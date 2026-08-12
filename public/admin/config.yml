@@ -1,0 +1,133 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Project Name", name: "title", widget: "string" }
+      - { label: "Market", name: "market", widget: "string" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Image", name: "image", widget: "image" }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "General Contractor", name: "gc", widget: "string", required: false }
+      - { label: "Owner", name: "owner", widget: "string", required: false }
+      - { label: "Project Size", name: "projectSize", widget: "string", required: false }
+      - { label: "Completion Date", name: "completionDate", widget: "string", required: false }
+      - label: "Services"
+        name: "services"
+        widget: "list"
+        required: false
+        field: { label: "Service", name: "service", widget: "string" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "services"
+    label: "Services"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Service Name", name: "title", widget: "string" }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "markets"
+    label: "Markets"
+    folder: "src/content/markets"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Market Name", name: "title", widget: "string" }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "Card Image", name: "cardImage", widget: "image", required: false }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Accent Color", name: "accentColor", widget: "color", required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "team"
+    label: "Team"
+    folder: "src/content/team"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Headshot", name: "headshot", widget: "image", required: false }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Phone", name: "phone", widget: "string", required: false }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Display Order", name: "displayOrder", widget: "number", default: 0 }
+      - { label: "Public Profile", name: "publicProfile", widget: "boolean", default: true }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Person", name: "person", widget: "string", required: false }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Company", name: "company", widget: "string", required: false }
+      - { label: "Project", name: "project", widget: "string", required: false }
+      - { label: "Approved Public", name: "approvedPublic", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+
+  - name: "resources"
+    label: "Resources"
+    folder: "src/content/resources"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Resource Type", name: "resourceType", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "File", name: "file", widget: "file", required: false }
+      - { label: "External URL", name: "externalUrl", widget: "string", required: false }
+      - label: "Visibility"
+        name: "visibility"
+        widget: "select"
+        options:
+          - { label: "Public", value: "public" }
+          - { label: "Request Required", value: "request_required" }
+          - { label: "Private", value: "private" }
+        default: "public"
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
