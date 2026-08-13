@@ -46,6 +46,26 @@ collections:
                 widget: "select"
                 options: ["Barlow Condensed", "Inter", "Lora"]
 
+      - label: "Footer"
+        name: "footer"
+        file: "src/data/site-footer.json"
+        fields:
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Address Line 1", name: "addressLine1", widget: "string" }
+              - { label: "Address Line 2", name: "addressLine2", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string", hint: "Displayed and used for the click-to-call link, e.g. (512) 555-0198" }
+              - { label: "Email", name: "email", widget: "string" }
+          - label: "Social Links"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false, hint: "Leave as # if not yet set up" }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, hint: "Leave as # if not yet set up" }
+
   - name: "pages"
     label: "Pages"
     files:

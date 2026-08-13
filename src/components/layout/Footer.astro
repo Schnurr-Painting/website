@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import footer from '../../data/site-footer.json';
 
 const services = (await getCollection('services'))
   .sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
@@ -10,12 +11,12 @@ const services = (await getCollection('services'))
     <div class="footer-top">
       <div class="footer-brand">
         <img class="footer-logo" src="/images/branding/schnurr-logo.png" alt="Schnurr Painting, LLC" />
-        <p class="tagline">Commercial Coatings. Est. Local. Licensed &amp; Insured.</p>
+        <p class="tagline">{footer.tagline}</p>
         <div class="social">
-          <a href="#" aria-label="LinkedIn">
+          <a href={footer.social.linkedin} aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5h3v11h-3zM6 3.5a1.8 1.8 0 110 3.6 1.8 1.8 0 010-3.6zM10.5 8.5h3v1.6h.04c.42-.78 1.44-1.6 2.96-1.6 3.17 0 3.75 2 3.75 4.6v6.4h-3v-5.7c0-1.36-.02-3.1-1.9-3.1-1.9 0-2.19 1.48-2.19 3v5.8h-3z"/></svg>
           </a>
-          <a href="#" aria-label="Instagram">
+          <a href={footer.social.instagram} aria-label="Instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>
           </a>
         </div>
@@ -51,11 +52,10 @@ const services = (await getCollection('services'))
 
       <div class="footer-col footer-contact">
         <p class="col-heading">Contact</p>
-        <p class="placeholder-flag">Placeholder — replace before launch</p>
         <ul>
-          <li>140 W 5th Street, Suite 200<br />Austin, Texas 78701</li>
-          <li><a href="tel:+15125550198">(512) 555-0198</a></li>
-          <li><a href="mailto:info@schnurrpainting.com">info@schnurrpainting.com</a></li>
+          <li>{footer.contact.addressLine1}<br />{footer.contact.addressLine2}</li>
+          <li><a href={`tel:+1${footer.contact.phone.replace(/\D/g, '')}`}>{footer.contact.phone}</a></li>
+          <li><a href={`mailto:${footer.contact.email}`}>{footer.contact.email}</a></li>
         </ul>
       </div>
     </div>
@@ -142,13 +142,6 @@ const services = (await getCollection('services'))
   }
 
   .footer-col a:hover {
-    color: var(--gold);
-  }
-
-  .footer-contact .placeholder-flag {
-    margin: -6px 0 12px;
-    font-size: 11px;
-    font-style: italic;
     color: var(--gold);
   }
 
