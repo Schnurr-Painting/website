@@ -1,0 +1,329 @@
+---
+const slides = [
+  { src: "/images/hero/hero-01.jpg", motion: "zoom-in", position: "center 68%" },
+  { src: "/images/hero/hero-02.jpg", motion: "pan-left", position: "center 72%" },
+  { src: "/images/hero/hero-03.jpg", motion: "zoom-out", position: "center 66%" },
+  { src: "/images/hero/hero-04.jpg", motion: "pan-up", position: "center 74%" },
+];
+---
+
+<section class="hero">
+  <div class="hero-copy-panel">
+    <div class="hero-copy-wrap">
+      <p class="eyebrow">Interior • Exterior • Specialty</p>
+
+      <h1>
+        Commercial<br />
+        Coatings.<br />
+        Built to <em>Last.</em>
+      </h1>
+
+      <p class="intro">
+        Expert interior and exterior painting, coatings, and wallcovering
+        for commercial buildings&mdash;delivered on schedule, on budget,
+        and built to stand up to real-world use.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="#request-bid">
+          Request a Bid <span aria-hidden="true">→</span>
+        </a>
+
+        <a class="btn btn-outline-light" href="/resources">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v10" />
+            <path d="m8 11 4 4 4-4" />
+            <path d="M5 20h14" />
+          </svg>
+          View Capability Statement
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-media">
+    <div class="slides" aria-hidden="true">
+      {slides.map((slide, index) => (
+        <img
+          class={`hero-photo ${slide.motion} ${index === 0 ? "active" : ""}`}
+          src={slide.src}
+          alt=""
+          style={`object-position:${slide.position};`}
+        />
+      ))}
+    </div>
+
+    <div class="paint-transition" aria-hidden="true"></div>
+
+    <div class="slider-ui">
+      <div class="slider-lines">
+        {slides.map((_, index) => (
+          <button
+            class={index === 0 ? "active" : ""}
+            type="button"
+            aria-label={`Show image ${index + 1}`}
+            data-slide-button={index}
+          ></button>
+        ))}
+      </div>
+
+      <span class="counter">
+        <span id="current-slide">01</span> / 04
+      </span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const photos = Array.from(document.querySelectorAll(".hero-photo"));
+  const buttons = Array.from(document.querySelectorAll("[data-slide-button]"));
+  const counter = document.getElementById("current-slide");
+
+  let current = 0;
+  let timer;
+
+  const restartAnimation = (el) => {
+    if (!el) return;
+    el.style.animation = "none";
+    void el.offsetWidth;
+    el.style.animation = "";
+  };
+
+  const showSlide = (next) => {
+    photos[current]?.classList.remove("active");
+    buttons[current]?.classList.remove("active");
+
+    current = next;
+    restartAnimation(photos[current]);
+
+    photos[current]?.classList.add("active");
+    buttons[current]?.classList.add("active");
+
+    if (counter) {
+      counter.textContent = String(current + 1).padStart(2, "0");
+    }
+  };
+
+  const advance = () => showSlide((current + 1) % photos.length);
+
+  const startTimer = () => {
+    clearInterval(timer);
+    timer = setInterval(advance, 8000);
+  };
+
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      showSlide(index);
+      startTimer();
+    });
+  });
+
+  startTimer();
+</script>
+
+<style>
+  .hero {
+    height: clamp(660px, 73vh, 750px);
+    display: grid;
+    grid-template-columns: 37% 63%;
+    background: #4a1756;
+    overflow: hidden;
+  }
+
+  .hero-copy-panel {
+    background: #4a1756;
+    color: white;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+  }
+
+  .hero-copy-wrap {
+    position: relative;
+    z-index: 3;
+    width: min(525px, calc(100% - 100px));
+    margin-left: max(
+      60px,
+      calc((100vw - min(100vw - 120px, 1680px)) / 2)
+    );
+  }
+
+  h1 {
+    margin: 22px 0 0;
+    color: white;
+    font-family: var(--display);
+    font-size: clamp(64px, 4.1vw, 78px);
+    font-weight: 600;
+    line-height: .98;
+    letter-spacing: -.035em;
+  }
+
+  h1 em { font-weight: 600; }
+
+  .intro {
+    max-width: 450px;
+    margin: 31px 0 0;
+    color: rgba(255,255,255,.91);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .actions {
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .actions svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hero-media {
+    position: relative;
+    min-width: 0;
+    overflow: visible;
+    background: #4a1756;
+  }
+
+  .slides {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-photo {
+    position: absolute;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+    will-change: transform, opacity;
+  }
+
+  .hero-photo.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero-photo.zoom-in.active  { animation: zoomIn 8s ease-out forwards; }
+  .hero-photo.zoom-out.active { animation: zoomOut 8s ease-out forwards; }
+  .hero-photo.pan-left.active { animation: panLeft 8s ease-in-out forwards; }
+  .hero-photo.pan-up.active   { animation: panUp 8s ease-in-out forwards; }
+
+  @keyframes zoomIn {
+    from { transform: scale(1); }
+    to   { transform: scale(1.14); }
+  }
+
+  @keyframes zoomOut {
+    from { transform: scale(1.16); }
+    to   { transform: scale(1.03); }
+  }
+
+  @keyframes panLeft {
+    from { transform: scale(1.09) translateX(5%); }
+    to   { transform: scale(1.09) translateX(-5%); }
+  }
+
+  @keyframes panUp {
+    from { transform: scale(1.09) translateY(5.5%); }
+    to   { transform: scale(1.09) translateY(-5.5%); }
+  }
+
+  .paint-transition {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: -96px;
+    width: clamp(250px, 18vw, 340px);
+    height: 100%;
+    pointer-events: none;
+    background: #4a1756;
+
+    -webkit-mask-image: url("/assets/brand-textures/hero-approved-transition-solid.png");
+    mask-image: url("/assets/brand-textures/hero-approved-transition-solid.png");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
+  .slider-ui {
+    position: absolute;
+    z-index: 4;
+    left: max(110px, 10vw);
+    right: 38px;
+    bottom: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .slider-lines {
+    display: flex;
+    gap: 10px;
+  }
+
+  .slider-lines button {
+    width: 34px;
+    height: 3px;
+    padding: 0;
+    border: 0;
+    background: rgba(255,255,255,.48);
+    cursor: pointer;
+  }
+
+  .slider-lines button.active { background: var(--gold); }
+
+  .counter {
+    color: white;
+    font-family: var(--utility);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo.active { animation: none; }
+  }
+
+  @media (max-width: 1000px) {
+    .hero {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .hero-copy-panel {
+      min-height: 620px;
+    }
+
+    .hero-copy-wrap {
+      width: min(560px, calc(100% - 64px));
+      margin-left: 32px;
+    }
+
+    .hero-media {
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    .paint-transition {
+      display: none;
+    }
+  }
+</style>

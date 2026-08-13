@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import SitePage from '../../layouts/SitePage.astro';
+import InteriorHero from '../../components/interior/InteriorHero.astro';
+import CollectionGrid from '../../components/interior/CollectionGrid.astro';
+import TestimonialsBand from '../../components/interior/TestimonialsBand.astro';
+import page from '../../data/pages/markets.json';
+const markets=(await getCollection('markets')).sort((a,b)=>a.data.sortOrder-b.data.sortOrder);
+const items=markets.map(market=>({id:market.id,title:market.data.title,description:market.data.shortDescription,image:market.data.cardImage||market.data.heroImage,href:`/markets/${market.id.replace(/\.md$/,'')}`,accent:market.data.accentColor||'var(--orange)'}));
+const h=page.hero;
+---
+<SitePage title={page.title} description={page.seoDescription}>
+  <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} image={h.image} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} headingFont={h.headingFont} />
+  <CollectionGrid items={items} />
+  <TestimonialsBand page="markets" />
+</SitePage>

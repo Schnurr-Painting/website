@@ -1,0 +1,183 @@
+---
+const {
+  eyebrow,
+  title,
+  intro,
+  image,
+  theme = 'navy',
+  imagePosition = 'center',
+  backgroundColor = 'var(--navy)',
+  overlayColor = '#3a1843',
+  overlayOpacity = 0.9,
+  headingColor = '#ffffff',
+  introColor = '#ffffff',
+  accentColor = 'var(--gold)',
+  headingFont = 'display',
+} = Astro.props;
+
+const hasImage = Boolean(image);
+const fontMap = {
+  display: 'var(--display)',
+  body: 'var(--body-font)',
+  utility: 'var(--utility)',
+};
+const resolvedHeadingFont = fontMap[headingFont] || 'var(--display)';
+
+const hexToRgba = (hex, alpha) => {
+  if (!hex || !hex.startsWith('#')) return hex;
+  const clean = hex.replace('#','');
+  const full = clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean;
+  const r = parseInt(full.slice(0,2),16);
+  const g = parseInt(full.slice(2,4),16);
+  const b = parseInt(full.slice(4,6),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+};
+
+const overlayStrong = hexToRgba(overlayColor, Math.min(1, Number(overlayOpacity) || .9));
+const overlayMid = hexToRgba(overlayColor, Math.max(0, (Number(overlayOpacity) || .9) - .14));
+const overlayLight = hexToRgba(overlayColor, Math.max(0, (Number(overlayOpacity) || .9) - .32));
+---
+
+<section
+  class:list={[
+    'interior-hero',
+    hasImage && 'interior-hero-photo',
+    !hasImage && 'interior-hero-solid',
+    theme === 'light' && 'interior-hero-light',
+  ]}
+  style={`--hero-bg:${backgroundColor};--hero-heading:${headingColor};--hero-intro:${introColor};--hero-accent:${accentColor};--hero-heading-font:${resolvedHeadingFont};--overlay-strong:${overlayStrong};--overlay-mid:${overlayMid};--overlay-light:${overlayLight};`}
+>
+  {hasImage && (
+    <div class="hero-background" aria-hidden="true">
+      <img src={image} alt="" style={`object-position:${imagePosition};`} />
+    </div>
+  )}
+
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="interior-hero-inner">
+    <div class="interior-hero-copy">
+      {eyebrow && (
+        <div class="interior-kicker">
+          <span aria-hidden="true"></span>
+          <p>{eyebrow}</p>
+        </div>
+      )}
+
+      <h1>{title}</h1>
+
+      {intro && <p class="interior-intro">{intro}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .interior-hero {
+    position: relative;
+    min-height: 430px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: var(--hero-bg);
+    color: white;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-background img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg,var(--overlay-strong) 0%,var(--overlay-strong) 34%,var(--overlay-mid) 60%,var(--overlay-light) 100%);
+    pointer-events: none;
+  }
+
+  .interior-hero-solid .hero-overlay {
+    background: linear-gradient(135deg,var(--hero-bg),var(--hero-bg));
+  }
+
+  .interior-hero-inner {
+    position: relative;
+    z-index: 2;
+    width: min(calc(100% - 120px), var(--content-max));
+    margin: 0 auto;
+    padding: 70px 0 68px;
+  }
+
+  .interior-hero-copy { max-width: 770px; }
+
+  .interior-kicker {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 18px;
+  }
+
+  .interior-kicker span {
+    width: 34px;
+    height: 3px;
+    background: var(--hero-accent);
+  }
+
+  .interior-kicker p {
+    margin: 0;
+    color: var(--hero-accent);
+    font-family: var(--utility);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 760px;
+    color: var(--hero-heading);
+    font-family: var(--hero-heading-font);
+    font-size: clamp(54px, 5vw, 82px);
+    font-weight: 600;
+    line-height: .97;
+    letter-spacing: -.042em;
+    text-wrap: balance;
+  }
+
+  .interior-intro {
+    max-width: 650px;
+    margin: 24px 0 0;
+    color: var(--hero-intro);
+    font-size: 18px;
+    line-height: 1.67;
+  }
+
+  @media (max-width: 900px) {
+    .interior-hero { min-height: 390px; }
+    .interior-hero-inner {
+      width: min(calc(100% - 56px), var(--content-max));
+      padding: 58px 0;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .interior-hero { min-height: 350px; }
+    .interior-hero-inner {
+      width: min(calc(100% - 40px), var(--content-max));
+      padding: 48px 0;
+    }
+    h1 { font-size: clamp(44px, 13vw, 62px); }
+    .interior-intro { font-size: 16px; }
+  }
+</style>

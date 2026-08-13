@@ -1,0 +1,23 @@
+---
+import SitePage from '../../layouts/SitePage.astro';
+import CompanyPage from '../../components/interior/CompanyPage.astro';
+import page from '../../data/pages/safety.json';
+const h = page.hero;
+---
+<SitePage title={page.title} description={page.seoDescription}>
+  <CompanyPage
+    eyebrow={h.eyebrow}
+    title={h.title}
+    intro={h.intro}
+    image={h.image}
+    imagePosition={h.imagePosition}
+    backgroundColor={h.backgroundColor}
+    overlayColor={h.overlayColor}
+    overlayOpacity={h.overlayOpacity}
+    headingColor={h.headingColor}
+    introColor={h.introColor}
+    accentColor={h.accentColor}
+    headingFont={h.headingFont}
+    sections={page.sections}
+  />
+</SitePage>

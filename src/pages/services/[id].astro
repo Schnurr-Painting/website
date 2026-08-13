@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from 'astro:content';
+import SitePage from '../../layouts/SitePage.astro';
+import DetailPage from '../../components/interior/DetailPage.astro';
+export async function getStaticPaths(){const services=await getCollection('services');return services.map(service=>({params:{id:service.id.replace(/\.md$/,'')},props:{service}}))}
+const {service}=Astro.props;
+const { Content } = await render(service);
+const hs=service.data.heroStyle || {};
+---
+<SitePage title={service.data.title} description={service.data.shortDescription}>
+  <DetailPage eyebrow="Service" title={service.data.title} intro={service.data.shortDescription} image={service.data.heroImage} backgroundColor={hs.heroBackgroundColor} overlayColor={hs.heroOverlayColor} overlayOpacity={hs.heroOverlayOpacity} headingColor={hs.heroHeadingColor} introColor={hs.heroIntroColor} accentColor={hs.heroAccentColor} headingFont={hs.heroHeadingFont}>
+    <Content />
+  </DetailPage>
+</SitePage>

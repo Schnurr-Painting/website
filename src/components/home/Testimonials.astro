@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+
+const testimonials = (await getCollection('testimonials'))
+  .filter((item) => item.data.approvedPublic)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .slice(0, 3);
+---
+
+{testimonials.length > 0 && (
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <div class="testimonials-heading">
+        <p class="eyebrow">What Partners Say</p>
+        <h2>Built for repeat work.</h2>
+      </div>
+
+      <div class="testimonial-grid">
+        {testimonials.map((item) => (
+          <blockquote class="testimonial-card">
+            <p>“{item.data.quote}”</p>
+            <footer>
+              {item.data.person && <strong>{item.data.person}</strong>}
+              <span>
+                {[item.data.role, item.data.company].filter(Boolean).join(' • ')}
+              </span>
+              {item.data.project && <small>{item.data.project}</small>}
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .testimonials{background:var(--paper);padding:84px 0 96px}
+  .testimonials-inner{width:min(calc(100% - 120px),var(--content-max));margin:0 auto}
+  .testimonials-heading{margin-bottom:34px}
+  .testimonials-heading .eyebrow{margin:0 0 10px;color:var(--gold)}
+  .testimonials-heading h2{margin:0;color:var(--ink);font-family:var(--display);font-size:clamp(40px,3.4vw,56px);font-weight:600;line-height:1.04}
+  .testimonial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+  .testimonial-card{margin:0;padding:30px;background:var(--cream);border-top:4px solid var(--gold)}
+  .testimonial-card>p{margin:0;color:var(--ink);font-family:var(--display);font-size:25px;line-height:1.32}
+  .testimonial-card footer{display:flex;flex-direction:column;gap:4px;margin-top:24px;color:var(--body);font-size:13px}
+  .testimonial-card strong{color:var(--ink)}
+  .testimonial-card small{margin-top:4px;font-size:12px}
+  @media(max-width:900px){.testimonials-inner{width:min(calc(100% - 48px),var(--content-max))}.testimonial-grid{grid-template-columns:1fr}}
+</style>

@@ -8,9 +8,226 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "site_settings"
+    label: "Site Settings"
+    files:
+      - label: "Brand & Theme"
+        name: "brand_theme"
+        file: "src/data/site-settings.json"
+        fields:
+          - label: "Brand"
+            name: "brand"
+            widget: "object"
+            fields:
+              - { label: "Logo", name: "logo", widget: "image" }
+              - { label: "Logo Alt Text", name: "logoAlt", widget: "string" }
+          - label: "Colors & Typography"
+            name: "theme"
+            widget: "object"
+            fields:
+              - { label: "Primary Purple", name: "primary", widget: "color" }
+              - { label: "Dark Purple", name: "primaryDark", widget: "color" }
+              - { label: "Gold / Accent", name: "accent", widget: "color" }
+              - { label: "Paper Background", name: "paper", widget: "color" }
+              - { label: "Cream Background", name: "cream", widget: "color" }
+              - { label: "Heading Text", name: "headingText", widget: "color" }
+              - { label: "Body Text", name: "bodyText", widget: "color" }
+              - { label: "Divider / Line", name: "line", widget: "color" }
+              - label: "Display / Heading Font"
+                name: "displayFont"
+                widget: "select"
+                options: ["Lora", "Inter", "Barlow Condensed"]
+              - label: "Body Font"
+                name: "bodyFont"
+                widget: "select"
+                options: ["Inter", "Lora", "Barlow Condensed"]
+              - label: "Utility / Navigation Font"
+                name: "utilityFont"
+                widget: "select"
+                options: ["Barlow Condensed", "Inter", "Lora"]
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home"
+        name: "home"
+        file: "src/data/pages/home.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading Line 1", name: "headingLine1", widget: "string" }
+              - { label: "Heading Line 2", name: "headingLine2", widget: "string" }
+              - { label: "Heading Line 3", name: "headingLine3", widget: "string" }
+              - { label: "Intro Text", name: "intro", widget: "text" }
+              - { label: "Banner / Panel Color", name: "backgroundColor", widget: "color" }
+              - { label: "Heading Color", name: "headingColor", widget: "color" }
+              - { label: "Intro Text Color", name: "introColor", widget: "color" }
+              - { label: "Eyebrow Color", name: "eyebrowColor", widget: "color" }
+              - label: "Heading Type"
+                name: "headingFont"
+                widget: "select"
+                options:
+                  - { label: "Display / Serif", value: "display" }
+                  - { label: "Body / Sans", value: "body" }
+                  - { label: "Condensed", value: "utility" }
+          - label: "Qualification Stats"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.value}} {{fields.label}}"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "string" }
+          - label: "Services Section"
+            name: "servicesSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+              - { label: "Photo Label", name: "photoLabel", widget: "string" }
+              - { label: "Photo Title", name: "photoTitle", widget: "string" }
+          - label: "Markets Section"
+            name: "marketsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+          - label: "Featured Projects Section"
+            name: "projectsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+
+      - label: "Services"
+        name: "services_page"
+        file: "src/data/pages/services.json"
+        fields: &standard_page_fields
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: &standard_hero_fields
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Intro Text", name: "intro", widget: "text" }
+              - { label: "Hero Image", name: "image", widget: "image", required: false }
+              - { label: "Image Position", name: "imagePosition", widget: "string", hint: "Examples: center, center 68%, left center" }
+              - { label: "Banner Background", name: "backgroundColor", widget: "color" }
+              - { label: "Image Overlay Color", name: "overlayColor", widget: "color" }
+              - { label: "Overlay Strength", name: "overlayOpacity", widget: "number", min: 0, max: 1, step: 0.05, value_type: "float" }
+              - { label: "Heading Color", name: "headingColor", widget: "color" }
+              - { label: "Intro Text Color", name: "introColor", widget: "color" }
+              - { label: "Accent / Eyebrow Color", name: "accentColor", widget: "color" }
+              - label: "Heading Type"
+                name: "headingFont"
+                widget: "select"
+                options:
+                  - { label: "Display / Serif", value: "display" }
+                  - { label: "Body / Sans", value: "body" }
+                  - { label: "Condensed", value: "utility" }
+
+      - label: "Markets"
+        name: "markets_page"
+        file: "src/data/pages/markets.json"
+        fields: *standard_page_fields
+
+      - label: "Projects"
+        name: "projects_page"
+        file: "src/data/pages/projects.json"
+        fields: *standard_page_fields
+
+      - label: "Resources"
+        name: "resources_page"
+        file: "src/data/pages/resources.json"
+        fields: *standard_page_fields
+
+      - label: "About"
+        name: "about_page"
+        file: "src/data/pages/about.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Heading", name: "title", widget: "string" }
+              - { label: "Section Text", name: "copy", widget: "text" }
+
+      - label: "Safety"
+        name: "safety_page"
+        file: "src/data/pages/safety.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Heading", name: "title", widget: "string" }
+              - { label: "Section Text", name: "copy", widget: "text" }
+
+      - label: "Careers"
+        name: "careers_page"
+        file: "src/data/pages/careers.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Heading", name: "title", widget: "string" }
+              - { label: "Section Text", name: "copy", widget: "text" }
+
+  - name: "images"
+    label: "Image Library"
+    label_singular: "Image"
+    folder: "src/content/images"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{title}} — {{category}}"
+    fields:
+      - { label: "Image Name", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", required: false }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Hero", "Project", "Service", "Market", "Team", "General"]
+        default: "General"
+      - { label: "Notes / Usage", name: "notes", widget: "text", required: false }
 
   - name: "projects"
-    label: "Projects"
+    label: "Content — Projects"
+    label_singular: "Project"
     folder: "src/content/projects"
     create: true
     slug: "{{slug}}"
@@ -36,12 +253,33 @@ collections:
         widget: "list"
         required: false
         field: { label: "Service", name: "service", widget: "string" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: &record_hero_fields
+          - { label: "Banner Background", name: "heroBackgroundColor", widget: "color", required: false }
+          - { label: "Overlay Color", name: "heroOverlayColor", widget: "color", required: false }
+          - { label: "Overlay Strength", name: "heroOverlayOpacity", widget: "number", min: 0, max: 1, step: 0.05, value_type: "float", required: false }
+          - { label: "Heading Color", name: "heroHeadingColor", widget: "color", required: false }
+          - { label: "Intro Color", name: "heroIntroColor", widget: "color", required: false }
+          - { label: "Accent Color", name: "heroAccentColor", widget: "color", required: false }
+          - label: "Heading Type"
+            name: "heroHeadingFont"
+            widget: "select"
+            required: false
+            options:
+              - { label: "Display / Serif", value: "display" }
+              - { label: "Body / Sans", value: "body" }
+              - { label: "Condensed", value: "utility" }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "services"
-    label: "Services"
+    label: "Content — Service Items"
+    label_singular: "Service"
     folder: "src/content/services"
     create: true
     slug: "{{slug}}"
@@ -52,12 +290,19 @@ collections:
       - { label: "Short Description", name: "shortDescription", widget: "text" }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
       - { label: "Icon", name: "icon", widget: "string", required: false }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: *record_hero_fields
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "markets"
-    label: "Markets"
+    label: "Content — Market Items"
+    label_singular: "Market"
     folder: "src/content/markets"
     create: true
     slug: "{{slug}}"
@@ -69,13 +314,20 @@ collections:
       - { label: "Card Image", name: "cardImage", widget: "image", required: false }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
       - { label: "Icon", name: "icon", widget: "string", required: false }
-      - { label: "Accent Color", name: "accentColor", widget: "color", required: false }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Card Accent Color", name: "accentColor", widget: "color", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: *record_hero_fields
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "team"
-    label: "Team"
+    label: "Content — Team Members"
+    label_singular: "Team Member"
     folder: "src/content/team"
     create: true
     slug: "{{slug}}"
@@ -89,11 +341,11 @@ collections:
       - { label: "Phone", name: "phone", widget: "string", required: false }
       - { label: "Bio", name: "bio", widget: "text", required: false }
       - { label: "Display Order", name: "displayOrder", widget: "number", default: 0 }
-      - { label: "Public Profile", name: "publicProfile", widget: "boolean", default: true }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
+      - { label: "Show on About Page", name: "publicProfile", widget: "boolean", default: true }
 
   - name: "testimonials"
-    label: "Testimonials"
+    label: "Content — Testimonials"
+    label_singular: "Testimonial"
     folder: "src/content/testimonials"
     create: true
     slug: "{{slug}}"
@@ -104,12 +356,25 @@ collections:
       - { label: "Person", name: "person", widget: "string", required: false }
       - { label: "Role", name: "role", widget: "string", required: false }
       - { label: "Company", name: "company", widget: "string", required: false }
-      - { label: "Project", name: "project", widget: "string", required: false }
-      - { label: "Approved Public", name: "approvedPublic", widget: "boolean", default: false }
+      - { label: "Related Project", name: "project", widget: "string", required: false }
+      - { label: "Approved for Public Site", name: "approvedPublic", widget: "boolean", default: false }
+      - label: "Show On Pages"
+        name: "showOn"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - { label: "Home", value: "home" }
+          - { label: "About", value: "about" }
+          - { label: "Services", value: "services" }
+          - { label: "Markets", value: "markets" }
+          - { label: "Projects", value: "projects" }
+        hint: "Select every page where this testimonial should appear."
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
 
   - name: "resources"
-    label: "Resources"
+    label: "Content — Resources"
+    label_singular: "Resource"
     folder: "src/content/resources"
     create: true
     slug: "{{slug}}"

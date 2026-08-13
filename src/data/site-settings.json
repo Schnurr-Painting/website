@@ -1,0 +1,19 @@
+{
+  "brand": {
+    "logo": "/images/branding/schnurr-logo.png",
+    "logoAlt": "Schnurr Painting, LLC"
+  },
+  "theme": {
+    "cream": "#f5f1e8",
+    "primary": "#3a1843",
+    "accent": "#c7b434",
+    "paper": "#fffdf8",
+    "bodyText": "#40515a",
+    "headingText": "#112a35",
+    "displayFont": "Lora",
+    "bodyFont": "Inter",
+    "line": "#d9d5cb",
+    "primaryDark": "#2a102f",
+    "utilityFont": "Barlow Condensed"
+  }
+}

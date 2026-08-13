@@ -1,0 +1,154 @@
+---
+import settings from '../../data/site-settings.json';
+
+const links = [
+  ['Services', '/services'],
+  ['Markets', '/markets'],
+  ['Projects', '/projects'],
+  ['Safety', '/safety'],
+  ['About', '/about'],
+  ['Resources', '/resources'],
+  ['Careers', '/careers'],
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Schnurr Painting home">
+      <div class="brand-logo-plate">
+        <img
+          class="brand-logo"
+          src={settings.brand.logo}
+          alt={settings.brand.logoAlt}
+        />
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="Primary navigation">
+      {links.map(([label, href]) => (
+        <a href={href}>{label}</a>
+      ))}
+    </nav>
+
+    <a class="bid-button" href="/#request-bid">
+      Request a Bid
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    height: 88px;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(17,42,53,.08);
+    position: relative;
+    z-index: 30;
+    overflow: visible;
+  }
+
+  .header-inner {
+    position: relative;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 235px 1fr 190px;
+    align-items: center;
+    gap: 30px;
+    overflow: visible;
+  }
+
+  .brand {
+    position: relative;
+    display: block;
+    height: 100%;
+    z-index: 40;
+  }
+
+  /* Return to the original, less-tightly-cropped logo asset.
+     This matches the earlier build more closely and keeps the actual
+     painted mark/text visually smaller without changing nav height. */
+  .brand-logo-plate {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 221px;
+    height: 117px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--paper);
+    overflow: hidden;
+    z-index: 41;
+  }
+
+  .brand-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left top;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(22px, 1.8vw, 36px);
+  }
+
+  .nav a {
+    color: var(--ink);
+    font-family: var(--utility);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .025em;
+  }
+
+  .nav a:hover {
+    color: var(--gold);
+  }
+
+  .bid-button {
+    min-height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding-inline: 18px;
+    background: var(--gold);
+    color: #25112a;
+    font-family: var(--utility);
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1100px) {
+    .header-inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .nav {
+      display: none;
+    }
+
+    .brand-logo-plate {
+      width: 200px;
+      height: 108px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .brand-logo-plate {
+      width: 167px;
+      height: 99px;
+    }
+
+    .bid-button {
+      min-height: 44px;
+      padding-inline: 12px;
+      font-size: 13px;
+    }
+  }
+</style>

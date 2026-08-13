@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+const team = (await getCollection('team'))
+  .filter(member => member.data.publicProfile)
+  .sort((a,b) => a.data.displayOrder - b.data.displayOrder);
+---
+{team.length > 0 && (
+  <section class="team-band">
+    <div class="team-inner">
+      <p class="eyebrow">Team</p>
+      <h2>People behind the work.</h2>
+      <div class="team-grid">
+        {team.map(member => (
+          <article class="team-card">
+            {member.data.headshot && <img src={member.data.headshot} alt={member.data.name} />}
+            <div class="team-copy">
+              <h3>{member.data.name}</h3>
+              <p class="role">{member.data.role}</p>
+              {member.data.bio && <p class="bio">{member.data.bio}</p>}
+              {member.data.email && <a href={`mailto:${member.data.email}`}>{member.data.email}</a>}
+              {member.data.phone && <a href={`tel:${member.data.phone}`}>{member.data.phone}</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+<style>
+.team-band{background:var(--paper);padding:76px 0 96px;border-top:1px solid var(--line)}
+.team-inner{width:min(calc(100% - 120px),1200px);margin:0 auto}
+.team-inner>.eyebrow{margin:0;color:var(--gold)}
+.team-inner>h2{margin:8px 0 30px;color:var(--ink);font-family:var(--display);font-size:clamp(38px,4vw,58px);font-weight:600}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.team-card{border:1px solid var(--line);background:var(--paper)}
+.team-card img{width:100%;height:300px;object-fit:cover;display:block}
+.team-copy{padding:22px}
+.team-copy h3{margin:0;color:var(--ink);font-family:var(--display);font-size:28px}
+.role{margin:5px 0 0;color:var(--gold);font-family:var(--utility);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.bio{color:var(--body);line-height:1.6}
+.team-copy a{display:block;margin-top:6px;color:var(--ink);font-size:14px}
+@media(max-width:900px){.team-inner{width:min(calc(100% - 48px),1200px)}}
+</style>

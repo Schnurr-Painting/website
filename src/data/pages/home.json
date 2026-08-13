@@ -1,0 +1,60 @@
+{
+  "title": "Home",
+  "seoDescription": "Schnurr Painting provides commercial painting, coatings, wallcovering and specialty finish services.",
+  "hero": {
+    "eyebrow": "Interior \u2022 Exterior \u2022 Specialty",
+    "headingLine1": "Commercial",
+    "headingLine2": "Coatings.",
+    "headingLine3": "Built to Last.",
+    "intro": "Expert interior and exterior painting, coatings, and wallcovering for commercial buildings\u2014delivered on schedule, on budget, and built to stand up to real-world use.",
+    "backgroundColor": "#4a1756",
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "eyebrowColor": "#ffffff",
+    "headingFont": "display"
+  },
+  "stats": [
+    {
+      "value": "20+",
+      "label": "Years in Business",
+      "description": "Building lasting partnerships"
+    },
+    {
+      "value": "0.68",
+      "label": "EMR Safety Rating",
+      "description": "Consistently safe job sites"
+    },
+    {
+      "value": "$2.5M",
+      "label": "Bonding Capacity",
+      "description": "Backed for projects that demand it"
+    },
+    {
+      "value": "12+",
+      "label": "Active Crews",
+      "description": "Scalable teams for fast turnarounds"
+    },
+    {
+      "value": "Licensed. Insured. OSHA-Certified.",
+      "label": "",
+      "description": "Fully compliant. Fully accountable."
+    }
+  ],
+  "servicesSection": {
+    "eyebrow": "What We Do",
+    "heading": "Commercial painting without the loose ends.",
+    "intro": "From large interior scopes to exterior systems and specialty finishes, Schnurr Painting brings one accountable team to the work from preparation through final punch.",
+    "photoLabel": "Commercial Painting",
+    "photoTitle": "Interior \u2022 Exterior \u2022 Specialty"
+  },
+  "marketsSection": {
+    "eyebrow": "Markets We Serve",
+    "heading": "Built for the spaces people depend on.",
+    "intro": "From occupied workplaces to complex institutional environments, Schnurr Painting brings the crews, coordination, and coating expertise commercial projects demand."
+  },
+  "projectsSection": {
+    "eyebrow": "Featured Projects",
+    "heading": "Work that has to hold up in the real world.",
+    "intro": "Commercial projects demand more than a good finish. They require coordination, schedule discipline, safety, and crews that can perform around the realities of an active jobsite."
+  }
+}

@@ -1,0 +1,438 @@
+---
+import { getCollection } from 'astro:content';
+import page from '../../data/pages/home.json';
+const section=page.projectsSection;
+
+const projects = (await getCollection('projects'))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .slice(0, 3);
+---
+
+<section class="projects" id="projects">
+  <div class="projects-inner">
+    <div class="projects-heading">
+      <div>
+        <p class="eyebrow projects-eyebrow">{section.eyebrow}</p>
+        <h2>{section.heading}</h2>
+      </div>
+
+      <p class="projects-intro">{section.intro}</p>
+    </div>
+
+    <div class:list={["project-grid", projects.length === 1 && "project-grid-single"]}>
+      {projects.map((project, index) => {
+        const number = String(index + 1).padStart(2, "0");
+
+        return (
+          <article class="project-card">
+            <div class="project-media">
+              {project.data.featuredImage ? (
+                <img
+                  class="project-image"
+                  src={project.data.featuredImage}
+                  alt={project.data.title}
+                  loading="lazy"
+                />
+              ) : (
+                <div class="project-fallback" aria-hidden="true">
+                  <span class="project-fallback-number">{number}</span>
+                  <span class="project-fallback-line"></span>
+                </div>
+              )}
+
+              <div class="project-media-shade"></div>
+
+              <div class="project-market">
+                <span>{project.data.market}</span>
+              </div>
+            </div>
+
+            <div class="project-content">
+              <div class="project-meta">
+                <span>{number}</span>
+                {project.data.location && <span>{project.data.location}</span>}
+              </div>
+
+              <h3>{project.data.title}</h3>
+              <p>{project.data.shortDescription}</p>
+
+              <div class="project-details">
+                {project.data.gc && (
+                  <div>
+                    <span class="detail-label">General Contractor</span>
+                    <span class="detail-value">{project.data.gc}</span>
+                  </div>
+                )}
+
+                {project.data.projectSize && (
+                  <div>
+                    <span class="detail-label">Project Size</span>
+                    <span class="detail-value">{project.data.projectSize}</span>
+                  </div>
+                )}
+              </div>
+
+              <a class="project-link" href={`/projects/${project.id}`}>
+                View Project
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    {projects.length === 0 && (
+      <p class="project-empty">No featured projects are currently published.</p>
+    )}
+  </div>
+</section>
+
+<style>
+  .projects {
+    background: var(--navy);
+    color: white;
+    padding: 104px 0 112px;
+  }
+
+  .projects-inner {
+    width: min(calc(100% - 120px), var(--content-max));
+    margin: 0 auto;
+  }
+
+  .projects-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, .78fr);
+    gap: 54px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+
+  .projects-eyebrow {
+    margin: 0 0 15px;
+    color: var(--gold);
+  }
+
+  h2 {
+    margin: 0;
+    color: white;
+    font-family: var(--display);
+    font-size: clamp(44px, 3.8vw, 66px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+
+  .projects-intro {
+    max-width: 580px;
+    margin: 0 0 5px;
+    color: rgba(255,255,255,.78);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .project-grid-single {
+    grid-template-columns: minmax(0, 1100px);
+    justify-content: center;
+  }
+
+  .project-card {
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-media {
+    position: relative;
+    height: 340px;
+    overflow: hidden;
+    background: #d8d2c6;
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .5s ease;
+  }
+
+  .project-card:hover .project-image {
+    transform: scale(1.035);
+  }
+
+  .project-media-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.03) 45%, rgba(5,42,55,.55) 100%);
+    pointer-events: none;
+  }
+
+  .project-market {
+    position: absolute;
+    left: 24px;
+    bottom: 22px;
+    z-index: 2;
+  }
+
+  .project-market span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 12px;
+    background: rgba(5,42,55,.88);
+    color: white;
+    font-family: var(--utility);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  .project-fallback {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, #e8e0d2 0%, #cbbca7 100%);
+  }
+
+  .project-fallback::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border: 1px solid rgba(7,54,70,.16);
+    border-radius: 50%;
+    right: -74px;
+    top: -66px;
+  }
+
+  .project-fallback::after {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 145px;
+    right: 34px;
+    bottom: -46px;
+    background: rgba(7,54,70,.08);
+    transform: rotate(-12deg);
+  }
+
+  .project-fallback-number {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    color: rgba(7,54,70,.54);
+    font-family: var(--utility);
+    font-size: 92px;
+    font-weight: 700;
+    line-height: .82;
+  }
+
+  .project-fallback-line {
+    position: absolute;
+    top: 32px;
+    left: 30px;
+    width: 76px;
+    height: 4px;
+    background: var(--gold);
+  }
+
+  .project-content {
+    padding: 28px 30px 31px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 20px;
+    color: var(--orange);
+    font-family: var(--utility);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .project-meta span + span {
+    color: var(--body);
+  }
+
+  h3 {
+    margin: 11px 0 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 31px;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -.025em;
+  }
+
+  .project-content > p {
+    margin: 16px 0 22px;
+    color: var(--body);
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .project-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 2px 0 25px;
+  }
+
+  .project-details:empty {
+    display: none;
+  }
+
+  .detail-label,
+  .detail-value {
+    display: block;
+  }
+
+  .detail-label {
+    color: #748087;
+    font-family: var(--utility);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .detail-value {
+    margin-top: 4px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .project-link {
+    margin-top: auto;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-family: var(--utility);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .project-link span {
+    color: var(--orange);
+    transition: transform .2s ease;
+  }
+
+  .project-link:hover span {
+    transform: translateX(4px);
+  }
+
+  .project-grid-single .project-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(340px, .65fr);
+    min-height: 0;
+    height: 540px;
+  }
+
+  .project-grid-single .project-media {
+    height: 540px;
+    min-height: 0;
+  }
+
+  .project-grid-single .project-image {
+    object-position: center 66%;
+  }
+
+  .project-grid-single .project-content {
+    padding: 54px 52px;
+    justify-content: flex-start;
+  }
+
+  .project-grid-single h3 {
+    font-size: 42px;
+  }
+
+  .project-grid-single .project-content > p {
+    max-width: 430px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .project-grid-single .project-link {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 1180px) {
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-grid-single {
+      grid-template-columns: 1fr;
+    }
+
+    .project-grid-single .project-card {
+      grid-template-columns: 1fr 1fr;
+      height: 500px;
+    }
+
+    .project-grid-single .project-media {
+      height: 500px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .projects {
+      padding: 78px 0 88px;
+    }
+
+    .projects-inner {
+      width: min(calc(100% - 48px), var(--content-max));
+    }
+
+    .projects-heading {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 34px;
+    }
+
+    .project-grid-single .project-card {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .project-grid-single .project-media {
+      height: 340px;
+    }
+
+    .project-grid-single .project-content {
+      padding: 36px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

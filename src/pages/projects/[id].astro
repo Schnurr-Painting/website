@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import SitePage from '../../layouts/SitePage.astro';
+import DetailPage from '../../components/interior/DetailPage.astro';
+export async function getStaticPaths(){const projects=await getCollection('projects');return projects.map(project=>({params:{id:project.id.replace(/\.md$/,'')},props:{project}}))}
+const {project}=Astro.props;
+const { Content } = await render(project);
+const hs=project.data.heroStyle || {};
+const details=[
+project.data.location&&{label:'Location',value:project.data.location},
+project.data.gc&&{label:'General Contractor',value:project.data.gc},
+project.data.owner&&{label:'Owner',value:project.data.owner},
+project.data.projectSize&&{label:'Project Size',value:project.data.projectSize},
+project.data.completionDate&&{label:'Completion',value:project.data.completionDate},
+].filter(Boolean);
+---
+<SitePage title={project.data.title} description={project.data.shortDescription}>
+  <DetailPage eyebrow={project.data.market} title={project.data.title} intro={project.data.shortDescription} image={project.data.featuredImage} details={details} backgroundColor={hs.heroBackgroundColor} overlayColor={hs.heroOverlayColor} overlayOpacity={hs.heroOverlayOpacity} headingColor={hs.heroHeadingColor} introColor={hs.heroIntroColor} accentColor={hs.heroAccentColor} headingFont={hs.heroHeadingFont}>
+    <Content />
+    {project.data.services?.length > 0 && <p><strong>Services:</strong> {project.data.services.join(', ')}</p>}
+    {project.data.gallery?.length > 0 && <div class="project-gallery">{project.data.gallery.map(src => <img src={src} alt="" />)}</div>}
+  </DetailPage>
+</SitePage>
+<style>.project-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:32px}.project-gallery img{width:100%;height:280px;object-fit:cover}@media(max-width:700px){.project-gallery{grid-template-columns:1fr}}</style>

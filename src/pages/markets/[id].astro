@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from 'astro:content';
+import SitePage from '../../layouts/SitePage.astro';
+import DetailPage from '../../components/interior/DetailPage.astro';
+export async function getStaticPaths(){const markets=await getCollection('markets');return markets.map(market=>({params:{id:market.id.replace(/\.md$/,'')},props:{market}}))}
+const {market}=Astro.props;
+const { Content } = await render(market);
+const hs=market.data.heroStyle || {};
+---
+<SitePage title={market.data.title} description={market.data.shortDescription}>
+  <DetailPage eyebrow="Market" title={market.data.title} intro={market.data.shortDescription} image={market.data.heroImage||market.data.cardImage} backgroundColor={hs.heroBackgroundColor} overlayColor={hs.heroOverlayColor} overlayOpacity={hs.heroOverlayOpacity} headingColor={hs.heroHeadingColor} introColor={hs.heroIntroColor} accentColor={hs.heroAccentColor} headingFont={hs.heroHeadingFont}>
+    <Content />
+  </DetailPage>
+</SitePage>

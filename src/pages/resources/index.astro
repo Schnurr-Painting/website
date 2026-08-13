@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import SitePage from '../../layouts/SitePage.astro';
+import InteriorHero from '../../components/interior/InteriorHero.astro';
+import page from '../../data/pages/resources.json';
+const resources=(await getCollection('resources')).filter(r=>r.data.visibility!=='private').sort((a,b)=>a.data.sortOrder-b.data.sortOrder);
+const h=page.hero;
+---
+<SitePage title={page.title} description={page.seoDescription}>
+  <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} image={h.image || undefined} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} headingFont={h.headingFont} />
+  <section class="resources"><div class="resources-inner">
+    {resources.map(resource => {
+      const isRequest=resource.data.visibility==='request_required';
+      const href=isRequest ? '/#request-bid' : (resource.data.file||resource.data.externalUrl||'#');
+      return <a class="resource-row" href={href}><div><span>{resource.data.resourceType}{isRequest ? ' · Request Required' : ''}</span><h2>{resource.data.title}</h2><p>{resource.data.description}</p></div><strong aria-hidden="true">→</strong></a>
+    })}
+  </div></section>
+</SitePage>
+<style>
+  .resources{background:var(--cream);padding:72px 0 96px}
+  .resources-inner{width:min(calc(100% - 120px),1200px);margin:0 auto;border-top:1px solid var(--line)}
+  .resource-row{display:flex;align-items:center;justify-content:space-between;gap:40px;padding:28px 4px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+  .resource-row span{color:var(--orange);font-family:var(--utility);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .resource-row h2{margin:5px 0 0;color:var(--ink);font-family:var(--display);font-size:31px;font-weight:600}
+  .resource-row p{margin:8px 0 0;color:var(--body)}
+  .resource-row strong{color:var(--orange);font-size:24px}
+</style>

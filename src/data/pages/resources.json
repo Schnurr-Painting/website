@@ -1,0 +1,18 @@
+{
+  "title": "Resources",
+  "seoDescription": "Capability documents, qualifications, and public resources from Schnurr Painting.",
+  "hero": {
+    "eyebrow": "Resources",
+    "title": "The information GCs and owners need.",
+    "intro": "Capability documents, qualifications, and other public resources from Schnurr Painting.",
+    "image": "",
+    "imagePosition": "center",
+    "backgroundColor": "#3a1843",
+    "overlayColor": "#3a1843",
+    "overlayOpacity": 0.9,
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "accentColor": "#c7b434",
+    "headingFont": "display"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Projects",
+  "seoDescription": "Commercial painting projects completed by Schnurr Painting.",
+  "hero": {
+    "eyebrow": "Projects",
+    "title": "Commercial work that speaks for itself.",
+    "intro": "Explore selected commercial painting, coatings, wallcovering, and specialty finish work.",
+    "image": "/images/hero/hero-01.jpg",
+    "imagePosition": "center 64%",
+    "backgroundColor": "#3a1843",
+    "overlayColor": "#3a1843",
+    "overlayOpacity": 0.9,
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "accentColor": "#c7b434",
+    "headingFont": "display"
+  }
+}

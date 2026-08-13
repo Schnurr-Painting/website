@@ -1,0 +1,46 @@
+---
+const { items, emptyMessage = 'No items are currently published.' } = Astro.props;
+---
+<section class="collection-grid-section">
+  <div class="collection-grid-inner">
+    {items.length > 0 ? (
+      <div class="collection-grid">
+        {items.map((item, index) => (
+          <article class="collection-card" style={`--card-accent:${item.accent || 'var(--orange)'}`}>
+            {item.image ? (
+              <div class="collection-image"><img src={item.image} alt={item.title} loading="lazy" /></div>
+            ) : (
+              <div class="collection-fallback" aria-hidden="true"><span>{String(index + 1).padStart(2,'0')}</span></div>
+            )}
+            <div class="collection-content">
+              {item.meta && <p class="collection-meta">{item.meta}</p>}
+              <h2>{item.title}</h2>
+              <p>{item.description}</p>
+              <a href={item.href}>View Details <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : <p>{emptyMessage}</p>}
+  </div>
+</section>
+
+<style>
+  .collection-grid-section{background:var(--cream);padding:72px 0 96px}
+  .collection-grid-inner{width:min(calc(100% - 120px),var(--content-max));margin:0 auto}
+  .collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+  .collection-card{min-height:480px;background:var(--paper);border-top:4px solid var(--card-accent);display:flex;flex-direction:column;overflow:hidden}
+  .collection-image,.collection-fallback{height:250px;overflow:hidden;background:#e9e3d8}
+  .collection-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+  .collection-card:hover .collection-image img{transform:scale(1.03)}
+  .collection-fallback{position:relative;background:linear-gradient(135deg,#efe9dd,#ddd3c4)}
+  .collection-fallback span{position:absolute;left:28px;bottom:22px;font-family:var(--utility);font-size:76px;font-weight:700;color:color-mix(in srgb,var(--card-accent) 60%,var(--ink));opacity:.7}
+  .collection-content{padding:28px 30px 30px;display:flex;flex:1;flex-direction:column}
+  .collection-meta{margin:0 0 9px;color:var(--orange);font-family:var(--utility);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  h2{margin:0;color:var(--ink);font-family:var(--display);font-size:31px;font-weight:600;line-height:1.06;letter-spacing:-.025em}
+  .collection-content>p:not(.collection-meta){margin:16px 0 28px;color:var(--body);font-size:15px;line-height:1.62}
+  .collection-content a{margin-top:auto;width:fit-content;display:inline-flex;gap:9px;color:var(--ink);font-family:var(--utility);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+  .collection-content a span{color:var(--orange)}
+  @media(max-width:1050px){.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:700px){.collection-grid-inner{width:min(calc(100% - 48px),var(--content-max))}.collection-grid{grid-template-columns:1fr}}
+</style>

@@ -1,0 +1,403 @@
+---
+import { getCollection } from 'astro:content';
+import page from '../../data/pages/home.json';
+const section=page.marketsSection;
+
+const markets = (await getCollection('markets'))
+  .filter((market) => market.data.featured)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<section class="markets" id="markets">
+  <div class="markets-inner">
+    <div class="markets-heading">
+      <div>
+        <p class="eyebrow markets-eyebrow">{section.eyebrow}</p>
+        <h2>{section.heading}</h2>
+      </div>
+
+      <p class="markets-intro">{section.intro}</p>
+    </div>
+
+    <div class="market-grid">
+      {markets.map((market, index) => {
+        const accent = market.data.accentColor || "var(--orange)";
+        const number = String(index + 1).padStart(2, "0");
+
+        return (
+          <article class="market-card" style={`--market-accent:${accent};`}>
+            <div class="market-visual">
+              {market.data.cardImage ? (
+                <>
+                  <img
+                    class="market-image"
+                    src={market.data.cardImage}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <div class="market-image-overlay"></div>
+                </>
+              ) : (
+                <div class="market-graphic" aria-hidden="true">
+                  <span class="market-number">{number}</span>
+                  <span class="market-line"></span>
+                  <span class="market-block market-block-one"></span>
+                  <span class="market-block market-block-two"></span>
+                  <span class="market-ring"></span>
+                </div>
+              )}
+            </div>
+
+            <div class="market-content">
+              <div class="market-title-row">
+                <span class="market-index">{number}</span>
+                <h3>{market.data.title}</h3>
+              </div>
+
+              <p>{market.data.shortDescription}</p>
+
+              <a href={`/markets/${market.id}`} class="market-link">
+                Explore Market
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    {markets.length === 0 && (
+      <p class="market-empty">No featured markets are currently published.</p>
+    )}
+  </div>
+</section>
+
+<style>
+  .markets {
+    background: var(--paper);
+    padding: 88px 0 96px;
+  }
+
+  .markets-inner {
+    width: min(calc(100% - 120px), var(--content-max));
+    margin: 0 auto;
+  }
+
+  .markets-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, .78fr);
+    gap: 54px;
+    align-items: end;
+    margin-bottom: 42px;
+  }
+
+  .markets-eyebrow {
+    color: var(--orange);
+    margin: 0 0 15px;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: clamp(44px, 3.8vw, 66px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+
+  .markets-intro {
+    max-width: 560px;
+    margin: 0 0 5px;
+    color: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .market-card {
+    position: relative;
+    min-height: 430px;
+    background: #f1ede4;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid var(--market-accent);
+  }
+
+  .market-visual {
+    position: relative;
+    height: 238px;
+    overflow: hidden;
+    background: #f1ede4;
+  }
+
+  .market-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .45s ease;
+  }
+
+  .market-card:hover .market-image {
+    transform: scale(1.035);
+  }
+
+  .market-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 54%, rgba(7,54,70,.18) 100%);
+  }
+
+  .market-graphic {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--market-accent) 9%, white), #eee8dc);
+  }
+
+  .market-number {
+    position: absolute;
+    left: 30px;
+    bottom: 24px;
+    color: color-mix(in srgb, var(--market-accent) 78%, var(--ink));
+    font-family: var(--utility);
+    font-size: 78px;
+    font-weight: 700;
+    line-height: .8;
+    letter-spacing: -.03em;
+    opacity: .82;
+  }
+
+  .market-line {
+    position: absolute;
+    left: 30px;
+    top: 34px;
+    width: 62px;
+    height: 4px;
+    background: var(--market-accent);
+  }
+
+  .market-ring {
+    position: absolute;
+    width: 185px;
+    height: 185px;
+    border: 1px solid color-mix(in srgb, var(--market-accent) 30%, transparent);
+    border-radius: 50%;
+    right: -38px;
+    top: -34px;
+  }
+
+  .market-block {
+    position: absolute;
+    background: var(--market-accent);
+    opacity: .08;
+  }
+
+  .market-block-one {
+    width: 125px;
+    height: 125px;
+    right: 22px;
+    bottom: -46px;
+    transform: rotate(17deg);
+  }
+
+  .market-block-two {
+    width: 42px;
+    height: 160px;
+    right: 176px;
+    bottom: -84px;
+    transform: rotate(-16deg);
+  }
+
+  .market-content {
+    padding: 28px 30px 30px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .market-title-row {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .market-index {
+    color: var(--market-accent);
+    font-family: var(--utility);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+  }
+
+  .market-content p {
+    margin: 16px 0 26px;
+    color: var(--body);
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .market-link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    color: var(--ink);
+    font-family: var(--utility);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .market-link span {
+    color: var(--market-accent);
+    transition: transform .2s ease;
+  }
+
+  .market-link:hover span {
+    transform: translateX(4px);
+  }
+
+  /* Robust single-record state: applies whenever this is literally the only card. */
+  .market-grid:has(> .market-card:only-child) {
+    grid-template-columns: minmax(0, 980px);
+  }
+
+  .market-grid > .market-card:only-child {
+    min-height: 330px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+  }
+
+  .market-grid > .market-card:only-child .market-visual {
+    height: 100%;
+    min-height: 330px;
+  }
+
+  .market-grid > .market-card:only-child .market-graphic {
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--market-accent) 8%, white), #ece5d9 74%);
+  }
+
+  .market-grid > .market-card:only-child .market-number {
+    left: 42px;
+    bottom: 34px;
+    font-size: 108px;
+  }
+
+  .market-grid > .market-card:only-child .market-line {
+    left: 42px;
+    top: 42px;
+    width: 82px;
+  }
+
+  .market-grid > .market-card:only-child .market-ring {
+    width: 265px;
+    height: 265px;
+    right: -28px;
+    top: -52px;
+  }
+
+  .market-grid > .market-card:only-child .market-block-one {
+    width: 190px;
+    height: 190px;
+    right: 22px;
+    bottom: -66px;
+  }
+
+  .market-grid > .market-card:only-child .market-block-two {
+    width: 62px;
+    height: 230px;
+    right: 245px;
+    bottom: -118px;
+  }
+
+  .market-grid > .market-card:only-child .market-content {
+    padding: 48px 52px;
+    justify-content: center;
+  }
+
+  .market-grid > .market-card:only-child h3 {
+    font-size: 38px;
+  }
+
+  .market-grid > .market-card:only-child .market-content p {
+    max-width: 430px;
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 1.68;
+  }
+
+  @media (max-width: 1180px) {
+    .market-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .market-grid:has(> .market-card:only-child) {
+      grid-template-columns: 1fr;
+    }
+
+    .market-grid > .market-card:only-child {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .markets {
+      padding: 76px 0 82px;
+    }
+
+    .markets-inner {
+      width: min(calc(100% - 48px), var(--content-max));
+    }
+
+    .markets-heading {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 34px;
+    }
+
+    .market-grid > .market-card:only-child {
+      grid-template-columns: 1fr;
+    }
+
+    .market-grid > .market-card:only-child .market-visual {
+      min-height: 260px;
+    }
+
+    .market-grid > .market-card:only-child .market-content {
+      padding: 34px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .market-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .market-card {
+      min-height: 0;
+    }
+  }
+</style>

@@ -1,0 +1,18 @@
+{
+  "title": "Services",
+  "seoDescription": "Commercial painting and coatings services from Schnurr Painting.",
+  "hero": {
+    "eyebrow": "Services",
+    "title": "Commercial painting from prep through punch.",
+    "intro": "Interior painting, exterior systems, specialty coatings, wallcovering, and finish work delivered by one accountable commercial team.",
+    "image": "/images/hero/hero-02.jpg",
+    "imagePosition": "center 68%",
+    "backgroundColor": "#3a1843",
+    "overlayColor": "#3a1843",
+    "overlayOpacity": 0.9,
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "accentColor": "#c7b434",
+    "headingFont": "display"
+  }
+}

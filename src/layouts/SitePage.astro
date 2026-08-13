@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import settings from '../data/site-settings.json';
+
+const {
+  title,
+  description = 'Schnurr Painting provides commercial painting, coatings, wallcovering and specialty finish services.',
+} = Astro.props;
+
+const fontMap = {
+  'Lora': "'Lora', Georgia, serif",
+  'Inter': "'Inter', Arial, sans-serif",
+  'Barlow Condensed': "'Barlow Condensed', 'Arial Narrow', sans-serif",
+};
+
+const t = settings.theme;
+const themeStyle = [
+  `--navy:${t.primary}`,
+  `--navy-deep:${t.primaryDark}`,
+  `--orange:${t.accent}`,
+  `--gold:${t.accent}`,
+  `--paper:${t.paper}`,
+  `--cream:${t.cream}`,
+  `--ink:${t.headingText}`,
+  `--body:${t.bodyText}`,
+  `--line:${t.line}`,
+  `--display:${fontMap[t.displayFont] || fontMap.Lora}`,
+  `--body-font:${fontMap[t.bodyFont] || fontMap.Inter}`,
+  `--utility:${fontMap[t.utilityFont] || fontMap['Barlow Condensed']}`,
+].join(';');
+---
+
+<!doctype html>
+<html lang="en" style={themeStyle}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} | Schnurr Painting</title>
+  </head>
+  <body>
+    <Header />
+    <main><slot /></main>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+const { page } = Astro.props;
+const testimonials = (await getCollection('testimonials'))
+  .filter(item => item.data.approvedPublic && (item.data.showOn || []).includes(page))
+  .sort((a,b) => a.data.sortOrder - b.data.sortOrder);
+---
+{testimonials.length > 0 && (
+  <section class="testimonials-band">
+    <div class="testimonials-inner">
+      <p class="eyebrow">What Clients Say</p>
+      <div class="testimonial-grid">
+        {testimonials.map(item => (
+          <blockquote>
+            <p>“{item.data.quote}”</p>
+            {(item.data.person || item.data.company) && (
+              <footer>
+                {item.data.person && <strong>{item.data.person}</strong>}
+                {[item.data.role, item.data.company].filter(Boolean).length > 0 && (
+                  <span>{[item.data.role, item.data.company].filter(Boolean).join(' · ')}</span>
+                )}
+              </footer>
+            )}
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+<style>
+.testimonials-band{background:var(--cream);padding:72px 0}
+.testimonials-inner{width:min(calc(100% - 120px),1200px);margin:0 auto}
+.testimonials-inner>.eyebrow{margin:0 0 24px;color:var(--gold)}
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+blockquote{margin:0;padding:30px;background:var(--paper);border-top:3px solid var(--gold)}
+blockquote>p{margin:0;color:var(--ink);font-family:var(--display);font-size:25px;line-height:1.35}
+footer{margin-top:22px;display:flex;flex-direction:column;gap:4px;color:var(--body);font-size:14px}
+footer strong{color:var(--ink)}
+@media(max-width:900px){.testimonials-inner{width:min(calc(100% - 48px),1200px)}}
+</style>
