@@ -2,7 +2,7 @@ local_backend: true
 
 backend:
   name: git-gateway
-  branch: main
+  branch: design-v1
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
