@@ -39,6 +39,9 @@ const themeStyle = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title} | Schnurr Painting</title>
+
+    <!-- Required for Netlify Identity invite/recovery/confirmation links to work. -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
   </head>
   <body>
     <Header />

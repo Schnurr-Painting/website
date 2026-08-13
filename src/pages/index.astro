@@ -22,6 +22,11 @@ import FeaturedProjects from '../components/home/FeaturedProjects.astro';
     />
 
     <title>Schnurr Painting</title>
+
+    <!-- Required for Netlify Identity invite/recovery/confirmation links to work.
+         These always redirect to the site root with a token in the URL hash;
+         without this script present, the token is silently ignored. -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
   </head>
 
   <body>
