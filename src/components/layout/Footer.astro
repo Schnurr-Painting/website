@@ -1,0 +1,184 @@
+---
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services'))
+  .sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="footer-logo" src="/images/branding/schnurr-logo.png" alt="Schnurr Painting, LLC" />
+        <p class="tagline">Commercial Coatings. Est. Local. Licensed &amp; Insured.</p>
+        <div class="social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5h3v11h-3zM6 3.5a1.8 1.8 0 110 3.6 1.8 1.8 0 010-3.6zM10.5 8.5h3v1.6h.04c.42-.78 1.44-1.6 2.96-1.6 3.17 0 3.75 2 3.75 4.6v6.4h-3v-5.7c0-1.36-.02-3.1-1.9-3.1-1.9 0-2.19 1.48-2.19 3v5.8h-3z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <p class="col-heading">Services</p>
+        <ul>
+          {services.map((s) => (
+            <li><a href={`/services/${s.id.replace(/\.md$/, '')}`}>{s.data.title}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="col-heading">Company</p>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/safety">Safety</a></li>
+          <li><a href="/careers">Careers</a></li>
+          <li><a href="/projects">Projects</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="col-heading">Resources</p>
+        <ul>
+          <li><a href="/resources">Capability Statement</a></li>
+          <li><a href="/resources">Prequalification</a></li>
+          <li><a href="/resources">Client Portal</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <p class="col-heading">Contact</p>
+        <p class="placeholder-flag">Placeholder — replace before launch</p>
+        <ul>
+          <li>140 W 5th Street, Suite 200<br />Austin, Texas 78701</li>
+          <li><a href="tel:+15125550198">(512) 555-0198</a></li>
+          <li><a href="mailto:info@schnurrpainting.com">info@schnurrpainting.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>&copy; {new Date().getFullYear()} Schnurr Painting, LLC. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-deep);
+    color: rgba(255, 255, 255, 0.82);
+    padding-top: 64px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+    gap: 32px;
+    padding-bottom: 44px;
+  }
+
+  .footer-logo {
+    height: 42px;
+    width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .tagline {
+    margin: 14px 0 0;
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 220px;
+  }
+
+  .social {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .social a {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .social svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .col-heading {
+    font-family: var(--utility);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0 0 14px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-col li {
+    margin-bottom: 10px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .footer-col a:hover {
+    color: var(--gold);
+  }
+
+  .footer-contact .placeholder-flag {
+    margin: -6px 0 12px;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .footer-legal {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .legal-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  @media (max-width: 1000px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>
