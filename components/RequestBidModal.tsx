@@ -74,7 +74,7 @@ export default function RequestBidModal() {
 
         <form name="request-bid" method="POST" data-netlify="true" netlify-honeypot="bot-field" className={styles.form} onSubmit={handleSubmit}>
           <input type="hidden" name="form-name" value="request-bid" />
-          <p style={{ display: 'none' }}><label>Don't fill this out: <input name="bot-field" /></label></p>
+          <p style={{ display: 'none' }}><label>Don&apos;t fill this out: <input name="bot-field" /></label></p>
 
           <div className={styles.fieldRow}>
             <div className={styles.field}><label htmlFor="rb-name">Name *</label><input type="text" id="rb-name" name="name" required /></div>
@@ -96,7 +96,7 @@ export default function RequestBidModal() {
             </svg>
           </div>
           <h2>Request Sent</h2>
-          <p>Thanks — we've got your request and will be in touch shortly.</p>
+          <p>Thanks — we&apos;ve got your request and will be in touch shortly.</p>
           <button type="button" className={`btn ${styles.successClose}`} onClick={closeModal}>Close</button>
         </div>
       </div>

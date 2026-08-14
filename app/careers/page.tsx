@@ -19,8 +19,10 @@ export default function CareersPage() {
     const resumeBtn = document.getElementById('send-resume-btn');
     if (resumeBtn) {
       resumeBtn.addEventListener('click', handleResumeClick);
-      return () => resumeBtn.removeEventListener('click', handleResumeClick);
+      const unsubscribe = () => resumeBtn.removeEventListener('click', handleResumeClick);
+      return unsubscribe;
     }
+    return undefined;
   }, []);
 
   return (
