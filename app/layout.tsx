@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import NetlifyIdentity from '@/components/NetlifyIdentity';
 
 export const metadata: Metadata = {
   title: 'Schnurr Painting | Commercial Painting & Coatings',
@@ -49,7 +50,14 @@ export default function RootLayout({
           @media (max-width: 900px) { .container { width: min(calc(100% - 48px), var(--content-max)); } }
         `}</style>
       </head>
-      <body>{children}</body>
+      <body>
+        {/* Required for Netlify Identity invite/recovery/confirmation links to work.
+            These always redirect to the site root with a token in the URL hash;
+            without this widget present on whatever page they land on, the token
+            is silently ignored and the invite link just opens the homepage. */}
+        <NetlifyIdentity />
+        {children}
+      </body>
     </html>
   );
 }
