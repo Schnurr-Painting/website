@@ -34,13 +34,27 @@ loose ends don't get lost or forgotten under the pace of everything else.
 
 ## Forms & Notifications
 
-- [ ] **Set up Netlify Forms email notifications** for both `request-bid` and
-      `contact` forms, using real Schnurr contact emails (not
-      `invoices@schnurrpainting.com` unless that's genuinely meant to catch
-      leads too — worth confirming that's the right inbox).
-- [ ] **Test both forms end-to-end** after notifications are set up: submit a
-      real entry, confirm it lands in the Netlify dashboard *and* triggers an
-      actual email, not just one or the other.
+- [ ] **Notifications set up but not arriving — likely Netlify hard-bounce/
+      suppression list.** Submissions land correctly in the dashboard;
+      recipient email confirmed configured but nothing arrives, no error
+      shown anywhere. This matches a well-documented, currently-active
+      Netlify issue (multiple recent forum reports, same symptom): once an
+      address is on Netlify's internal suppression list, it silently drops
+      all future notifications with no visible error. **Diagnostic:**
+      temporarily point the notification at a personal Gmail (or any
+      known-good address) and test — if that one arrives, it confirms the
+      theory, and the real fix requires contacting Netlify Support directly
+      to clear the actual address (not fixable from dashboard settings
+      alone).
+- [ ] **Confirm whether an autoresponse to the form submitter is actually
+      wanted.** Currently the submitter only sees an on-page "Request Sent"
+      confirmation — no email is sent to them. If a confirmation email to
+      the submitter is expected, that's a separate feature needing
+      deliberate setup (Netlify supports form autoresponses), not something
+      currently built.
+- [ ] **Test both forms end-to-end** once notifications are confirmed
+      working: submit a real entry, confirm it lands in the Netlify
+      dashboard *and* triggers an actual email, not just one or the other.
 
 ## Content Gaps (verified, not guessed — checked directly against the repo)
 
@@ -91,6 +105,13 @@ loose ends don't get lost or forgotten under the pace of everything else.
       per-page/per-template unique fields instead of one shared global file.
       Revisit before launch since it affects content structure, not just
       copy.
+
+## Billable Items to Schnurr
+
+Running total of real costs incurred during the build, to invoice at handoff.
+
+- Anthropic: $12
+- Netlify: $9
 
 ---
 
