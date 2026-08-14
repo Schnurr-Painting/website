@@ -2,8 +2,8 @@
 
 export default function ApplyButton({ positionTitle, roleType }: { positionTitle: string; roleType: string }) {
   const handleClick = () => {
-    if (typeof window !== 'undefined' && (window as any).openBidModal) {
-      (window as any).openBidModal();
+    if (typeof window !== 'undefined' && (window as any).openApplicationModal) {
+      (window as any).openApplicationModal(positionTitle, roleType);
     }
   };
 

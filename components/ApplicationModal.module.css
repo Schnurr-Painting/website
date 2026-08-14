@@ -1,0 +1,26 @@
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-start; justify-content: center; }
+.backdrop { position: absolute; inset: 0; background: rgba(17, 10, 20, 0.6); cursor: pointer; }
+.dialog { position: relative; z-index: 1; background: var(--paper); width: min(calc(100% - 40px), 640px); max-height: calc(100vh - 60px); overflow-y: auto; margin: 30px auto; padding: 40px; }
+.close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border: 1px solid var(--line); background: var(--paper); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.close svg { width: 16px; height: 16px; color: var(--ink); }
+.heading { margin-bottom: 24px; padding-right: 40px; }
+.heading h2 { margin: 10px 0 0; color: var(--ink); font-family: var(--display); font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.15; }
+.intro { margin: 10px 0 0; color: var(--body); font-size: 15px; line-height: 1.6; }
+.form { display: flex; flex-direction: column; gap: 16px; }
+.fieldRow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+.field input, .field select, .field textarea { font-family: var(--body-font); font-size: 15px; color: var(--ink); background: var(--cream); border: 1px solid var(--line); padding: 10px 12px; width: 100%; }
+.field input[type="file"] { padding: 8px 10px; background: var(--cream); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: -1px; }
+.field textarea { resize: vertical; font-family: inherit; }
+.submitBtn { align-self: flex-start; margin-top: 4px; }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+.formStatus { margin: 0; font-size: 14px; color: #a13a2f; font-weight: 600; }
+.success { text-align: center; padding: 20px 10px 8px; }
+.successIcon { width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 50%; background: #e8f0e6; display: flex; align-items: center; justify-content: center; }
+.successIcon svg { width: 28px; height: 28px; color: #3d6e3d; }
+.success h2 { margin: 0; color: var(--ink); font-family: var(--display); font-size: 26px; font-weight: 600; }
+.success p { margin: 12px 0 0; color: var(--body); font-size: 15px; line-height: 1.6; }
+.successClose { margin: 24px auto 0; color: var(--ink); border-color: var(--line); background: transparent; border-width: 1px; border-style: solid; }
+@media (max-width: 600px) { .fieldRow { grid-template-columns: 1fr; } .dialog { padding: 28px 20px; } }

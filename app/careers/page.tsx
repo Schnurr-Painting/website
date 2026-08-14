@@ -91,7 +91,7 @@ export default function CareersPage() {
           ) : (
             <div className={styles.noOpenings}>
               <p>We don&apos;t have any open positions right now, but we&apos;re always interested in hearing from experienced commercial painters and project leaders.</p>
-              <ApplyButton positionTitle="General Application" roleType="" />
+              <ApplyButton positionTitle="" roleType="" />
             </div>
           )}
         </div>

@@ -1,6 +1,7 @@
 import Header from './Header';
 import Footer from './Footer';
 import RequestBidModal from './RequestBidModal';
+import ApplicationModal from './ApplicationModal';
 
 export default function SitePage({ children }: { children: React.ReactNode }) {
   return (
@@ -9,6 +10,7 @@ export default function SitePage({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
       <Footer />
       <RequestBidModal />
+      <ApplicationModal />
     </>
   );
 }

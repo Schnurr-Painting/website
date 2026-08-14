@@ -12,9 +12,9 @@ export default function Home() {
       <Hero />
       <StatsBand />
       <Services />
+      <Testimonials />
       <Markets />
       <FeaturedProjects />
-      <Testimonials />
     </SitePage>
   );
 }

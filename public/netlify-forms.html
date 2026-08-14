@@ -9,13 +9,23 @@
     <input type="tel" name="phone" />
     <input type="text" name="company" />
     <textarea name="message"></textarea>
-    <input type="text" name="resume" />
   </form>
   <form name="contact" netlify netlify-honeypot="bot-field" hidden>
     <input type="text" name="bot-field" />
     <input type="text" name="name" />
     <input type="email" name="email" />
     <input type="tel" name="phone" />
+    <textarea name="message"></textarea>
+  </form>
+  <form name="job-application" netlify netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+    <input type="text" name="bot-field" />
+    <input type="text" name="appliedForPosition" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="roleInterest" />
+    <input type="text" name="experience" />
+    <input type="file" name="resume" />
     <textarea name="message"></textarea>
   </form>
 </body>
