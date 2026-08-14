@@ -1,5 +1,6 @@
 ---
 import InteriorHero from './InteriorHero.astro';
+import shared from '../../data/site-shared.json';
 const { eyebrow, title, intro, image, details = [], backgroundColor, overlayColor, overlayOpacity, headingColor, introColor, accentColor, headingFont } = Astro.props;
 ---
 <InteriorHero eyebrow={eyebrow} title={title} intro={intro} image={image} backgroundColor={backgroundColor} overlayColor={overlayColor} overlayOpacity={overlayOpacity} headingColor={headingColor} introColor={introColor} accentColor={accentColor} headingFont={headingFont} />
@@ -17,7 +18,7 @@ const { eyebrow, title, intro, image, details = [], backgroundColor, overlayColo
 </section>
 <section class="detail-cta">
   <div class="detail-cta-inner">
-    <div><p class="eyebrow">Start a Conversation</p><h2>Have a commercial project coming up?</h2></div>
+    <div><p class="eyebrow">{shared.detailCtaEyebrow}</p><h2>{shared.detailCtaHeading}</h2></div>
     <a class="btn btn-primary" href="/#request-bid">Request a Bid →</a>
   </div>
 </section>

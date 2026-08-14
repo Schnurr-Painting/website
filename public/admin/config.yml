@@ -66,6 +66,17 @@ collections:
               - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false, hint: "Leave as # if not yet set up" }
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false, hint: "Leave as # if not yet set up" }
 
+      - label: "Shared Section Labels"
+        name: "shared_labels"
+        file: "src/data/site-shared.json"
+        hint: "Text that repeats identically across multiple pages. Editing here updates it everywhere at once."
+        fields:
+          - { label: "Testimonials Eyebrow", name: "testimonialsEyebrow", widget: "string", hint: "Shown above testimonials on About, Services, Markets, and Projects pages" }
+          - { label: "Team Section Eyebrow", name: "teamBandEyebrow", widget: "string", hint: "Shown above the team grid on the About page" }
+          - { label: "Team Section Heading", name: "teamBandHeading", widget: "string" }
+          - { label: "Detail Page CTA Eyebrow", name: "detailCtaEyebrow", widget: "string", hint: "Shown at the bottom of every Service/Market/Project detail page" }
+          - { label: "Detail Page CTA Heading", name: "detailCtaHeading", widget: "string" }
+
   - name: "pages"
     label: "Pages"
     files:
@@ -95,7 +106,14 @@ collections:
                   - { label: "Display / Serif", value: "display" }
                   - { label: "Body / Sans", value: "body" }
                   - { label: "Condensed", value: "utility" }
-          - label: "Qualification Stats"
+              - label: "Hero Slides"
+                name: "slides"
+                widget: "list"
+                summary: "{{fields.image}}"
+                hint: "Rotating background photos. Motion (zoom/pan) cycles automatically per slide."
+                fields:
+                  - { label: "Image", name: "image", widget: "image" }
+                  - { label: "Image Position", name: "imagePosition", widget: "string", default: "center", hint: "Examples: center, center 68%, left center" }
             name: "stats"
             widget: "list"
             summary: "{{fields.value}} {{fields.label}}"
@@ -126,6 +144,12 @@ collections:
               - { label: "Eyebrow", name: "eyebrow", widget: "string" }
               - { label: "Heading", name: "heading", widget: "string" }
               - { label: "Intro", name: "intro", widget: "text" }
+          - label: "Testimonials Section"
+            name: "testimonialsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
 
       - label: "Services"
         name: "services_page"

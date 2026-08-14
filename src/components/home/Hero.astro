@@ -1,27 +1,35 @@
 ---
-const slides = [
-  { src: "/images/hero/hero-01.jpg", motion: "zoom-in", position: "center 68%" },
-  { src: "/images/hero/hero-02.jpg", motion: "pan-left", position: "center 72%" },
-  { src: "/images/hero/hero-03.jpg", motion: "zoom-out", position: "center 66%" },
-  { src: "/images/hero/hero-04.jpg", motion: "pan-up", position: "center 74%" },
-];
+import page from '../../data/pages/home.json';
+const h = page.hero;
+
+const MOTIONS = ["zoom-in", "pan-left", "zoom-out", "pan-up"];
+const slides = (h.slides || []).map((slide, index) => ({
+  src: slide.image,
+  position: slide.imagePosition || "center",
+  motion: MOTIONS[index % MOTIONS.length],
+}));
+
+// Preserve the italic emphasis on the last word of heading line 3
+// (e.g. "Built to Last." -> "Built to <em>Last.</em>") while keeping
+// the actual text fully editable via Decap.
+const line3Words = (h.headingLine3 || "").split(" ");
+const line3Last = line3Words.pop();
+const line3Rest = line3Words.join(" ");
 ---
 
 <section class="hero">
   <div class="hero-copy-panel">
     <div class="hero-copy-wrap">
-      <p class="eyebrow">Interior • Exterior • Specialty</p>
+      <p class="eyebrow">{h.eyebrow}</p>
 
       <h1>
-        Commercial<br />
-        Coatings.<br />
-        Built to <em>Last.</em>
+        {h.headingLine1}<br />
+        {h.headingLine2}<br />
+        {line3Rest ? `${line3Rest} ` : ''}<em>{line3Last}</em>
       </h1>
 
       <p class="intro">
-        Expert interior and exterior painting, coatings, and wallcovering
-        for commercial buildings&mdash;delivered on schedule, on budget,
-        and built to stand up to real-world use.
+        {h.intro}
       </p>
 
       <div class="actions">
@@ -68,7 +76,7 @@ const slides = [
       </div>
 
       <span class="counter">
-        <span id="current-slide">01</span> / 04
+        <span id="current-slide">01</span> / {String(slides.length).padStart(2, "0")}
       </span>
     </div>
   </div>

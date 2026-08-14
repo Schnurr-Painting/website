@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import shared from '../../data/site-shared.json';
 const { page } = Astro.props;
 const testimonials = (await getCollection('testimonials'))
   .filter(item => item.data.approvedPublic && (item.data.showOn || []).includes(page))
@@ -8,7 +9,7 @@ const testimonials = (await getCollection('testimonials'))
 {testimonials.length > 0 && (
   <section class="testimonials-band">
     <div class="testimonials-inner">
-      <p class="eyebrow">What Clients Say</p>
+      <p class="eyebrow">{shared.testimonialsEyebrow}</p>
       <div class="testimonial-grid">
         {testimonials.map(item => (
           <blockquote>

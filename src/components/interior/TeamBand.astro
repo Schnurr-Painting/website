@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import shared from '../../data/site-shared.json';
 const team = (await getCollection('team'))
   .filter(member => member.data.publicProfile)
   .sort((a,b) => a.data.displayOrder - b.data.displayOrder);
@@ -7,8 +8,8 @@ const team = (await getCollection('team'))
 {team.length > 0 && (
   <section class="team-band">
     <div class="team-inner">
-      <p class="eyebrow">Team</p>
-      <h2>People behind the work.</h2>
+      <p class="eyebrow">{shared.teamBandEyebrow}</p>
+      <h2>{shared.teamBandHeading}</h2>
       <div class="team-grid">
         {team.map(member => (
           <article class="team-card">

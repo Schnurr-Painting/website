@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
+import page from '../../data/pages/home.json';
+const section = page.testimonialsSection;
 
 const testimonials = (await getCollection('testimonials'))
   .filter((item) => item.data.approvedPublic)
@@ -11,8 +13,8 @@ const testimonials = (await getCollection('testimonials'))
   <section class="testimonials">
     <div class="testimonials-inner">
       <div class="testimonials-heading">
-        <p class="eyebrow">What Partners Say</p>
-        <h2>Built for repeat work.</h2>
+        <p class="eyebrow">{section.eyebrow}</p>
+        <h2>{section.heading}</h2>
       </div>
 
       <div class="testimonial-grid">

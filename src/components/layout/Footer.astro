@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import footer from '../../data/site-footer.json';
+import settings from '../../data/site-settings.json';
 
 const services = (await getCollection('services'))
   .sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
@@ -10,7 +11,7 @@ const services = (await getCollection('services'))
   <div class="container footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <img class="footer-logo" src="/images/branding/schnurr-logo.png" alt="Schnurr Painting, LLC" />
+        <img class="footer-logo" src={settings.brand.logo} alt={settings.brand.logoAlt} />
         <p class="tagline">{footer.tagline}</p>
         <div class="social">
           <a href={footer.social.linkedin} aria-label="LinkedIn">

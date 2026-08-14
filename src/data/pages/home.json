@@ -11,7 +11,13 @@
     "headingColor": "#ffffff",
     "introColor": "#ffffff",
     "eyebrowColor": "#ffffff",
-    "headingFont": "display"
+    "headingFont": "display",
+    "slides": [
+      { "image": "/images/hero/hero-01.jpg", "imagePosition": "center 68%" },
+      { "image": "/images/hero/hero-02.jpg", "imagePosition": "center 72%" },
+      { "image": "/images/hero/hero-03.jpg", "imagePosition": "center 66%" },
+      { "image": "/images/hero/hero-04.jpg", "imagePosition": "center 74%" }
+    ]
   },
   "stats": [
     {
@@ -56,5 +62,9 @@
     "eyebrow": "Featured Projects",
     "heading": "Work that has to hold up in the real world.",
     "intro": "Commercial projects demand more than a good finish. They require coordination, schedule discipline, safety, and crews that can perform around the realities of an active jobsite."
+  },
+  "testimonialsSection": {
+    "eyebrow": "What Partners Say",
+    "heading": "Built for repeat work."
   }
 }
