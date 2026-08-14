@@ -11,10 +11,19 @@ const section = page.requestBidSection;
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
     </button>
 
-    <div class="bid-modal-heading">
+    <div class="bid-modal-heading" id="bid-modal-heading-block">
       <p class="eyebrow">{section.eyebrow}</p>
       <h2 id="bid-modal-heading">{section.heading}</h2>
       <p class="bid-modal-intro">{section.intro}</p>
+    </div>
+
+    <div class="bid-modal-success" id="bid-modal-success" hidden>
+      <div class="success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+      </div>
+      <h2>Request Sent</h2>
+      <p>Thanks &mdash; we've got your request and will be in touch shortly.</p>
+      <button type="button" class="btn btn-outline-light success-close" data-close-modal>Close</button>
     </div>
 
     <form
@@ -89,16 +98,28 @@ const section = page.requestBidSection;
       <p class="form-status" id="rb-status" role="status" aria-live="polite"></p>
     </form>
   </div>
-</div>
-
-<script>
+</div><script>
   const modal = document.getElementById('bid-modal');
   const form = document.getElementById('request-bid-form');
   const status = document.getElementById('rb-status');
+  const headingBlock = document.getElementById('bid-modal-heading-block');
+  const successView = document.getElementById('bid-modal-success');
   let lastFocused = null;
+
+  function resetToFormView() {
+    headingBlock.hidden = false;
+    successView.hidden = true;
+    form.style.display = '';
+    form.reset();
+    status.textContent = '';
+    status.classList.remove('success', 'error');
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.disabled = false;
+  }
 
   function openModal() {
     lastFocused = document.activeElement;
+    resetToFormView();
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -163,10 +184,10 @@ const section = page.requestBidSection;
       });
 
       if (response.ok) {
-        form.reset();
+        headingBlock.hidden = true;
         form.style.display = 'none';
-        status.textContent = "Thanks \u2014 we've got your request and will be in touch shortly.";
-        status.classList.add('success');
+        successView.hidden = false;
+        successView.querySelector('.success-close')?.focus();
       } else {
         throw new Error('Submission failed');
       }
