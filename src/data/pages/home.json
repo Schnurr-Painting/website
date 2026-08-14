@@ -2,22 +2,30 @@
   "title": "Home",
   "seoDescription": "Schnurr Painting provides commercial painting, coatings, wallcovering and specialty finish services.",
   "hero": {
-    "eyebrow": "Interior \u2022 Exterior \u2022 Specialty",
-    "headingLine1": "Commercial",
-    "headingLine2": "Coatings.",
-    "headingLine3": "Built to Last.",
-    "intro": "Expert interior and exterior painting, coatings, and wallcovering for commercial buildings\u2014delivered on schedule, on budget, and built to stand up to real-world use.",
-    "backgroundColor": "#4a1756",
     "headingColor": "#ffffff",
+    "slides": [
+      {
+        "image": "/images/hero/hero-01.jpg",
+        "imagePosition": "center 68%"
+      },
+      {
+        "image": "/images/hero/hero-02.jpg",
+        "imagePosition": "center 72%"
+      },
+      {
+        "image": "/images/hero/hero-04.jpg",
+        "imagePosition": "center 74%"
+      }
+    ],
+    "eyebrow": "Interior • Exterior • Specialty",
+    "intro": "Expert interior and exterior painting, coatings, and wallcovering for commercial buildings—delivered on schedule, on budget, and built to stand up to real-world use.",
+    "headingFont": "display",
+    "backgroundColor": "#4a1756",
     "introColor": "#ffffff",
     "eyebrowColor": "#ffffff",
-    "headingFont": "display",
-    "slides": [
-      { "image": "/images/hero/hero-01.jpg", "imagePosition": "center 68%" },
-      { "image": "/images/hero/hero-02.jpg", "imagePosition": "center 72%" },
-      { "image": "/images/hero/hero-03.jpg", "imagePosition": "center 66%" },
-      { "image": "/images/hero/hero-04.jpg", "imagePosition": "center 74%" }
-    ]
+    "headingLine1": "Commercial",
+    "headingLine2": "Coatings.",
+    "headingLine3": "Built to Last."
   },
   "stats": [
     {
@@ -51,7 +59,7 @@
     "heading": "Commercial painting without the loose ends.",
     "intro": "From large interior scopes to exterior systems and specialty finishes, Schnurr Painting brings one accountable team to the work from preparation through final punch.",
     "photoLabel": "Commercial Painting",
-    "photoTitle": "Interior \u2022 Exterior \u2022 Specialty"
+    "photoTitle": "Interior • Exterior • Specialty"
   },
   "marketsSection": {
     "eyebrow": "Markets We Serve",
