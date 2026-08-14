@@ -47,12 +47,20 @@ export default function RequestBidModal() {
           <p className={styles.intro}>{section.intro}</p>
         </div>
 
-        <form name="request-bid" method="POST" data-netlify="true" className={styles.form} onSubmit={(e) => {
+        <form name="request-bid" method="POST" data-netlify="true" netlify-honeypot="bot-field" className={styles.form} onSubmit={(e) => {
           e.preventDefault();
           const form = e.target as HTMLFormElement;
-          fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form) as any).toString() })
-            .then(() => { document.getElementById('bid-modal-success')?.removeAttribute('hidden'); form.style.display = 'none'; })
-            .catch(() => alert('There was an error. Please try again.'));
+          const data = new FormData(form);
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data as any).toString(),
+          })
+            .then(() => {
+              document.getElementById('bid-modal-success')?.removeAttribute('hidden');
+              (form as HTMLElement).style.display = 'none';
+            })
+            .catch(() => alert('There was an error submitting the form. Please email us directly at invoices@schnurrpainting.com'));
         }}>
           <input type="hidden" name="form-name" value="request-bid" />
           <div className={styles.fieldRow}>
