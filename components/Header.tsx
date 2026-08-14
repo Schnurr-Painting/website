@@ -31,8 +31,6 @@ export default function Header() {
               className={styles.brandLogo}
               src={settings.brand.logo}
               alt={settings.brand.logoAlt}
-              width="235"
-              height="64"
             />
           </div>
         </Link>
