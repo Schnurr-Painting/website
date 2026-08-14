@@ -1,0 +1,152 @@
+---
+import { getCollection } from 'astro:content';
+
+const positions = (await getCollection('positions'))
+  .filter((p) => p.data.active)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<section class="positions">
+  <div class="positions-inner">
+    <div class="positions-heading">
+      <p class="eyebrow">Open Positions</p>
+      <h2>Current Openings</h2>
+    </div>
+
+    {positions.length > 0 ? (
+      <div class="positions-list">
+        {positions.map((position) => (
+          <article class="position-card">
+            <div class="position-meta">
+              <span class="position-type">{position.data.roleType}</span>
+              <span class="position-employment">{position.data.employmentType}</span>
+              {position.data.location && <span class="position-location">{position.data.location}</span>}
+            </div>
+            <h3>{position.data.title}</h3>
+            <p class="position-description">{position.data.description}</p>
+            {position.data.requirements && position.data.requirements.length > 0 && (
+              <ul class="position-requirements">
+                {position.data.requirements.map((req) => <li>{req}</li>)}
+              </ul>
+            )}
+            <a class="btn btn-primary apply-link" href="#apply">Apply for This Role <span aria-hidden="true">→</span></a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="positions-empty">
+        <p>No open positions posted right now &mdash; but we're always interested in meeting good people. Submit a general application below and we'll reach out when something fits.</p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .positions {
+    background: var(--cream);
+    padding: 76px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .positions-inner {
+    width: min(calc(100% - 120px), 1000px);
+    margin: 0 auto;
+  }
+
+  .positions-heading {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .positions-heading h2 {
+    margin: 10px 0 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 600;
+  }
+
+  .positions-empty {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .positions-empty p {
+    margin: 0;
+    color: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .positions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .position-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--orange);
+    padding: 28px 32px;
+  }
+
+  .position-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .position-meta span {
+    font-family: var(--utility);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  .position-meta .position-location {
+    color: var(--body);
+  }
+
+  .position-card h3 {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .position-description {
+    margin: 10px 0 0;
+    color: var(--body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  .position-requirements {
+    margin: 14px 0 0;
+    padding-left: 20px;
+    color: var(--body);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+
+  .apply-link {
+    margin-top: 18px;
+  }
+
+  @media (max-width: 700px) {
+    .position-card {
+      padding: 22px 20px;
+    }
+  }
+</style>

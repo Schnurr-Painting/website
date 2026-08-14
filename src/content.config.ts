@@ -81,4 +81,14 @@ const images = defineCollection({
   }),
 });
 
-export const collections = { projects, services, markets, team, testimonials, resources, images };
+const positions = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/positions' }),
+  schema: z.object({
+    title: z.string(), roleType: z.string(), employmentType: z.string().default('Full-Time'),
+    location: z.string().optional(), description: z.string(),
+    requirements: z.array(z.string()).optional(),
+    active: z.boolean().default(true), sortOrder: z.number().default(0),
+  }),
+});
+
+export const collections = { projects, services, markets, team, testimonials, resources, images, positions };

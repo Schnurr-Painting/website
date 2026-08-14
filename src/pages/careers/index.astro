@@ -1,6 +1,8 @@
 ---
 import SitePage from '../../layouts/SitePage.astro';
 import CompanyPage from '../../components/interior/CompanyPage.astro';
+import PositionsList from '../../components/interior/PositionsList.astro';
+import ApplicationForm from '../../components/interior/ApplicationForm.astro';
 import page from '../../data/pages/careers.json';
 const h = page.hero;
 ---
@@ -20,4 +22,6 @@ const h = page.hero;
     headingFont={h.headingFont}
     sections={page.sections}
   />
+  <PositionsList />
+  <ApplicationForm />
 </SitePage>

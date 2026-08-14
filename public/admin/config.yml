@@ -459,3 +459,32 @@ collections:
         default: "public"
       - { label: "Icon", name: "icon", widget: "string", required: false }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+
+  - name: "positions"
+    label: "Content — Open Positions"
+    label_singular: "Position"
+    folder: "src/content/positions"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Position Title", name: "title", widget: "string" }
+      - label: "Role Type"
+        name: "roleType"
+        widget: "select"
+        options: ["Crew Painter", "Foreman / Crew Lead", "Apprentice", "Estimator", "Project Manager", "Other"]
+      - label: "Employment Type"
+        name: "employmentType"
+        widget: "select"
+        options: ["Full-Time", "Part-Time", "Seasonal"]
+        default: "Full-Time"
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "e.g. Austin, TX or a specific jobsite" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Requirements"
+        name: "requirements"
+        widget: "list"
+        required: false
+        field: { label: "Requirement", name: "requirement", widget: "string" }
+      - { label: "Currently Active", name: "active", widget: "boolean", default: true, hint: "Turn off to hide without deleting - e.g. once filled" }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
