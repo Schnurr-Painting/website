@@ -21,6 +21,12 @@ loose ends don't get lost or forgotten under the pace of everything else.
       actually access after handoff: Netlify account, GitHub repo access,
       Decap/Identity accounts and who has them, domain registrar (wherever
       the actual domain is/will be registered — not yet confirmed).
+- [ ] **Provision Schnurr users in Decap/Netlify Identity before the onboard
+      meeting.** Whoever at Schnurr needs CMS access should have working
+      logins walking in, not be set up live during the meeting.
+- [ ] **Update DNS** — point the real domain at Netlify once it's decided
+      which site (Astro or Next.js) is going live and ownership/registrar
+      questions above are settled.
 - [ ] **Confirm Netlify Identity Registration is set to "Invite only."** It
       was deliberately switched to "Open" temporarily so the first account
       could be self-registered, then supposed to be switched back. Verify
@@ -46,6 +52,10 @@ loose ends don't get lost or forgotten under the pace of everything else.
       theory, and the real fix requires contacting Netlify Support directly
       to clear the actual address (not fixable from dashboard settings
       alone).
+- [ ] **Contact Us success notification looks unusual — needs investigation.**
+      Flagged as "off" but the specifics weren't captured in the moment.
+      Revisit and document exactly what's wrong (wording? styling? wrong
+      trigger?) before deciding on a fix.
 - [ ] **Build a confirmation email to the form submitter** (Request a Bid and
       Contact forms both). Confirmed wanted, not yet built. Currently the
       submitter only sees an on-page "Request Sent" confirmation — no email
@@ -63,20 +73,32 @@ loose ends don't get lost or forgotten under the pace of everything else.
 - [ ] **Favicon is still Astro's default rocket-ship icon**, not Schnurr
       branding. `public/favicon.ico` / `favicon.svg` need to be replaced with
       the real logo mark.
-- [ ] **No `robots.txt` or sitemap exist.** Worth adding before launch for
-      basic SEO/crawler behavior — trivial to add via Astro's sitemap
-      integration.
+- [ ] **Build sitemap and add `robots.txt`.** Neither exists yet. Worth
+      adding before launch for basic SEO/crawler behavior — trivial to add
+      via Astro's sitemap integration.
+- [ ] **Review SEO overall** — titles, meta descriptions, alt text, heading
+      structure across all pages. Not yet audited page by page.
+- [ ] **Build schema (structured data)** — Organization/LocalBusiness JSON-LD
+      at minimum, so search engines and AI answer engines can actually parse
+      who Schnurr is, what they do, and where. Not started.
 - [ ] **`/privacy` and `/terms` are dead links.** Footer links to both;
       neither page exists. Need real legal pages (or at minimum placeholder
       ones) before this is genuinely launch-ready — a live site with a
       Privacy Policy link that 404s is a bad look and possibly a compliance
       issue depending on what data the forms collect.
-- [ ] **Resources collection has exactly one entry** (Capability Statement),
-      and it's still placeholder text with no actual file attached — the
-      resource card exists but doesn't do anything real yet.
-- [ ] **Team collection has only one member** (the owner). If Field
-      Operations Manager / Project Manager / Estimator roles are still part
-      of the plan, those need real entries.
+- [ ] **Review Services pages — content direction still unclear.** Not sure
+      yet what should actually go on these pages beyond the short
+      descriptions already in place. Needs a real content pass, not a
+      structural fix.
+- [ ] **Build out the Capability Statement / capabilities section for real.**
+      Currently one placeholder Resources entry with no attached file.
+      Schnurr needs to drive what actually goes in it (project history,
+      bonding capacity, safety record, etc.) — not something to guess at
+      from this end.
+- [ ] **Team collection now has 2 members** (Jason Schnurr, Christine Vasta —
+      the latter added since this checklist was first written). Still worth
+      confirming whether other planned roles (Field Operations Manager,
+      Project Manager, Estimator) are part of the launch plan or come later.
 - [ ] **Testimonials collection has zero approved entries** — the homepage
       Testimonials section and every page's TestimonialsBand correctly show
       nothing right now, which is expected behavior, but means the site has
@@ -92,9 +114,14 @@ loose ends don't get lost or forgotten under the pace of everything else.
       actual link don't match.
 - [ ] **Market and service detail pages still have placeholder content** in
       places — flagged earlier in the original site audit, not yet resolved.
-- [ ] **Careers page** — you've said this will definitely be restructured;
-      current version is a generic placeholder-style page using the same
-      template as About/Safety.
+- [ ] **Careers page — status unclear, needs a fresh look.** Originally
+      flagged as "generic placeholder-style page using the same template as
+      About/Safety," but a direct check now shows it actually renders a real
+      `PositionsList` component with the live Interior Painter posting —
+      either this was built after the original flag, or the hero wrapper
+      (`CompanyPage.astro`) differs enough from About/Safety that the
+      original claim doesn't fully hold. Worth deciding if this item is
+      actually resolved or if there's still a real gap being missed.
 
 ## Structural / Deferred Decisions
 
@@ -107,6 +134,9 @@ loose ends don't get lost or forgotten under the pace of everything else.
       per-page/per-template unique fields instead of one shared global file.
       Revisit before launch since it affects content structure, not just
       copy.
+- [ ] **Client portal — build with Adrian.** Separate subdomain, separate
+      server, per earlier discussion. Not started; scope/timeline depends on
+      Adrian's availability.
 
 ## Billable Items to Schnurr
 
@@ -128,12 +158,11 @@ Running total of real costs incurred during the build, to invoice at handoff.
       the real site automatically. Also surfaces hidden-state warnings
       directly in the preview (inactive position, unapproved
       testimonial, team member hidden from About) — answers "will this
-      actually show up" without needing to publish first. **I can't log
-      into `/admin` myself (real Netlify Identity login required) — this
-      needs you to check it live before it's confirmed working, not just
-      code-reviewed.** Phase 2 (a shared hero preview for Pages +
-      Services/Markets/Projects) and Phase 3 (Resources, Site Settings)
-      still remain, lower priority.
+      actually show up" without needing to publish first. Login now
+      confirmed working (Netlify Identity widget issue resolved); preview
+      pane itself still needs a real check now that login works.
+      Phase 2 (a shared hero preview for Pages + Services/Markets/Projects)
+      and Phase 3 (Resources, Site Settings) still remain, lower priority.
 - [ ] **"Check for Preview" button does nothing — root cause confirmed,
       decision made.** It's an editorial-workflow-only feature (checks
       whether a separate Netlify branch-deploy finished building); this
@@ -143,6 +172,40 @@ Running total of real costs incurred during the build, to invoice at handoff.
       step to every future edit, not something needed right now). Button
       itself is still worth hiding via CSS since it's genuinely inert and
       confusing — not yet done, low priority.
+
+## Next.js Migration (parallel site — `schnurr-painting-nextjs`)
+
+A second full build of the site now exists in parallel, on a separate branch
+(`nextjs-migration`) and separate Netlify project, exploring a move off Astro
+for faster iteration. Not yet decided whether/when this actually goes live.
+Its own set of gaps, distinct from the Astro items above:
+
+- [ ] **Netlify Identity was just enabled on this site** — registration mode
+      (open vs. invite-only) not yet locked down, same risk flagged above
+      for the Astro site. Login flow itself is now confirmed working.
+- [ ] **Decap admin (`config.yml`, preview templates) copied verbatim from
+      Astro.** Login now works, but the preview pane has never been tested
+      live on this branch, and the preview templates were built assuming
+      Astro's global CSS setup — real risk they render broken or unstyled
+      against this site's CSS Modules approach. Needs a real check, not an
+      assumption it carries over cleanly.
+- [ ] **Forms/notifications never tested end-to-end on this site at all** —
+      separate Netlify Forms setup from the Astro site, zero real
+      verification yet.
+- [ ] **"Send Us Your Resume" button on Careers opens the Request-a-Bid
+      form, not an actual resume upload.** It reuses the bid modal as a
+      placeholder rather than a dedicated application flow with file
+      upload. Needs a real applicant form, or at minimum a modal that
+      doesn't say "Request a Bid" at the top when someone's trying to
+      apply for a job.
+- [ ] **This branch has its own separate copy of `src/content/`.** Content
+      edited via Decap on one branch does not appear on the other — the two
+      sites will silently drift apart until a real cutover decision is made
+      and one becomes the source of truth.
+- [ ] All Astro-side Content Gaps above (favicon, robots.txt/sitemap, SEO,
+      schema, /privacy /terms, Services page content, Capability Statement,
+      etc.) apply equally here and haven't been separately re-verified on
+      this branch.
 
 ---
 
