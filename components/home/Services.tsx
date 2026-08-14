@@ -1,73 +1,22 @@
-'use client';
-
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { getCollection } from '@/lib/content';
 import page from '@/data/pages/home.json';
 import styles from './Services.module.css';
 
-interface Service {
-  id: string;
-  data: {
-    title: string;
-    shortDescription: string;
-    heroImage?: string;
-    featured?: boolean;
-    sortOrder: number;
-  };
+interface ServiceData {
+  title: string;
+  shortDescription: string;
+  heroImage?: string;
+  featured?: boolean;
+  sortOrder: number;
 }
 
 export default function Services() {
-  const [services, setServices] = useState<Service[]>([]);
   const section = page.servicesSection;
-
-  useEffect(() => {
-    // Load services from Astro project's content
-    // For now, using placeholder data - in production would fetch from CMS/API
-    const placeholderServices: Service[] = [
-      {
-        id: 'interior-painting',
-        data: {
-          title: 'Interior Painting',
-          shortDescription: 'Professional interior painting for commercial spaces',
-          heroImage: '/images/hero/hero-01.jpg',
-          featured: true,
-          sortOrder: 1,
-        },
-      },
-      {
-        id: 'exterior-painting',
-        data: {
-          title: 'Exterior Painting',
-          shortDescription: 'Weather-resistant exterior coatings and finishing',
-          heroImage: '/images/hero/hero-02.jpg',
-          featured: true,
-          sortOrder: 2,
-        },
-      },
-      {
-        id: 'specialty-coatings',
-        data: {
-          title: 'Specialty Coatings',
-          shortDescription: 'Industrial and specialty finishes for unique projects',
-          heroImage: '/images/hero/hero-03.jpg',
-          featured: true,
-          sortOrder: 3,
-        },
-      },
-      {
-        id: 'wallcovering-finishes',
-        data: {
-          title: 'Wallcovering & Finishes',
-          shortDescription: 'Complete wallcovering and decorative finish solutions',
-          heroImage: '/images/hero/hero-04.jpg',
-          featured: true,
-          sortOrder: 4,
-        },
-      },
-    ];
-
-    setServices(placeholderServices);
-  }, []);
+  const services = getCollection<ServiceData>('services')
+    .filter((s) => s.data.featured)
+    .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+    .slice(0, 4);
 
   const sectionImage =
     services.find((s) => s.data.heroImage)?.data.heroImage || '/images/hero/hero-02.jpg';
@@ -101,9 +50,7 @@ export default function Services() {
                     <h3>{service.data.title}</h3>
                     <p>{service.data.shortDescription}</p>
                   </div>
-                  <span className={styles.serviceArrow} aria-hidden="true">
-                    →
-                  </span>
+                  <span className={styles.serviceArrow} aria-hidden="true">→</span>
                 </Link>
               );
             })}

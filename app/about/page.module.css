@@ -14,5 +14,6 @@
 .teamCopy { padding: 22px; }
 .teamCopy h3 { margin: 0; color: var(--ink); font-family: var(--display); font-size: 28px; }
 .role { margin: 5px 0 0; color: var(--gold); font-family: var(--utility); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.bio { color: var(--body); line-height: 1.6; margin: 10px 0 0; font-size: 14px; }
 .teamCopy a { display: block; margin-top: 6px; color: var(--ink); font-size: 14px; }
 @media (max-width: 900px) { .inner, .teamInner { width: min(calc(100% - 48px), 1200px); } .section { grid-template-columns: 1fr; gap: 10px; } }

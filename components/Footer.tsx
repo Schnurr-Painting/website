@@ -1,16 +1,17 @@
 import Link from 'next/link';
 import footer from '@/data/site-footer.json';
 import settings from '@/data/site-settings.json';
+import { getCollection } from '@/lib/content';
 import styles from './Footer.module.css';
 
-const services = [
-  { id: 'interior-painting', title: 'Interior Painting' },
-  { id: 'exterior-painting', title: 'Exterior Painting' },
-  { id: 'specialty-coatings', title: 'Specialty Coatings' },
-  { id: 'wallcovering-finishes', title: 'Wallcovering & Finishes' },
-];
+interface ServiceData {
+  title: string;
+  sortOrder: number;
+}
 
 export default function Footer() {
+  const services = getCollection<ServiceData>('services').sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.footerInner}`}>
@@ -38,7 +39,7 @@ export default function Footer() {
             <p className={styles.colHeading}>Services</p>
             <ul>
               {services.map(s => (
-                <li key={s.id}><Link href={`/services/${s.id}`}>{s.title}</Link></li>
+                <li key={s.id}><Link href={`/services/${s.id}`}>{s.data.title}</Link></li>
               ))}
             </ul>
           </div>

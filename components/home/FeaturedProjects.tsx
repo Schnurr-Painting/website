@@ -1,24 +1,27 @@
 import Link from 'next/link';
+import { getCollection } from '@/lib/content';
 import page from '@/data/pages/home.json';
 import styles from './FeaturedProjects.module.css';
 
-const projects = [
-  {
-    id: 'performing-arts-center',
-    data: {
-      title: 'Performing Arts Center',
-      market: 'Civic / Institutional',
-      shortDescription: 'Full interior coatings and specialty finishes for a large assembly space.',
-      featuredImage: '/images/hero/hero-04.jpg',
-      featured: true,
-      sortOrder: 1,
-    },
-  },
-];
+interface ProjectData {
+  title: string;
+  market?: string;
+  shortDescription: string;
+  featuredImage?: string;
+  featured?: boolean;
+  sortOrder: number;
+}
 
 export default function FeaturedProjects() {
   const section = page.projectsSection;
+  const projects = getCollection<ProjectData>('projects')
+    .filter((p) => p.data.featured)
+    .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+    .slice(0, 3);
+
   const isSingle = projects.length === 1;
+
+  if (projects.length === 0) return null;
 
   return (
     <section className={styles.projects} id="projects">

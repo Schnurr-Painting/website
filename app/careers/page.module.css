@@ -4,4 +4,21 @@
 .heading h2 { margin: 0; font-family: var(--display); font-size: clamp(38px, 4vw, 56px); font-weight: 600; color: var(--ink); line-height: 1.02; }
 .noOpenings { max-width: 640px; }
 .noOpenings p { color: var(--body); font-size: 17px; line-height: 1.72; margin: 0; }
+
+.positionsList { display: flex; flex-direction: column; gap: 20px; }
+.positionCard { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--orange); padding: 28px 32px; }
+.positionMeta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.positionMeta span { font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); }
+.location { color: var(--body) !important; }
+.positionCard h3 { margin: 0; color: var(--ink); font-family: var(--display); font-size: 24px; font-weight: 600; }
+.positionDescription { margin: 10px 0 0; color: var(--body); font-size: 15.5px; line-height: 1.6; max-width: 700px; }
+.positionDescription p { margin: 0 0 12px; }
+.positionDescription p:last-child { margin-bottom: 0; }
+.positionDescription ul { margin: 0 0 12px; padding-left: 20px; }
+.positionDescription strong { color: var(--ink); font-weight: 700; }
+.requirementsBlock { margin-top: 16px; }
+.requirementsHeading { margin: 0 0 8px; font-family: var(--utility); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+.requirements { margin: 0; padding-left: 20px; color: var(--body); font-size: 14.5px; line-height: 1.7; }
+
 @media (max-width: 900px) { .inner { width: min(calc(100% - 48px), 1200px); } }
+@media (max-width: 700px) { .positionCard { padding: 22px 20px; } }

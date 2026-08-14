@@ -1,16 +1,22 @@
 import Link from 'next/link';
+import { getCollection } from '@/lib/content';
 import page from '@/data/pages/home.json';
 import styles from './Markets.module.css';
 
-const markets = [
-  { id: 'office-corporate', data: { title: 'Office & Corporate', shortDescription: 'Commercial coatings for offices, campuses, and occupied workplaces.', accentColor: '#D84A16', featured: true, sortOrder: 1 } },
-  { id: 'healthcare', data: { title: 'Healthcare', shortDescription: 'Commercial painting and coatings for healthcare facilities, clinics, and occupied care environments.', accentColor: '#547C4D', featured: true, sortOrder: 2 } },
-  { id: 'retail', data: { title: 'Retail', shortDescription: 'Interior and exterior coatings for retail spaces, tenant improvements, and customer-facing environments.', accentColor: '#DDA216', featured: true, sortOrder: 3 } },
-  { id: 'commercial-interiors', data: { title: 'Commercial Interiors', shortDescription: 'Interior painting, wallcovering, and specialty finishes for complex commercial buildouts and renovations.', accentColor: '#3268AC', featured: true, sortOrder: 4 } },
-];
+interface MarketData {
+  title: string;
+  shortDescription: string;
+  cardImage?: string;
+  accentColor?: string;
+  featured?: boolean;
+  sortOrder: number;
+}
 
 export default function Markets() {
   const section = page.marketsSection;
+  const markets = getCollection<MarketData>('markets')
+    .filter((m) => m.data.featured)
+    .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   return (
     <section className={styles.markets} id="markets">
@@ -34,13 +40,17 @@ export default function Markets() {
                 style={{ '--market-accent': accent } as React.CSSProperties}
               >
                 <div className={styles.marketVisual}>
-                  <div className={styles.marketGraphic} aria-hidden="true">
-                    <span className={styles.marketNumber}>{number}</span>
-                    <span className={styles.marketLine}></span>
-                    <span className={`${styles.marketBlock} ${styles.marketBlockOne}`}></span>
-                    <span className={`${styles.marketBlock} ${styles.marketBlockTwo}`}></span>
-                    <span className={styles.marketRing}></span>
-                  </div>
+                  {market.data.cardImage ? (
+                    <img src={market.data.cardImage} alt="" loading="lazy" />
+                  ) : (
+                    <div className={styles.marketGraphic} aria-hidden="true">
+                      <span className={styles.marketNumber}>{number}</span>
+                      <span className={styles.marketLine}></span>
+                      <span className={`${styles.marketBlock} ${styles.marketBlockOne}`}></span>
+                      <span className={`${styles.marketBlock} ${styles.marketBlockTwo}`}></span>
+                      <span className={styles.marketRing}></span>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.marketContent}>
