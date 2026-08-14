@@ -1,0 +1,102 @@
+.interiorHero {
+  position: relative;
+  min-height: 430px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--hero-bg);
+  color: white;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heroBackground img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--overlay-strong) 0%, var(--overlay-strong) 34%, var(--overlay-mid) 60%, var(--overlay-light) 100%);
+  pointer-events: none;
+}
+
+.interiorHeroSolid .heroOverlay {
+  background: var(--hero-bg);
+}
+
+.interiorHeroInner {
+  position: relative;
+  z-index: 2;
+  width: min(calc(100% - 120px), var(--content-max));
+  margin: 0 auto;
+  padding: 70px 0 68px;
+}
+
+.interiorHeroCopy { max-width: 770px; }
+
+.interiorKicker {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 18px;
+}
+
+.interiorKicker span {
+  width: 34px;
+  height: 3px;
+  background: var(--hero-accent);
+  flex-shrink: 0;
+}
+
+.interiorKicker p {
+  margin: 0;
+  color: var(--hero-accent);
+  font-family: var(--utility);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.interiorHeroCopy h1 {
+  margin: 0;
+  max-width: 760px;
+  color: var(--hero-heading);
+  font-family: var(--display);
+  font-size: clamp(54px, 5vw, 82px);
+  font-weight: 600;
+  line-height: .97;
+  letter-spacing: -.042em;
+}
+
+.interiorIntro {
+  max-width: 650px;
+  margin: 24px 0 0;
+  color: var(--hero-intro);
+  font-size: 18px;
+  line-height: 1.67;
+}
+
+@media (max-width: 900px) {
+  .interiorHero { min-height: 390px; }
+  .interiorHeroInner { width: min(calc(100% - 56px), var(--content-max)); padding: 58px 0; }
+}
+
+@media (max-width: 650px) {
+  .interiorHero { min-height: 350px; }
+  .interiorHeroInner { width: min(calc(100% - 40px), var(--content-max)); padding: 48px 0; }
+  .interiorHeroCopy h1 { font-size: clamp(44px, 13vw, 62px); }
+  .interiorIntro { font-size: 16px; }
+}
