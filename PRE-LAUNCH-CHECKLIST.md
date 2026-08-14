@@ -46,12 +46,14 @@ loose ends don't get lost or forgotten under the pace of everything else.
       theory, and the real fix requires contacting Netlify Support directly
       to clear the actual address (not fixable from dashboard settings
       alone).
-- [ ] **Confirm whether an autoresponse to the form submitter is actually
-      wanted.** Currently the submitter only sees an on-page "Request Sent"
-      confirmation — no email is sent to them. If a confirmation email to
-      the submitter is expected, that's a separate feature needing
-      deliberate setup (Netlify supports form autoresponses), not something
-      currently built.
+- [ ] **Build a confirmation email to the form submitter** (Request a Bid and
+      Contact forms both). Confirmed wanted, not yet built. Currently the
+      submitter only sees an on-page "Request Sent" confirmation — no email
+      goes to them. Netlify supports form autoresponses; needs deliberate
+      setup (a response template per form, likely configured in the Netlify
+      dashboard rather than pure code) plus the same real-Schnurr-email
+      question as the recipient notifications above — confirm what address
+      it should send *from* before building.
 - [ ] **Test both forms end-to-end** once notifications are confirmed
       working: submit a real entry, confirm it lands in the Netlify
       dashboard *and* triggers an actual email, not just one or the other.
