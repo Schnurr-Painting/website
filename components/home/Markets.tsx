@@ -1,89 +1,61 @@
-'use client';
-
 import Link from 'next/link';
 import page from '@/data/pages/home.json';
 import styles from './Markets.module.css';
 
-interface Market {
-  id: string;
-  data: {
-    title: string;
-    shortDescription: string;
-    cardImage?: string;
-    accentColor?: string;
-    featured?: boolean;
-    sortOrder: number;
-  };
-}
+const markets = [
+  { id: 'office-corporate', data: { title: 'Office & Corporate', shortDescription: 'Commercial coatings for offices, campuses, and occupied workplaces.', accentColor: '#D84A16', featured: true, sortOrder: 1 } },
+  { id: 'healthcare', data: { title: 'Healthcare', shortDescription: 'Commercial painting and coatings for healthcare facilities, clinics, and occupied care environments.', accentColor: '#547C4D', featured: true, sortOrder: 2 } },
+  { id: 'retail', data: { title: 'Retail', shortDescription: 'Interior and exterior coatings for retail spaces, tenant improvements, and customer-facing environments.', accentColor: '#DDA216', featured: true, sortOrder: 3 } },
+  { id: 'commercial-interiors', data: { title: 'Commercial Interiors', shortDescription: 'Interior painting, wallcovering, and specialty finishes for complex commercial buildouts and renovations.', accentColor: '#3268AC', featured: true, sortOrder: 4 } },
+];
 
 export default function Markets() {
   const section = page.marketsSection;
 
-  // Placeholder markets data
-  const markets: Market[] = [
-    {
-      id: 'office-corporate',
-      data: {
-        title: 'Office & Corporate',
-        shortDescription: 'Professional office environments requiring precision and reliability',
-        accentColor: '#6f6677',
-        featured: true,
-        sortOrder: 1,
-      },
-    },
-    {
-      id: 'healthcare',
-      data: {
-        title: 'Healthcare Facilities',
-        shortDescription: 'Sterile, compliant environments for medical and research spaces',
-        accentColor: '#5a7080',
-        featured: true,
-        sortOrder: 2,
-      },
-    },
-    {
-      id: 'education',
-      data: {
-        title: 'Educational Institutions',
-        shortDescription: 'Schools, universities, and learning centers',
-        accentColor: '#7d856f',
-        featured: true,
-        sortOrder: 3,
-      },
-    },
-    {
-      id: 'retail-hospitality',
-      data: {
-        title: 'Retail & Hospitality',
-        shortDescription: 'Customer-facing spaces that make lasting impressions',
-        accentColor: '#761b82',
-        featured: true,
-        sortOrder: 4,
-      },
-    },
-  ];
-
   return (
-    <section className={styles.markets}>
+    <section className={styles.markets} id="markets">
       <div className={styles.marketsInner}>
         <div className={styles.marketsHeading}>
-          <p className={`eyebrow ${styles.marketsEyebrow}`}>{section.eyebrow}</p>
-          <h2>{section.heading}</h2>
+          <div>
+            <p className={`eyebrow ${styles.marketsEyebrow}`}>{section.eyebrow}</p>
+            <h2 className={styles.heading}>{section.heading}</h2>
+          </div>
           <p className={styles.marketsIntro}>{section.intro}</p>
         </div>
 
         <div className={styles.marketGrid}>
-          {markets.map((market) => (
-            <Link key={market.id} href={`/markets/${market.id}`} className={styles.marketCard}>
-              {market.data.cardImage && (
-                <img src={market.data.cardImage} alt={market.data.title} loading="lazy" />
-              )}
-              <div className={styles.marketCardContent}>
-                <h3 style={{ color: market.data.accentColor }}>{market.data.title}</h3>
-                <p>{market.data.shortDescription}</p>
-              </div>
-            </Link>
-          ))}
+          {markets.map((market, index) => {
+            const accent = market.data.accentColor || 'var(--orange)';
+            const number = String(index + 1).padStart(2, '0');
+            return (
+              <article
+                key={market.id}
+                className={styles.marketCard}
+                style={{ '--market-accent': accent } as React.CSSProperties}
+              >
+                <div className={styles.marketVisual}>
+                  <div className={styles.marketGraphic} aria-hidden="true">
+                    <span className={styles.marketNumber}>{number}</span>
+                    <span className={styles.marketLine}></span>
+                    <span className={`${styles.marketBlock} ${styles.marketBlockOne}`}></span>
+                    <span className={`${styles.marketBlock} ${styles.marketBlockTwo}`}></span>
+                    <span className={styles.marketRing}></span>
+                  </div>
+                </div>
+
+                <div className={styles.marketContent}>
+                  <div className={styles.marketTitleRow}>
+                    <span className={styles.marketIndex}>{number}</span>
+                    <h3 className={styles.marketTitle}>{market.data.title}</h3>
+                  </div>
+                  <p className={styles.marketDesc}>{market.data.shortDescription}</p>
+                  <Link href={`/markets/${market.id}`} className={styles.marketLink}>
+                    Explore Market <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
