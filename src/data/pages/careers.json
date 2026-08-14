@@ -15,5 +15,10 @@
     "image": "/images/uploads/home-hero-painting-2.webp",
     "overlayOpacity": 0.9
   },
-  "sections": []
+  "sections": [
+    {
+      "title": "Painter",
+      "copy": "Great Job"
+    }
+  ]
 }
