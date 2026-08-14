@@ -10,6 +10,8 @@
 .headerInner {
   position: relative;
   height: 100%;
+  width: min(calc(100% - 120px), 1680px);
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 235px 1fr 190px;
   align-items: center;

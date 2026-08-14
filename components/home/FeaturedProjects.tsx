@@ -1,60 +1,77 @@
-'use client';
-
 import Link from 'next/link';
 import page from '@/data/pages/home.json';
 import styles from './FeaturedProjects.module.css';
 
-interface Project {
-  id: string;
-  data: {
-    title: string;
-    shortDescription: string;
-    featuredImage?: string;
-    featured?: boolean;
-    sortOrder: number;
-  };
-}
+const projects = [
+  {
+    id: 'performing-arts-center',
+    data: {
+      title: 'Performing Arts Center',
+      market: 'Civic / Institutional',
+      shortDescription: 'Full interior coatings and specialty finishes for a large assembly space.',
+      featuredImage: '/images/hero/hero-01.jpg',
+      featured: true,
+      sortOrder: 1,
+    },
+  },
+];
 
 export default function FeaturedProjects() {
   const section = page.projectsSection;
-
-  // Placeholder projects
-  const projects: Project[] = [
-    {
-      id: 'performing-arts-center',
-      data: {
-        title: 'Performing Arts Center',
-        shortDescription: 'Large-scale interior painting and specialty finishes',
-        featured: true,
-        sortOrder: 1,
-      },
-    },
-  ];
+  const isSingle = projects.length === 1;
 
   return (
-    <section className={styles.featuredProjects}>
+    <section className={styles.projects} id="projects">
       <div className={styles.projectsInner}>
         <div className={styles.projectsHeading}>
-          <p className={`eyebrow ${styles.projectsEyebrow}`}>{section.eyebrow}</p>
-          <h2>{section.heading}</h2>
+          <div>
+            <p className={`eyebrow ${styles.projectsEyebrow}`}>{section.eyebrow}</p>
+            <h2 className={styles.heading}>{section.heading}</h2>
+          </div>
           <p className={styles.projectsIntro}>{section.intro}</p>
         </div>
 
-        {projects.length > 0 && (
-          <div className={styles.projectsGrid}>
-            {projects.map((project) => (
-              <Link key={project.id} href={`/projects/${project.id}`} className={styles.projectCard}>
-                {project.data.featuredImage && (
-                  <img src={project.data.featuredImage} alt={project.data.title} loading="lazy" />
-                )}
-                <div className={styles.projectCardContent}>
-                  <h3>{project.data.title}</h3>
-                  <p>{project.data.shortDescription}</p>
+        <div className={`${styles.projectGrid} ${isSingle ? styles.projectGridSingle : ''}`}>
+          {projects.map((project, index) => {
+            const number = String(index + 1).padStart(2, '0');
+            return (
+              <article key={project.id} className={styles.projectCard}>
+                <div className={styles.projectMedia}>
+                  {project.data.featuredImage ? (
+                    <img
+                      className={styles.projectImage}
+                      src={project.data.featuredImage}
+                      alt={project.data.title}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.projectFallback} aria-hidden="true">
+                      <span className={styles.projectFallbackNumber}>{number}</span>
+                      <span className={styles.projectFallbackLine}></span>
+                    </div>
+                  )}
+                  <div className={styles.projectMediaShade} />
+                  {project.data.market && (
+                    <div className={styles.projectMarket}>
+                      <span>{project.data.market}</span>
+                    </div>
+                  )}
                 </div>
-              </Link>
-            ))}
-          </div>
-        )}
+
+                <div className={styles.projectContent}>
+                  <div className={styles.projectMeta}>
+                    <span>{number}</span>
+                  </div>
+                  <h3 className={styles.projectTitle}>{project.data.title}</h3>
+                  <p className={styles.projectDesc}>{project.data.shortDescription}</p>
+                  <Link href={`/projects/${project.id}`} className={styles.projectLink}>
+                    View Project <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
