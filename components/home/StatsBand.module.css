@@ -1,0 +1,158 @@
+.credentials {
+  position: relative;
+  background: var(--cream);
+  padding: 20px 0 24px;
+  overflow: hidden;
+}
+
+.credentialsPanelWrap {
+  position: relative;
+  z-index: 2;
+  width: min(calc(100% - 150px), 1680px);
+  margin: 0 auto;
+}
+
+.credentialsGrid {
+  min-height: 225px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(17, 42, 53, 0.08);
+  box-shadow: 0 14px 32px rgba(17, 42, 53, 0.05);
+}
+
+.credential {
+  min-width: 0;
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-right: 1px solid rgba(17, 42, 53, 0.14);
+}
+
+.credential:last-child {
+  border-right: 0;
+}
+
+.icon {
+  margin-bottom: 9px;
+}
+
+.icon svg {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.orange {
+  color: var(--orange);
+}
+.green {
+  color: var(--green);
+}
+.blue {
+  color: var(--blue);
+}
+.gold {
+  color: var(--gold);
+}
+.teal {
+  color: var(--teal);
+}
+
+.value {
+  font-family: var(--display);
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.qualification {
+  margin-top: 4px;
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.18;
+  text-transform: uppercase;
+}
+
+.label {
+  margin-top: 11px;
+  font-family: var(--utility);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.credential p {
+  max-width: 190px;
+  margin: 9px auto 0;
+  color: var(--body);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.statsBrush {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.statsBrushOrange {
+  width: 185px;
+  left: 0;
+  top: 8px;
+  transform: translateX(-12%);
+}
+
+.statsBrushTeal {
+  width: 175px;
+  right: 0;
+  bottom: 6px;
+  transform: translateX(28%);
+}
+
+@media (max-width: 1050px) {
+  .credentialsPanelWrap {
+    width: min(calc(100% - 72px), 1680px);
+  }
+
+  .credentialsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .credential {
+    border-bottom: 1px solid rgba(17, 42, 53, 0.12);
+  }
+
+  .statsBrushOrange {
+    width: 135px;
+  }
+
+  .statsBrushTeal {
+    width: 130px;
+  }
+}
+
+@media (max-width: 650px) {
+  .credentialsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .credential {
+    border-right: 0;
+  }
+
+  .statsBrush {
+    display: none;
+  }
+}

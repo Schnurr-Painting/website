@@ -1,0 +1,215 @@
+.services {
+  background: var(--navy);
+  color: white;
+  padding: 96px 0 104px;
+}
+
+.servicesInner {
+  width: min(calc(100% - 120px), 1500px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(420px, 0.9fr) minmax(620px, 1.1fr);
+  gap: 72px;
+  align-items: stretch;
+}
+
+.servicesPhoto {
+  position: relative;
+  min-height: 640px;
+  overflow: hidden;
+}
+
+.servicesPhoto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 64%;
+  display: block;
+}
+
+.servicesPhotoShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 42, 55, 0.05) 38%, rgba(5, 42, 55, 0.74) 100%);
+}
+
+.servicesPhotoLabel {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 28px;
+  z-index: 2;
+}
+
+.servicesPhotoLabel span,
+.servicesPhotoLabel strong {
+  display: block;
+}
+
+.servicesPhotoLabel span {
+  color: var(--gold);
+  font-family: var(--utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.servicesPhotoLabel strong {
+  margin-top: 6px;
+  color: white;
+  font-family: var(--display);
+  font-size: 29px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.servicesContent {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 34px;
+}
+
+.servicesHeading {
+  max-width: 690px;
+  margin-bottom: 30px;
+}
+
+.servicesHeading h2 {
+  margin: 0;
+  color: white;
+  font-family: var(--display);
+  font-size: clamp(44px, 3.55vw, 62px);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.servicesEyebrow {
+  color: var(--gold);
+  margin: 0 0 15px;
+}
+
+.servicesIntro {
+  max-width: 610px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+  line-height: 1.66;
+}
+
+.serviceList {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.serviceRow {
+  min-height: 105px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 30px;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  text-decoration: none;
+  transition: padding-left 0.2s ease, background-color 0.2s ease;
+}
+
+.serviceRow:hover {
+  padding-left: 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.serviceNumber {
+  color: var(--gold);
+  font-family: var(--utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  align-self: start;
+  padding-top: 5px;
+}
+
+.serviceMain {
+  min-width: 0;
+}
+
+.serviceMain h3 {
+  margin: 0;
+  color: white;
+  font-family: var(--display);
+  font-size: clamp(26px, 1.8vw, 33px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.serviceMain p {
+  max-width: 620px;
+  margin: 7px 0 0;
+  color: rgba(255, 255, 255, 0.67);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.serviceArrow {
+  color: var(--orange);
+  font-size: 22px;
+  justify-self: end;
+  transition: transform 0.2s ease;
+}
+
+.serviceRow:hover .serviceArrow {
+  transform: translateX(5px);
+}
+
+@media (max-width: 1100px) {
+  .servicesInner {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 44px;
+  }
+
+  .servicesPhoto {
+    min-height: 590px;
+  }
+
+  .servicesContent {
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .services {
+    padding: 76px 0 84px;
+  }
+
+  .servicesInner {
+    width: min(calc(100% - 48px), 1500px);
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .servicesPhoto {
+    min-height: 440px;
+  }
+
+  .servicesContent {
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .servicesPhoto {
+    min-height: 340px;
+  }
+
+  .serviceRow {
+    grid-template-columns: 34px minmax(0, 1fr) 24px;
+    gap: 12px;
+  }
+}
