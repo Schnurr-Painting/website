@@ -2,17 +2,31 @@
   "title": "Careers",
   "seoDescription": "Careers and opportunities at Schnurr Painting.",
   "hero": {
-    "eyebrow": "Careers",
-    "title": "Build good work with good people.",
-    "intro": "Commercial painting careers with teams focused on quality, safety, and professionalism.",
-    "image": "",
-    "imagePosition": "center",
-    "backgroundColor": "#3a1843",
-    "overlayColor": "#3a1843",
-    "overlayOpacity": 0.9,
     "headingColor": "#ffffff",
+    "imagePosition": "center",
+    "eyebrow": "Careers",
+    "intro": "Commercial painting careers with teams focused on quality, safety, and professionalism.",
+    "headingFont": "display",
+    "overlayColor": "#3a1843",
+    "backgroundColor": "#3a1843",
     "introColor": "#ffffff",
+    "title": "Build good work with good people.",
     "accentColor": "#c7b434",
-    "headingFont": "display"
-  }
+    "image": "/images/uploads/home-hero-painting-2.webp",
+    "overlayOpacity": 0.9
+  },
+  "sections": [
+    {
+      "title": "Work on commercial projects that matter.",
+      "copy": "Schnurr Painting crews work across a range of commercial environments—auditoriums, healthcare facilities, high-rises, and more—with an emphasis on quality, safety, and professionalism."
+    },
+    {
+      "title": "A safety record that protects you, not just the schedule.",
+      "copy": "0.68 EMR safety rating, OSHA-certified crews, and weekly toolbox talks before work begins. Safety here isn't a poster in the breakroom—it's how jobs actually get planned."
+    },
+    {
+      "title": "Grow with experienced teams.",
+      "copy": "20+ years in business means steady commercial work, not gig-to-gig uncertainty. The company values people who communicate well, take ownership of the work, and want to build lasting trade skills."
+    }
+  ]
 }
