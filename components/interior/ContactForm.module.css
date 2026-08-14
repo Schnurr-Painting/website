@@ -1,0 +1,18 @@
+.section { background: var(--cream); padding: 72px 0 96px; }
+.inner { width: min(calc(100% - 120px), 1200px); margin: 0 auto; display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: start; }
+.form { display: flex; flex-direction: column; gap: 20px; }
+.fieldRow { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--body); }
+.field input, .field textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--line); font-family: var(--body-font); font-size: 15px; color: var(--ink); background: white; }
+.field input:focus, .field textarea:focus { outline: 2px solid var(--orange); border-color: transparent; }
+.field textarea { resize: vertical; }
+.submit { margin-top: 4px; }
+.status { margin: 8px 0 0; font-size: 15px; }
+.success { color: var(--green); }
+.error { color: #c0392b; }
+.contactInfo { display: flex; flex-direction: column; gap: 32px; padding-top: 8px; }
+.infoBlock { border-top: 1px solid var(--line); padding-top: 20px; }
+.infoLabel { margin: 0 0 8px; font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.infoBlock a, .infoBlock p { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.6; }
+@media (max-width: 900px) { .inner { width: min(calc(100% - 48px), 1200px); grid-template-columns: 1fr; gap: 48px; } .fieldRow { grid-template-columns: 1fr; } }
