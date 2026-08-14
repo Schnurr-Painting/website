@@ -112,7 +112,7 @@ collections:
                 summary: "{{fields.image}}"
                 hint: "Rotating background photos. Motion (zoom/pan) cycles automatically per slide."
                 fields:
-                  - { label: "Image", name: "image", widget: "image" }
+                  - { label: "Image", name: "image", widget: "image", hint: "After uploading, click Save at the top to confirm." }
                   - { label: "Image Position", name: "imagePosition", widget: "string", default: "center", hint: "Examples: center, center 68%, left center" }
           - label: "Qualification Stats"
             name: "stats"
@@ -293,12 +293,12 @@ collections:
       - { label: "Project Name", name: "title", widget: "string" }
       - { label: "Market", name: "market", widget: "string" }
       - { label: "Location", name: "location", widget: "string", required: false }
-      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false, hint: "After uploading, click Save to confirm." }
       - label: "Gallery"
         name: "gallery"
         widget: "list"
         required: false
-        field: { label: "Image", name: "image", widget: "image" }
+        field: { label: "Image", name: "image", widget: "image", hint: "Save after uploading to confirm." }
       - { label: "Short Description", name: "shortDescription", widget: "text" }
       - { label: "General Contractor", name: "gc", widget: "string", required: false }
       - { label: "Owner", name: "owner", widget: "string", required: false }
@@ -392,7 +392,7 @@ collections:
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }
-      - { label: "Headshot", name: "headshot", widget: "image", required: false }
+      - { label: "Headshot", name: "headshot", widget: "image", required: false, hint: "After uploading, click Save at the top to confirm. Preview updates on save." }
       - { label: "Email", name: "email", widget: "string", required: false }
       - { label: "Phone", name: "phone", widget: "string", required: false }
       - { label: "Bio", name: "bio", widget: "text", required: false }
