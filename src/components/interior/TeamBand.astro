@@ -33,8 +33,8 @@ const team = (await getCollection('team'))
 .team-inner>.eyebrow{margin:0;color:var(--gold)}
 .team-inner>h2{margin:8px 0 30px;color:var(--ink);font-family:var(--display);font-size:clamp(38px,4vw,58px);font-weight:600}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.team-card{border:1px solid var(--line);background:var(--paper)}
-.team-card img{width:100%;height:300px;object-fit:cover;display:block}
+.team-card{border:1px solid var(--line);background:var(--paper);max-width:300px}
+.team-card img{width:100%;height:300px;object-fit:cover;display:block;max-width:300px}
 .team-copy{padding:22px}
 .team-copy h3{margin:0;color:var(--ink);font-family:var(--display);font-size:28px}
 .role{margin:5px 0 0;color:var(--gold);font-family:var(--utility);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
