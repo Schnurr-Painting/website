@@ -115,6 +115,24 @@ Running total of real costs incurred during the build, to invoice at handoff.
 - Anthropic: $12
 - Netlify: $9
 
+## CMS Editor Experience
+
+- [ ] **Decap's right-hand preview pane is unstyled and effectively
+      unusable** across every collection - it shows Decap's default
+      fallback (a raw dump of field labels/values, unstyled, oversized
+      images) because no custom preview template has been registered
+      for any collection. Real fix is a genuinely large, standalone
+      piece of work: writing actual preview components in Decap's own
+      React-based system (separate from Astro) for each collection -
+      Home, Services, Markets, Positions, etc. Not something to bolt
+      onto a smaller fix; scope this as its own task when ready.
+- [ ] **"Check for Preview" button does nothing.** Root cause not yet
+      confirmed - could be Decap's live-preview feature (needs setup we
+      haven't done) or something tied to Netlify's PR-based deploy
+      previews (doesn't apply here since we push straight to
+      design-v1). Need to see exactly what the button looks like /
+      where it lives before diagnosing further.
+
 ---
 
 *Last updated: this file was created during the site build process. Add a
