@@ -1,9 +1,13 @@
 /*
  * Custom Decap CMS preview templates.
  *
- * Loaded via plain <script> tag (no build step) - uses React/ReactDOM from
- * CDN and plain React.createElement calls instead of JSX, matching the
- * rest of this admin setup which has intentionally stayed build-free.
+ * Loaded via plain <script> tag (no build step, no JSX) - uses Decap's own
+ * globally-exposed h (React.createElement alias), NOT a separately loaded
+ * copy of React. An earlier version of this file loaded React/ReactDOM via
+ * CDN, which caused "Minified React error #525" - Decap CMS bundles its own
+ * React internally and exposes h/createClass specifically so consumers
+ * never need to bring a second copy. Do not add React/ReactDOM <script>
+ * tags to admin/index.html; use the global h instead.
  *
  * Styling reuses the real site's actual CSS custom properties (loaded via
  * CMS.registerPreviewStyle pointing at the same global.css the live site
@@ -17,8 +21,13 @@
  */
 
 CMS.registerPreviewStyle('/styles/global.css');
-
-var h = React.createElement;
+// h (React.createElement alias) is exposed globally by decap-cms.js itself -
+// deliberately not declared here. An earlier version of this file loaded a
+// separate copy of React via CDN and declared its own h, which caused
+// "Minified React error #525" (multiple React instances rendering elements
+// created by a different copy than the one Decap uses internally to mount
+// the preview pane). Decap's own docs specifically expose h/createClass for
+// this exact reason - use those, don't bring your own React.
 
 var styles = {
   wrapper: {
