@@ -52,7 +52,7 @@ export default function RequestBidModal() {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modal} style={{ display: 'flex' }}>
+    <div className={styles.modal}>
       <div className={styles.backdrop} onClick={closeModal} />
       <div className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="bid-modal-heading">
         <button type="button" className={styles.close} onClick={closeModal} aria-label="Close">

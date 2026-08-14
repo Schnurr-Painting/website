@@ -61,9 +61,17 @@ export default function Hero() {
           </h1>
           <p className={styles.intro}>{h.intro}</p>
           <div className={styles.actions}>
-            <Link href="/#request-bid" className="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).openBidModal) {
+                  (window as any).openBidModal();
+                }
+              }}
+            >
               Request a Bid <span aria-hidden="true">→</span>
-            </Link>
+            </button>
             <Link href="/resources" className="btn btn-outline-light">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18 }}>
                 <path d="M12 4v10" /><path d="m8 11 4 4 4-4" /><path d="M5 20h14" />
