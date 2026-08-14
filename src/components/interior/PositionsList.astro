@@ -1,9 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const positions = (await getCollection('positions'))
-  .filter((p) => p.data.active)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+let renderedPositions = [];
+try {
+  const positions = (await getCollection('positions'))
+    .filter((p) => p.data.active)
+    .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+  renderedPositions = await Promise.all(
+    positions.map(async (p) => {
+      const { Content } = await render(p);
+      const requirementLines = (p.data.requirements || '')
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean);
+      return { data: p.data, Content, requirementLines };
+    })
+  );
+} catch {
+  // A completely empty collection (zero files) throws rather than
+  // returning []. Treat that the same as "no active postings."
+  renderedPositions = [];
+}
 ---
 
 <section class="positions">
@@ -13,9 +31,9 @@ const positions = (await getCollection('positions'))
       <h2>Current Openings</h2>
     </div>
 
-    {positions.length > 0 ? (
+    {renderedPositions.length > 0 ? (
       <div class="positions-list">
-        {positions.map((position) => (
+        {renderedPositions.map((position) => (
           <article class="position-card">
             <div class="position-meta">
               <span class="position-type">{position.data.roleType}</span>
@@ -23,11 +41,16 @@ const positions = (await getCollection('positions'))
               {position.data.location && <span class="position-location">{position.data.location}</span>}
             </div>
             <h3>{position.data.title}</h3>
-            <p class="position-description">{position.data.description}</p>
-            {position.data.requirements && position.data.requirements.length > 0 && (
-              <ul class="position-requirements">
-                {position.data.requirements.map((req) => <li>{req}</li>)}
-              </ul>
+            <div class="position-description">
+              <position.Content />
+            </div>
+            {position.requirementLines.length > 0 && (
+              <div class="position-requirements-block">
+                <p class="requirements-heading">Requirements</p>
+                <ul class="position-requirements">
+                  {position.requirementLines.map((req) => <li>{req}</li>)}
+                </ul>
+              </div>
             )}
             <button
               type="button"
@@ -144,8 +167,41 @@ const positions = (await getCollection('positions'))
     max-width: 700px;
   }
 
+  .position-description :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .position-description :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .position-description :global(ul),
+  .position-description :global(ol) {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+
+  .position-description :global(strong) {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .position-requirements-block {
+    margin-top: 16px;
+  }
+
+  .requirements-heading {
+    margin: 0 0 8px;
+    font-family: var(--utility);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
   .position-requirements {
-    margin: 14px 0 0;
+    margin: 0;
     padding-left: 20px;
     color: var(--body);
     font-size: 14.5px;

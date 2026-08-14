@@ -85,8 +85,8 @@ const positions = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/positions' }),
   schema: z.object({
     title: z.string(), roleType: z.string(), employmentType: z.string().default('Full-Time'),
-    location: z.string().optional(), description: z.string(),
-    requirements: z.array(z.string()).optional(),
+    location: z.string().optional(),
+    requirements: z.string().optional(),
     active: z.boolean().default(true), sortOrder: z.number().default(0),
   }),
 });

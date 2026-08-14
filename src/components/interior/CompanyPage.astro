@@ -4,19 +4,21 @@ const { eyebrow, title, intro, image, sections = [], imagePosition='center', bac
 ---
 <InteriorHero eyebrow={eyebrow} title={title} intro={intro} image={image} imagePosition={imagePosition} backgroundColor={backgroundColor} overlayColor={overlayColor} overlayOpacity={overlayOpacity} headingColor={headingColor} introColor={introColor} accentColor={accentColor} headingFont={headingFont} />
 
-<section class="company-body">
-  <div class="company-inner">
-    {sections.map((section, index) => (
-      <article class="company-section">
-        <span class="company-index">{String(index + 1).padStart(2,'0')}</span>
-        <div>
-          <h2>{section.title}</h2>
-          <p>{section.copy}</p>
-        </div>
-      </article>
-    ))}
-  </div>
-</section>
+{sections.length > 0 && (
+  <section class="company-body">
+    <div class="company-inner">
+      {sections.map((section, index) => (
+        <article class="company-section">
+          <span class="company-index">{String(index + 1).padStart(2,'0')}</span>
+          <div>
+            <h2>{section.title}</h2>
+            <p>{section.copy}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+)}
 
 <style>
   .company-body{background:var(--paper);padding:76px 0 96px}

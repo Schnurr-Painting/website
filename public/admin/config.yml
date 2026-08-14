@@ -473,11 +473,15 @@ collections:
         options: ["Full-Time", "Part-Time", "Seasonal"]
         default: "Full-Time"
       - { label: "Location", name: "location", widget: "string", required: false, hint: "e.g. Austin, TX or a specific jobsite" }
-      - { label: "Description", name: "description", widget: "text" }
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
+        hint: "Use the toolbar for bold, bullets, and paragraphs - this is what shows on the site, formatted."
+        buttons: ["bold", "italic", "bulleted-list", "numbered-list"]
       - label: "Requirements"
         name: "requirements"
-        widget: "list"
+        widget: "text"
         required: false
-        field: { label: "Requirement", name: "requirement", widget: "string" }
+        hint: "One requirement per line. Each line becomes its own bullet on the site."
       - { label: "Currently Active", name: "active", widget: "boolean", default: true, hint: "Turn off to hide without deleting - e.g. once filled" }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
