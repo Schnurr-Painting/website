@@ -62,7 +62,7 @@ export default function Hero() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [current, slides.length]);
+  }, [current]);
 
   const handleButtonClick = (index: number) => {
     showSlide(index);

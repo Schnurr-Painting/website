@@ -40,14 +40,15 @@ export default function Footer() {
               </div>
               <div className={styles.contactBlock}>
                 <h3>Address</h3>
-                <p>{footer.contact.address}</p>
+                <p>{footer.contact.addressLine1}</p>
+                {footer.contact.addressLine2 && <p>{footer.contact.addressLine2}</p>}
               </div>
             </div>
           </div>
 
           <div className={styles.footerBottom}>
             <p className={styles.copyright}>
-              © {new Date().getFullYear()} {settings.brand.name}. All rights reserved.
+              © {new Date().getFullYear()} Schnurr Painting. All rights reserved.
             </p>
             <div className={styles.social}>
               {footer.social.linkedin !== '#' && (

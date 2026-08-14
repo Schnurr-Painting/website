@@ -67,7 +67,7 @@ export default function Testimonials() {
           <div className={styles.testimonialGrid}>
             {testimonials.map((testimonial) => (
               <blockquote key={testimonial.id} className={styles.testimonialCard}>
-                <p className={styles.quote}>"{testimonial.data.quote}"</p>
+                <p className={styles.quote}>&ldquo;{testimonial.data.quote}&rdquo;</p>
                 {testimonial.data.person && (
                   <footer className={styles.attribution}>
                     <strong>{testimonial.data.person}</strong>
