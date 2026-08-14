@@ -13,7 +13,7 @@ collections:
     files:
       - label: "Brand & Theme"
         name: "brand_theme"
-        file: "src/data/site-settings.json"
+        file: "data/site-settings.json"
         fields:
           - label: "Brand"
             name: "brand"
@@ -48,7 +48,7 @@ collections:
 
       - label: "Footer"
         name: "footer"
-        file: "src/data/site-footer.json"
+        file: "data/site-footer.json"
         fields:
           - { label: "Tagline", name: "tagline", widget: "string" }
           - label: "Contact"
@@ -68,7 +68,7 @@ collections:
 
       - label: "Shared Section Labels"
         name: "shared_labels"
-        file: "src/data/site-shared.json"
+        file: "data/site-shared.json"
         hint: "Text that repeats identically across multiple pages. Editing here updates it everywhere at once."
         fields:
           - { label: "Testimonials Eyebrow", name: "testimonialsEyebrow", widget: "string", hint: "Shown above testimonials on About, Services, Markets, and Projects pages" }
@@ -82,7 +82,7 @@ collections:
     files:
       - label: "Home"
         name: "home"
-        file: "src/data/pages/home.json"
+        file: "data/pages/home.json"
         fields:
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
@@ -161,7 +161,7 @@ collections:
 
       - label: "Services"
         name: "services_page"
-        file: "src/data/pages/services.json"
+        file: "data/pages/services.json"
         fields: &standard_page_fields
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
@@ -190,22 +190,22 @@ collections:
 
       - label: "Markets"
         name: "markets_page"
-        file: "src/data/pages/markets.json"
+        file: "data/pages/markets.json"
         fields: *standard_page_fields
 
       - label: "Projects"
         name: "projects_page"
-        file: "src/data/pages/projects.json"
+        file: "data/pages/projects.json"
         fields: *standard_page_fields
 
       - label: "Resources"
         name: "resources_page"
-        file: "src/data/pages/resources.json"
+        file: "data/pages/resources.json"
         fields: *standard_page_fields
 
       - label: "About"
         name: "about_page"
-        file: "src/data/pages/about.json"
+        file: "data/pages/about.json"
         fields:
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
@@ -223,7 +223,7 @@ collections:
 
       - label: "Safety"
         name: "safety_page"
-        file: "src/data/pages/safety.json"
+        file: "data/pages/safety.json"
         fields:
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
@@ -241,7 +241,7 @@ collections:
 
       - label: "Careers"
         name: "careers_page"
-        file: "src/data/pages/careers.json"
+        file: "data/pages/careers.json"
         fields:
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
@@ -252,7 +252,7 @@ collections:
 
       - label: "Contact"
         name: "contact_page"
-        file: "src/data/pages/contact.json"
+        file: "data/pages/contact.json"
         fields:
           - { label: "Page Name", name: "title", widget: "string" }
           - { label: "SEO Description", name: "seoDescription", widget: "text" }
