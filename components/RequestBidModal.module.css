@@ -1,0 +1,71 @@
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.modal.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 42, 53, 0.72);
+  cursor: pointer;
+}
+
+.dialog {
+  position: relative;
+  z-index: 1;
+  width: min(calc(100% - 48px), 640px);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  padding: 48px 44px;
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.close svg { width: 20px; height: 20px; }
+
+.heading { margin-bottom: 28px; }
+.heading h2 { margin: 8px 0 0; font-family: var(--display); font-size: 38px; font-weight: 600; color: var(--ink); }
+.intro { margin: 12px 0 0; color: var(--body); font-size: 16px; line-height: 1.6; }
+
+.form { display: flex; flex-direction: column; gap: 16px; }
+.fieldRow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body); }
+.field input, .field select, .field textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--line); font-family: var(--body-font); font-size: 15px; color: var(--ink); background: white; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--orange); border-color: transparent; }
+.field textarea { resize: vertical; }
+
+.success { text-align: center; padding: 24px 0; }
+.successIcon { width: 56px; height: 56px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+.successIcon svg { width: 28px; height: 28px; stroke: white; }
+.success h2 { margin: 0 0 12px; font-family: var(--display); font-size: 34px; color: var(--ink); }
+.success p { color: var(--body); font-size: 16px; margin-bottom: 24px; }
+.successClose { background: var(--ink); color: white; }
+
+@media (max-width: 600px) {
+  .dialog { padding: 36px 24px; }
+  .fieldRow { grid-template-columns: 1fr; }
+}
