@@ -1,0 +1,89 @@
+.header {
+  height: 88px;
+  background: var(--paper);
+  border-bottom: 1px solid rgba(17, 42, 53, 0.08);
+  position: relative;
+  z-index: 30;
+  overflow: visible;
+}
+
+.headerInner {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 235px 1fr 190px;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 12px 0;
+}
+
+.brandLogoPlate {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.brandLogo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  font-family: var(--utility);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nav a {
+  position: relative;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--orange);
+}
+
+.bidButton {
+  min-height: 50px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--orange);
+  color: white;
+  font-family: var(--utility);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.bidButton:hover {
+  background: #b8a62c;
+}
+
+@media (max-width: 900px) {
+  .headerInner {
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+  }
+
+  .nav {
+    display: none;
+  }
+}

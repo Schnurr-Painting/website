@@ -1,0 +1,487 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: design-v1
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "site_settings"
+    label: "Site Settings"
+    files:
+      - label: "Brand & Theme"
+        name: "brand_theme"
+        file: "src/data/site-settings.json"
+        fields:
+          - label: "Brand"
+            name: "brand"
+            widget: "object"
+            fields:
+              - { label: "Logo", name: "logo", widget: "image" }
+              - { label: "Logo Alt Text", name: "logoAlt", widget: "string" }
+          - label: "Colors & Typography"
+            name: "theme"
+            widget: "object"
+            fields:
+              - { label: "Primary Purple", name: "primary", widget: "color" }
+              - { label: "Dark Purple", name: "primaryDark", widget: "color" }
+              - { label: "Gold / Accent", name: "accent", widget: "color" }
+              - { label: "Paper Background", name: "paper", widget: "color" }
+              - { label: "Cream Background", name: "cream", widget: "color" }
+              - { label: "Heading Text", name: "headingText", widget: "color" }
+              - { label: "Body Text", name: "bodyText", widget: "color" }
+              - { label: "Divider / Line", name: "line", widget: "color" }
+              - label: "Display / Heading Font"
+                name: "displayFont"
+                widget: "select"
+                options: ["Lora", "Inter", "Barlow Condensed"]
+              - label: "Body Font"
+                name: "bodyFont"
+                widget: "select"
+                options: ["Inter", "Lora", "Barlow Condensed"]
+              - label: "Utility / Navigation Font"
+                name: "utilityFont"
+                widget: "select"
+                options: ["Barlow Condensed", "Inter", "Lora"]
+
+      - label: "Footer"
+        name: "footer"
+        file: "src/data/site-footer.json"
+        fields:
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Address Line 1", name: "addressLine1", widget: "string" }
+              - { label: "Address Line 2", name: "addressLine2", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string", hint: "Displayed and used for the click-to-call link, e.g. (512) 555-0198" }
+              - { label: "Email", name: "email", widget: "string" }
+          - label: "Social Links"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false, hint: "Leave as # if not yet set up" }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, hint: "Leave as # if not yet set up" }
+
+      - label: "Shared Section Labels"
+        name: "shared_labels"
+        file: "src/data/site-shared.json"
+        hint: "Text that repeats identically across multiple pages. Editing here updates it everywhere at once."
+        fields:
+          - { label: "Testimonials Eyebrow", name: "testimonialsEyebrow", widget: "string", hint: "Shown above testimonials on About, Services, Markets, and Projects pages" }
+          - { label: "Team Section Eyebrow", name: "teamBandEyebrow", widget: "string", hint: "Shown above the team grid on the About page" }
+          - { label: "Team Section Heading", name: "teamBandHeading", widget: "string" }
+          - { label: "Detail Page CTA Eyebrow", name: "detailCtaEyebrow", widget: "string", hint: "Shown at the bottom of every Service/Market/Project detail page" }
+          - { label: "Detail Page CTA Heading", name: "detailCtaHeading", widget: "string" }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home"
+        name: "home"
+        file: "src/data/pages/home.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading Line 1", name: "headingLine1", widget: "string" }
+              - { label: "Heading Line 2", name: "headingLine2", widget: "string" }
+              - { label: "Heading Line 3", name: "headingLine3", widget: "string" }
+              - { label: "Intro Text", name: "intro", widget: "text" }
+              - { label: "Banner / Panel Color", name: "backgroundColor", widget: "color" }
+              - { label: "Heading Color", name: "headingColor", widget: "color" }
+              - { label: "Intro Text Color", name: "introColor", widget: "color" }
+              - { label: "Eyebrow Color", name: "eyebrowColor", widget: "color" }
+              - label: "Heading Type"
+                name: "headingFont"
+                widget: "select"
+                options:
+                  - { label: "Display / Serif", value: "display" }
+                  - { label: "Body / Sans", value: "body" }
+                  - { label: "Condensed", value: "utility" }
+              - label: "Hero Slides"
+                name: "slides"
+                widget: "list"
+                summary: "{{fields.image}}"
+                hint: "Rotating background photos. Motion (zoom/pan) cycles automatically per slide."
+                fields:
+                  - { label: "Image", name: "image", widget: "image", hint: "After uploading, click Save at the top to confirm." }
+                  - { label: "Image Position", name: "imagePosition", widget: "string", default: "center", hint: "Examples: center, center 68%, left center" }
+          - label: "Qualification Stats"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.value}} {{fields.label}}"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "string" }
+          - label: "Services Section"
+            name: "servicesSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+              - { label: "Photo Label", name: "photoLabel", widget: "string" }
+              - { label: "Photo Title", name: "photoTitle", widget: "string" }
+          - label: "Markets Section"
+            name: "marketsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+          - label: "Featured Projects Section"
+            name: "projectsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+          - label: "Testimonials Section"
+            name: "testimonialsSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+          - label: "Request a Bid Section"
+            name: "requestBidSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+
+      - label: "Services"
+        name: "services_page"
+        file: "src/data/pages/services.json"
+        fields: &standard_page_fields
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: &standard_hero_fields
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Intro Text", name: "intro", widget: "text" }
+              - { label: "Hero Image", name: "image", widget: "image", required: false }
+              - { label: "Image Position", name: "imagePosition", widget: "string", hint: "Examples: center, center 68%, left center" }
+              - { label: "Banner Background", name: "backgroundColor", widget: "color" }
+              - { label: "Image Overlay Color", name: "overlayColor", widget: "color" }
+              - { label: "Overlay Strength", name: "overlayOpacity", widget: "number", min: 0, max: 1, step: 0.05, value_type: "float" }
+              - { label: "Heading Color", name: "headingColor", widget: "color" }
+              - { label: "Intro Text Color", name: "introColor", widget: "color" }
+              - { label: "Accent / Eyebrow Color", name: "accentColor", widget: "color" }
+              - label: "Heading Type"
+                name: "headingFont"
+                widget: "select"
+                options:
+                  - { label: "Display / Serif", value: "display" }
+                  - { label: "Body / Sans", value: "body" }
+                  - { label: "Condensed", value: "utility" }
+
+      - label: "Markets"
+        name: "markets_page"
+        file: "src/data/pages/markets.json"
+        fields: *standard_page_fields
+
+      - label: "Projects"
+        name: "projects_page"
+        file: "src/data/pages/projects.json"
+        fields: *standard_page_fields
+
+      - label: "Resources"
+        name: "resources_page"
+        file: "src/data/pages/resources.json"
+        fields: *standard_page_fields
+
+      - label: "About"
+        name: "about_page"
+        file: "src/data/pages/about.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Heading", name: "title", widget: "string" }
+              - { label: "Section Text", name: "copy", widget: "text" }
+
+      - label: "Safety"
+        name: "safety_page"
+        file: "src/data/pages/safety.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Heading", name: "title", widget: "string" }
+              - { label: "Section Text", name: "copy", widget: "text" }
+
+      - label: "Careers"
+        name: "careers_page"
+        file: "src/data/pages/careers.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+
+      - label: "Contact"
+        name: "contact_page"
+        file: "src/data/pages/contact.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
+
+  - name: "images"
+    label: "Image Library"
+    label_singular: "Image"
+    folder: "src/content/images"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{title}} — {{category}}"
+    fields:
+      - { label: "Image Name", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", required: false }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Hero", "Project", "Service", "Market", "Team", "General"]
+        default: "General"
+      - { label: "Notes / Usage", name: "notes", widget: "text", required: false }
+
+  - name: "projects"
+    label: "Content — Projects"
+    label_singular: "Project"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Project Name", name: "title", widget: "string" }
+      - { label: "Market", name: "market", widget: "string" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false, hint: "After uploading, click Save to confirm." }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Image", name: "image", widget: "image", hint: "Save after uploading to confirm." }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "General Contractor", name: "gc", widget: "string", required: false }
+      - { label: "Owner", name: "owner", widget: "string", required: false }
+      - { label: "Project Size", name: "projectSize", widget: "string", required: false }
+      - { label: "Completion Date", name: "completionDate", widget: "string", required: false }
+      - label: "Services"
+        name: "services"
+        widget: "list"
+        required: false
+        field: { label: "Service", name: "service", widget: "string" }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: &record_hero_fields
+          - { label: "Banner Background", name: "heroBackgroundColor", widget: "color", required: false }
+          - { label: "Overlay Color", name: "heroOverlayColor", widget: "color", required: false }
+          - { label: "Overlay Strength", name: "heroOverlayOpacity", widget: "number", min: 0, max: 1, step: 0.05, value_type: "float", required: false }
+          - { label: "Heading Color", name: "heroHeadingColor", widget: "color", required: false }
+          - { label: "Intro Color", name: "heroIntroColor", widget: "color", required: false }
+          - { label: "Accent Color", name: "heroAccentColor", widget: "color", required: false }
+          - label: "Heading Type"
+            name: "heroHeadingFont"
+            widget: "select"
+            required: false
+            options:
+              - { label: "Display / Serif", value: "display" }
+              - { label: "Body / Sans", value: "body" }
+              - { label: "Condensed", value: "utility" }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "services"
+    label: "Content — Service Items"
+    label_singular: "Service"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Service Name", name: "title", widget: "string" }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: *record_hero_fields
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "markets"
+    label: "Content — Market Items"
+    label_singular: "Market"
+    folder: "src/content/markets"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Market Name", name: "title", widget: "string" }
+      - { label: "Short Description", name: "shortDescription", widget: "text" }
+      - { label: "Card Image", name: "cardImage", widget: "image", required: false }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Card Accent Color", name: "accentColor", widget: "color", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+      - label: "Detail Page Hero Style"
+        name: "heroStyle"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: *record_hero_fields
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "team"
+    label: "Content — Team Members"
+    label_singular: "Team Member"
+    folder: "src/content/team"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Headshot", name: "headshot", widget: "image", required: false, hint: "After uploading, click Save at the top to confirm. Preview updates on save." }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Phone", name: "phone", widget: "string", required: false }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Display Order", name: "displayOrder", widget: "number", default: 0 }
+      - { label: "Show on About Page", name: "publicProfile", widget: "boolean", default: true }
+
+  - name: "testimonials"
+    label: "Content — Testimonials"
+    label_singular: "Testimonial"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Person", name: "person", widget: "string", required: false }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Company", name: "company", widget: "string", required: false }
+      - { label: "Related Project", name: "project", widget: "string", required: false }
+      - { label: "Approved for Public Site", name: "approvedPublic", widget: "boolean", default: false }
+      - label: "Show On Pages"
+        name: "showOn"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - { label: "Home", value: "home" }
+          - { label: "About", value: "about" }
+          - { label: "Services", value: "services" }
+          - { label: "Markets", value: "markets" }
+          - { label: "Projects", value: "projects" }
+        hint: "Select every page where this testimonial should appear."
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+
+  - name: "resources"
+    label: "Content — Resources"
+    label_singular: "Resource"
+    folder: "src/content/resources"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Resource Type", name: "resourceType", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "File", name: "file", widget: "file", required: false }
+      - { label: "External URL", name: "externalUrl", widget: "string", required: false }
+      - label: "Visibility"
+        name: "visibility"
+        widget: "select"
+        options:
+          - { label: "Public", value: "public" }
+          - { label: "Request Required", value: "request_required" }
+          - { label: "Private", value: "private" }
+        default: "public"
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }
+
+  - name: "positions"
+    label: "Content — Open Positions"
+    label_singular: "Position"
+    folder: "src/content/positions"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Position Title", name: "title", widget: "string" }
+      - label: "Role Type"
+        name: "roleType"
+        widget: "select"
+        options: ["Crew Painter", "Foreman / Crew Lead", "Apprentice", "Estimator", "Project Manager", "Other"]
+      - label: "Employment Type"
+        name: "employmentType"
+        widget: "select"
+        options: ["Full-Time", "Part-Time", "Seasonal"]
+        default: "Full-Time"
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "e.g. Austin, TX or a specific jobsite" }
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
+        hint: "Use the toolbar for bold, bullets, and paragraphs - this is what shows on the site, formatted."
+        buttons: ["bold", "italic", "bulleted-list", "numbered-list"]
+      - label: "Requirements"
+        name: "requirements"
+        widget: "text"
+        required: false
+        hint: "One requirement per line. Each line becomes its own bullet on the site."
+      - { label: "Currently Active", name: "active", widget: "boolean", default: true, hint: "Turn off to hide without deleting - e.g. once filled" }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 0 }

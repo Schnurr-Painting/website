@@ -1,0 +1,32 @@
+{
+  "title": "Safety",
+  "seoDescription": "Safety practices and qualifications at Schnurr Painting.",
+  "hero": {
+    "headingColor": "#ffffff",
+    "imagePosition": "center",
+    "eyebrow": "Safety",
+    "intro": "A commercial painting partner has to protect people, schedules, and the jobsite—not just the finish.",
+    "headingFont": "display",
+    "overlayColor": "#3a1843",
+    "backgroundColor": "#3a1843",
+    "introColor": "#ffffff",
+    "title": "Safe work is planned work.",
+    "accentColor": "#c7b434",
+    "image": "/images/hero/hero-01.jpg",
+    "overlayOpacity": 0.9
+  },
+  "sections": [
+    {
+      "title": "Safety is part of the work plan.",
+      "copy": "Safe execution starts before crews arrive on site and continues through daily coordination, site conditions, and closeout."
+    },
+    {
+      "title": "Experienced commercial crews.",
+      "copy": "Training, supervision, and jobsite discipline help Schnurr work effectively around other trades and active environments."
+    },
+    {
+      "title": "Qualifications that support larger work.",
+      "copy": "EMR performance, insurance, OSHA-focused practices, and bonding capacity help support demanding commercial project requirements."
+    }
+  ]
+}

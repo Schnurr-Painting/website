@@ -1,0 +1,18 @@
+{
+  "title": "Markets",
+  "seoDescription": "Commercial painting markets served by Schnurr Painting.",
+  "hero": {
+    "eyebrow": "Markets",
+    "title": "Built for the spaces people depend on.",
+    "intro": "Commercial painting and coatings for occupied, public-facing, and complex project environments.",
+    "image": "/images/hero/hero-03.jpg",
+    "imagePosition": "center 66%",
+    "backgroundColor": "#3a1843",
+    "overlayColor": "#3a1843",
+    "overlayOpacity": 0.9,
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "accentColor": "#c7b434",
+    "headingFont": "display"
+  }
+}

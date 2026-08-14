@@ -1,0 +1,18 @@
+{
+  "title": "Contact",
+  "seoDescription": "Get in touch with Schnurr Painting for commercial painting, coatings, wallcovering, and specialty finish work.",
+  "hero": {
+    "eyebrow": "Get In Touch",
+    "title": "Let's talk about your building.",
+    "intro": "Questions, general inquiries, or just getting started \u2014 send us a note and a member of our team will follow up directly.",
+    "image": "/images/hero/hero-03.jpg",
+    "imagePosition": "center",
+    "backgroundColor": "#3a1843",
+    "overlayColor": "#3a1843",
+    "overlayOpacity": 0.9,
+    "headingColor": "#ffffff",
+    "introColor": "#ffffff",
+    "accentColor": "#c7b434",
+    "headingFont": "display"
+  }
+}

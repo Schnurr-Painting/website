@@ -1,0 +1,24 @@
+{
+  "title": "Careers",
+  "seoDescription": "Careers and opportunities at Schnurr Painting.",
+  "hero": {
+    "headingColor": "#ffffff",
+    "imagePosition": "center",
+    "eyebrow": "Careers",
+    "intro": "Commercial painting careers with teams focused on quality, safety, and professionalism.",
+    "headingFont": "display",
+    "overlayColor": "#3a1843",
+    "backgroundColor": "#3a1843",
+    "introColor": "#ffffff",
+    "title": "Build good work with good people.",
+    "accentColor": "#c7b434",
+    "image": "/images/uploads/home-hero-painting-2.webp",
+    "overlayOpacity": 0.9
+  },
+  "sections": [
+    {
+      "title": "Painter",
+      "copy": "Great Job"
+    }
+  ]
+}
