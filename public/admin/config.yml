@@ -114,6 +114,7 @@ collections:
                 fields:
                   - { label: "Image", name: "image", widget: "image" }
                   - { label: "Image Position", name: "imagePosition", widget: "string", default: "center", hint: "Examples: center, center 68%, left center" }
+          - label: "Qualification Stats"
             name: "stats"
             widget: "list"
             summary: "{{fields.value}} {{fields.label}}"
