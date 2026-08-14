@@ -66,5 +66,10 @@
   "testimonialsSection": {
     "eyebrow": "What Partners Say",
     "heading": "Built for repeat work."
+  },
+  "requestBidSection": {
+    "eyebrow": "Get Started",
+    "heading": "Request a Bid",
+    "intro": "Tell us about your project and we'll follow up to talk scope, timeline, and next steps."
   }
 }

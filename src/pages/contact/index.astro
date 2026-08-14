@@ -1,0 +1,24 @@
+---
+import SitePage from '../../layouts/SitePage.astro';
+import InteriorHero from '../../components/interior/InteriorHero.astro';
+import ContactForm from '../../components/interior/ContactForm.astro';
+import page from '../../data/pages/contact.json';
+const h = page.hero;
+---
+<SitePage title={page.title} description={page.seoDescription}>
+  <InteriorHero
+    eyebrow={h.eyebrow}
+    title={h.title}
+    intro={h.intro}
+    image={h.image}
+    imagePosition={h.imagePosition}
+    backgroundColor={h.backgroundColor}
+    overlayColor={h.overlayColor}
+    overlayOpacity={h.overlayOpacity}
+    headingColor={h.headingColor}
+    introColor={h.introColor}
+    accentColor={h.accentColor}
+    headingFont={h.headingFont}
+  />
+  <ContactForm />
+</SitePage>

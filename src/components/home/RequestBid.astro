@@ -1,0 +1,250 @@
+---
+import page from '../../data/pages/home.json';
+const section = page.requestBidSection;
+---
+
+<section class="request-bid" id="request-bid">
+  <div class="request-bid-inner">
+    <div class="request-bid-heading">
+      <p class="eyebrow">{section.eyebrow}</p>
+      <h2>{section.heading}</h2>
+      <p class="request-bid-intro">{section.intro}</p>
+    </div>
+
+    <form
+      name="request-bid"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="request-bid-form"
+      id="request-bid-form"
+    >
+      <input type="hidden" name="form-name" value="request-bid" />
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="rb-name">Name *</label>
+          <input type="text" id="rb-name" name="name" required />
+        </div>
+        <div class="field">
+          <label for="rb-email">Email *</label>
+          <input type="email" id="rb-email" name="email" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="rb-phone">Phone</label>
+          <input type="tel" id="rb-phone" name="phone" />
+        </div>
+        <div class="field">
+          <label for="rb-company">Company</label>
+          <input type="text" id="rb-company" name="company" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="rb-type">Project Type</label>
+          <select id="rb-type" name="projectType">
+            <option value="">Select one</option>
+            <option>Interior Painting</option>
+            <option>Exterior Painting</option>
+            <option>Wallcovering & Finishes</option>
+            <option>Specialty Coatings</option>
+            <option>Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rb-timeline">Timeline</label>
+          <select id="rb-timeline" name="timeline">
+            <option value="">Select one</option>
+            <option>As Soon As Possible</option>
+            <option>Within 30 Days</option>
+            <option>1&ndash;3 Months</option>
+            <option>Just Researching</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rb-location">Project Location</label>
+        <input type="text" id="rb-location" name="location" placeholder="City, or building address if known" />
+      </div>
+
+      <div class="field">
+        <label for="rb-details">Project Details</label>
+        <textarea id="rb-details" name="details" rows="4" placeholder="Scope, square footage, current condition&mdash;whatever you have."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary submit-btn">Send Request <span aria-hidden="true">→</span></button>
+
+      <p class="form-status" id="rb-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('request-bid-form');
+  const status = document.getElementById('rb-status');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const body = new URLSearchParams();
+    formData.forEach((value, key) => body.append(key, String(value)));
+
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+
+      if (response.ok) {
+        form.reset();
+        form.style.display = 'none';
+        status.textContent = "Thanks \u2014 we've got your request and will be in touch shortly.";
+        status.classList.add('success');
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong sending that. Please try again, or call us directly.';
+      status.classList.add('error');
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .request-bid {
+    background: var(--cream);
+    padding: 88px 0;
+  }
+
+  .request-bid-inner {
+    width: min(calc(100% - 120px), 900px);
+    margin: 0 auto;
+  }
+
+  .request-bid-heading {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .request-bid-heading h2 {
+    margin: 12px 0 0;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: clamp(32px, 3vw, 44px);
+    font-weight: 600;
+    line-height: 1.05;
+  }
+
+  .request-bid-intro {
+    max-width: 520px;
+    margin: 16px auto 0;
+    color: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .request-bid-form {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field label {
+    font-family: var(--utility);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--body-font);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    width: 100%;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: -1px;
+  }
+
+  .field textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .submit-btn {
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-status {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .form-status.success {
+    color: #3d6e3d;
+    font-weight: 600;
+  }
+
+  .form-status.error {
+    color: #a13a2f;
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+
+    .request-bid-form {
+      padding: 28px 24px;
+    }
+  }
+</style>

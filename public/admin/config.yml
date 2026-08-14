@@ -151,6 +151,13 @@ collections:
             fields:
               - { label: "Eyebrow", name: "eyebrow", widget: "string" }
               - { label: "Heading", name: "heading", widget: "string" }
+          - label: "Request a Bid Section"
+            name: "requestBidSection"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
 
       - label: "Services"
         name: "services_page"
@@ -249,6 +256,17 @@ collections:
             fields:
               - { label: "Section Heading", name: "title", widget: "string" }
               - { label: "Section Text", name: "copy", widget: "text" }
+
+      - label: "Contact"
+        name: "contact_page"
+        file: "src/data/pages/contact.json"
+        fields:
+          - { label: "Page Name", name: "title", widget: "string" }
+          - { label: "SEO Description", name: "seoDescription", widget: "text" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields: *standard_hero_fields
 
   - name: "images"
     label: "Image Library"
