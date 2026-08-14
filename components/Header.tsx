@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
 import settings from '@/data/site-settings.json';
 import styles from './Header.module.css';
 
@@ -17,12 +16,9 @@ const links = [
 ];
 
 export default function Header() {
-  const openModal = () => {
-    const modal = document.getElementById('bid-modal');
-    if (modal) {
-      modal.setAttribute('aria-hidden', 'false');
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
+  const handleBidClick = () => {
+    if (typeof window !== 'undefined' && (window as any).openBidModal) {
+      (window as any).openBidModal();
     }
   };
 
@@ -35,6 +31,8 @@ export default function Header() {
               className={styles.brandLogo}
               src={settings.brand.logo}
               alt={settings.brand.logoAlt}
+              width="235"
+              height="64"
             />
           </div>
         </Link>
@@ -45,7 +43,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <button onClick={openModal} className={styles.bidButton} type="button">
+        <button onClick={handleBidClick} className={styles.bidButton} type="button">
           Request a Bid <span aria-hidden="true">→</span>
         </button>
       </div>
