@@ -9,17 +9,12 @@
       /* Custom branded wrapper around Decap CMS. Decap does not support
          deep theming of its own editor chrome (open feature request,
          unresolved since 2018 — see decaporg/decap-cms#1727), so this
-         header lives OUTSIDE Decap's mount point (#nc-root) as a
-         permanent, always-visible brand bar. It persists through login,
-         loading, and every collection/entry screen. */
+         header lives OUTSIDE Decap's mount point (#nc-root). It shows on
+         the login screen and collections list, but is hidden while an
+         entry is actually open — see the script below for why. */
       * { box-sizing: border-box; }
       body { margin: 0; }
       #schnurr-cms-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 2147483647;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -86,14 +81,6 @@
         #schnurr-cms-header .titles strong { font-size: 13px; }
         #schnurr-cms-header .view-site span { display: none; }
       }
-      /* Decap mounts its own app inside #nc-root. Since the header above
-         is position:fixed (needed because Decap's editor view uses its
-         own full-viewport layout internally that would otherwise cover a
-         merely-sticky header), push nc-root's content down by the
-         header's height so nothing renders underneath it. */
-      #nc-root {
-        padding-top: 56px;
-      }
     </style>
   </head>
   <body>
@@ -114,5 +101,25 @@
 
     <script src="https://unpkg.com/decap-cms@^3.8.0/dist/decap-cms.js"></script>
     <script src="/admin/preview-templates.js"></script>
+    <script>
+      // The branded header above lives outside Decap's own mount point,
+      // which works fine for the login screen and the collections list.
+      // But Decap's individual entry-editor view renders its own
+      // full-viewport UI (with the real Save/Publish toolbar, breadcrumb,
+      // and logout menu) — a fixed header on top of that just covers up
+      // Decap's actual controls without adding anything useful. So: hide
+      // our header specifically while an entry is open, and let Decap's
+      // own UI (which already shows what you're editing) be the one
+      // source of truth there.
+      (function () {
+        var header = document.getElementById('schnurr-cms-header');
+        function syncHeaderVisibility() {
+          var inEntryEditor = /\/entries\//.test(window.location.hash);
+          header.style.display = inEntryEditor ? 'none' : 'flex';
+        }
+        window.addEventListener('hashchange', syncHeaderVisibility);
+        syncHeaderVisibility();
+      })();
+    </script>
   </body>
 </html>
