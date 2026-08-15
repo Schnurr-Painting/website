@@ -39,12 +39,15 @@ function githubHeaders(): HeadersInit {
 export async function getCollection<T = Record<string, any>>(
   collectionName: string
 ): Promise<ContentEntry<T>[]> {
+  const t0 = Date.now();
   const dirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/src/content/${collectionName}?ref=${GITHUB_BRANCH}`;
 
   const res = await fetch(dirUrl, {
     headers: githubHeaders(),
     next: { tags: [`content:${collectionName}`], revalidate: FALLBACK_REVALIDATE_SECONDS },
   });
+  const t1 = Date.now();
+  console.log(`[content] ${collectionName}: directory listing took ${t1 - t0}ms (status ${res.status})`);
 
   if (!res.ok) {
     if (res.status === 404) return [];
@@ -56,10 +59,12 @@ export async function getCollection<T = Record<string, any>>(
 
   const entries = await Promise.all(
     mdFiles.map(async (file) => {
+      const fileStart = Date.now();
       const contentRes = await fetch(file.download_url, {
         next: { tags: [`content:${collectionName}`], revalidate: FALLBACK_REVALIDATE_SECONDS },
       });
       const raw = await contentRes.text();
+      console.log(`[content] ${collectionName}/${file.name}: fetch took ${Date.now() - fileStart}ms`);
       const { data, content } = matter(raw);
       return {
         id: file.name.replace(/\.md$/, ''),
@@ -69,6 +74,7 @@ export async function getCollection<T = Record<string, any>>(
     })
   );
 
+  console.log(`[content] ${collectionName}: TOTAL getCollection() took ${Date.now() - t0}ms`);
   return entries;
 }
 
@@ -79,6 +85,7 @@ export async function getEntry<T = Record<string, any>>(
   collectionName: string,
   id: string
 ): Promise<ContentEntry<T> | null> {
+  const t0 = Date.now();
   const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/src/content/${collectionName}/${id}.md?ref=${GITHUB_BRANCH}`;
 
   const res = await fetch(fileUrl, {
@@ -88,6 +95,7 @@ export async function getEntry<T = Record<string, any>>(
       revalidate: FALLBACK_REVALIDATE_SECONDS,
     },
   });
+  console.log(`[content] getEntry(${collectionName}, ${id}) took ${Date.now() - t0}ms (status ${res.status})`);
 
   if (!res.ok) return null;
 

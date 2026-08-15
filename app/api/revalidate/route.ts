@@ -39,6 +39,8 @@ function isValidGithubSignature(rawBody: string, signatureHeader: string | null,
 }
 
 export async function POST(request: NextRequest) {
+  const t0 = Date.now();
+
   if (!process.env.REVALIDATE_SECRET) {
     return NextResponse.json(
       { error: 'REVALIDATE_SECRET is not configured on this deployment.' },
@@ -53,7 +55,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature.' }, { status: 401 });
   }
 
+  const tRevalidateStart = Date.now();
   ALL_COLLECTION_TAGS.forEach((tag) => revalidateTag(tag));
+  const tRevalidateEnd = Date.now();
+  console.log(`[revalidate] revalidateTag() for ${ALL_COLLECTION_TAGS.length} tags took ${tRevalidateEnd - tRevalidateStart}ms`);
 
   // revalidateTag() alone only invalidates Next.js's own internal data
   // cache — it does NOT clear Netlify's separate CDN edge cache sitting
@@ -65,16 +70,21 @@ export async function POST(request: NextRequest) {
   // used in lib/content.ts's fetch() calls, trusting Netlify's
   // documented automatic tag-mapping — but doesn't rely on that mapping
   // being the only mechanism in play.
+  const tPurgeStart = Date.now();
   try {
     await purgeCache({ tags: ALL_COLLECTION_TAGS });
+    console.log(`[revalidate] purgeCache() took ${Date.now() - tPurgeStart}ms`);
   } catch (err) {
     // Don't fail the whole request if the CDN purge call itself has a
     // problem — revalidateTag() above still ran, so Next.js's own cache
     // is correct even if this extra step didn't succeed.
-    console.error('Netlify CDN purge failed:', err);
+    console.error(`[revalidate] purgeCache() FAILED after ${Date.now() - tPurgeStart}ms:`, err);
   }
 
-  return NextResponse.json({ revalidated: true, tags: ALL_COLLECTION_TAGS, now: Date.now() });
+  const totalMs = Date.now() - t0;
+  console.log(`[revalidate] TOTAL webhook handler time: ${totalMs}ms`);
+
+  return NextResponse.json({ revalidated: true, tags: ALL_COLLECTION_TAGS, totalMs, now: Date.now() });
 }
 
 // Convenience for sanity-checking the route exists and responds, without
