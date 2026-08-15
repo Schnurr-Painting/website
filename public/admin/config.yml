@@ -4,6 +4,8 @@ backend:
   name: git-gateway
   branch: nextjs-migration
 
+logo_url: "/images/branding/schnurr-logo.png"
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
