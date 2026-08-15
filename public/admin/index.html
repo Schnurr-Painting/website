@@ -15,6 +15,11 @@
       * { box-sizing: border-box; }
       body { margin: 0; }
       #schnurr-cms-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2147483647;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -80,6 +85,14 @@
       @media (max-width: 560px) {
         #schnurr-cms-header .titles strong { font-size: 13px; }
         #schnurr-cms-header .view-site span { display: none; }
+      }
+      /* Decap mounts its own app inside #nc-root. Since the header above
+         is position:fixed (needed because Decap's editor view uses its
+         own full-viewport layout internally that would otherwise cover a
+         merely-sticky header), push nc-root's content down by the
+         header's height so nothing renders underneath it. */
+      #nc-root {
+        padding-top: 56px;
       }
     </style>
   </head>
