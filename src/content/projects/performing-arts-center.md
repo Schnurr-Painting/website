@@ -2,7 +2,8 @@
 title: Performing Arts Center
 market: Civic / Institutional
 featuredImage: /images/hero/hero-01.jpg
-shortDescription: Full interior coatings and specialty finishes for large assemblyyy spacessssss.
+shortDescription: Full interior coatings and specialty finishes for largeeeeee
+  assemblyyy spacessssss.
 featured: true
 sortOrder: 1
 ---
