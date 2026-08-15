@@ -11,6 +11,19 @@ loose ends don't get lost or forgotten under the pace of everything else.
 
 ## Ownership & Access
 
+- [ ] **Two GitHub personal access tokens exist — only one is actually
+      used.** A fine-grained token was created first, turned out to be
+      incompatible with Netlify's Git Gateway (documented GitHub
+      limitation — fine-grained tokens don't reliably work for
+      organization-owned repos in every scenario), and was abandoned.
+      A **classic** token replaced it and is what's actually wired into
+      both Git Gateway and `GITHUB_CONTENT_TOKEN`. The fine-grained one
+      is still sitting unused in the password manager — not harmful, but
+      renamed the classic one's GitHub label to make this unambiguous
+      going forward (`CLASSIC — Netlify (Git Gateway + Content Token)`).
+      Worth deleting the unused fine-grained one eventually, low
+      priority.
+
 - [ ] **Transfer Netlify project ownership to Schnurr.** Currently under Rick's
       personal account (deliberately, to stay on the free/personal tier —
       see the earlier conversation about GitHub org vs. personal account
