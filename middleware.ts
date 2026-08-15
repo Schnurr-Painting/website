@@ -1,37 +1,71 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Confirmed via real testing: a hard refresh (bypasses the browser's
-// own cache) shows content edits immediately, while a normal refresh
-// keeps showing stale content. That means the actual revalidation
-// pipeline — webhook, revalidateTag, Netlify CDN purge, live GitHub
-// fetch — is working correctly and fast (proven separately via server
-// logs: every page render completes in well under a second). The
-// remaining problem is purely that browsers are trusting their own
-// local cached copy without ever checking back with the server on a
-// normal refresh.
+// Confirmed via real testing: an empty function log after a hard
+// refresh means the request never reached the server at all — it was
+// served entirely from Netlify's CDN edge cache. That rules out
+// browser caching (already separately confirmed fixed) as the current
+// problem. The remaining gap: the webhook calls purgeCache({ tags })
+// against Netlify's CDN, but nothing was ever tagging the actual page
+// RESPONSES with matching Netlify-Cache-Tag headers in the first
+// place — Next.js's own `next: { tags }` fetch option only affects
+// Next.js's internal data cache, not Netlify's separate CDN tag
+// system. A purge call against tags nothing was ever tagged with has
+// nothing real to match, so the old cached page just stays put
+// indefinitely.
 //
-// This sets two separate cache directives:
-// - Cache-Control (what browsers obey): max-age=0 + must-revalidate,
-//   so a normal refresh always asks the server "is this still fresh?"
-//   instead of silently reusing a stale local copy.
-// - Netlify-CDN-Cache-Control (what Netlify's own edge network obeys,
-//   separately from the browser-facing header): can stay long-lived,
-//   since that layer is what actually gets explicitly purged by tag
-//   whenever the revalidation webhook fires — no reason to also force
-//   it to revalidate on every single request.
+// This maps each route to the content tags relevant to it and sets
+// Netlify-Cache-Tag accordingly, so purgeCache() in the webhook route
+// actually has something real to evict.
+function getContentTagsForPath(pathname: string): string[] {
+  if (pathname === '/') {
+    return ['content:services', 'content:markets', 'content:projects', 'content:testimonials'];
+  }
+  if (pathname === '/services' || pathname.startsWith('/services/')) {
+    const id = pathname.split('/')[2];
+    return id ? [`content:services`, `content:services:${id}`] : ['content:services'];
+  }
+  if (pathname === '/markets' || pathname.startsWith('/markets/')) {
+    const id = pathname.split('/')[2];
+    return id ? [`content:markets`, `content:markets:${id}`] : ['content:markets'];
+  }
+  if (pathname === '/projects' || pathname.startsWith('/projects/')) {
+    const id = pathname.split('/')[2];
+    return id ? [`content:projects`, `content:projects:${id}`] : ['content:projects'];
+  }
+  if (pathname === '/about') {
+    return ['content:team'];
+  }
+  if (pathname === '/careers') {
+    return ['content:positions'];
+  }
+  if (pathname === '/resources') {
+    return ['content:resources'];
+  }
+  return [];
+}
+
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
+  // Browsers: always check freshness with the server on a normal
+  // refresh instead of silently reusing a stale local copy.
   response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
+  // Netlify's own CDN: can cache long-lived, since it's explicitly
+  // purged by tag whenever the revalidation webhook fires.
   response.headers.set('Netlify-CDN-Cache-Control', 'public, max-age=31536000, must-revalidate');
+
+  // Tag the actual cached response so purgeCache({ tags }) in the
+  // webhook route has something real to evict.
+  const tags = getContentTagsForPath(request.nextUrl.pathname);
+  if (tags.length > 0) {
+    response.headers.set('Netlify-Cache-Tag', tags.join(','));
+  }
 
   return response;
 }
 
 export const config = {
-  // Applies to page routes only — static assets (JS/CSS bundles, images,
-  // favicon) are content-hashed and genuinely safe to cache long-term in
-  // the browser, unlike page HTML which changes based on CMS content.
   matcher: ['/((?!_next/static|_next/image|favicon.ico|images/|admin/).*)'],
 };
