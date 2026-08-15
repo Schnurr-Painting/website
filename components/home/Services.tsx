@@ -11,9 +11,9 @@ interface ServiceData {
   sortOrder: number;
 }
 
-export default function Services() {
+export default async function Services() {
   const section = page.servicesSection;
-  const services = getCollection<ServiceData>('services')
+  const services = (await getCollection<ServiceData>('services'))
     .filter((s) => s.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
     .slice(0, 4);

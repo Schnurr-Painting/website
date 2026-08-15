@@ -10,11 +10,11 @@ interface MarketData {
 }
 
 export async function generateStaticParams() {
-  return getCollection('markets').map((m) => ({ id: m.id }));
+  return (await getCollection('markets')).map((m) => ({ id: m.id }));
 }
 
-export default function MarketDetailPage({ params }: { params: { id: string } }) {
-  const entry = getEntry<MarketData>('markets', params.id);
+export default async function MarketDetailPage({ params }: { params: { id: string } }) {
+  const entry = await getEntry<MarketData>('markets', params.id);
   if (!entry) notFound();
 
   return (

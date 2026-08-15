@@ -12,9 +12,9 @@ interface ProjectData {
   sortOrder: number;
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
   const h = page.hero;
-  const projects = getCollection<ProjectData>('projects').sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+  const projects = (await getCollection<ProjectData>('projects')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const items = projects.map((p) => ({
     id: p.id,

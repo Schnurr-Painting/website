@@ -11,11 +11,11 @@ interface ProjectData {
 }
 
 export async function generateStaticParams() {
-  return getCollection('projects').map((p) => ({ id: p.id }));
+  return (await getCollection('projects')).map((p) => ({ id: p.id }));
 }
 
-export default function ProjectDetailPage({ params }: { params: { id: string } }) {
-  const entry = getEntry<ProjectData>('projects', params.id);
+export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
+  const entry = await getEntry<ProjectData>('projects', params.id);
   if (!entry) notFound();
 
   return (

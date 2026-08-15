@@ -11,9 +11,9 @@ interface ServiceData {
   sortOrder: number;
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
   const h = page.hero;
-  const services = getCollection<ServiceData>('services').sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+  const services = (await getCollection<ServiceData>('services')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const items = services.map((s) => ({
     id: s.id,

@@ -12,9 +12,9 @@ interface ProjectData {
   sortOrder: number;
 }
 
-export default function FeaturedProjects() {
+export default async function FeaturedProjects() {
   const section = page.projectsSection;
-  const projects = getCollection<ProjectData>('projects')
+  const projects = (await getCollection<ProjectData>('projects'))
     .filter((p) => p.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
     .slice(0, 3);

@@ -16,9 +16,9 @@ interface TeamData {
   displayOrder: number;
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
   const h = page.hero;
-  const team = getCollection<TeamData>('team')
+  const team = (await getCollection<TeamData>('team'))
     .filter((m) => m.data.publicProfile)
     .sort((a, b) => a.data.displayOrder - b.data.displayOrder);
 

@@ -11,9 +11,9 @@ interface MarketData {
   sortOrder: number;
 }
 
-export default function MarketsPage() {
+export default async function MarketsPage() {
   const h = page.hero;
-  const markets = getCollection<MarketData>('markets').sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+  const markets = (await getCollection<MarketData>('markets')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const items = markets.map((m) => ({
     id: m.id,

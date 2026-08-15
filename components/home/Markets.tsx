@@ -12,9 +12,9 @@ interface MarketData {
   sortOrder: number;
 }
 
-export default function Markets() {
+export default async function Markets() {
   const section = page.marketsSection;
-  const markets = getCollection<MarketData>('markets')
+  const markets = (await getCollection<MarketData>('markets'))
     .filter((m) => m.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 

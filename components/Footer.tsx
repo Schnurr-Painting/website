@@ -9,8 +9,8 @@ interface ServiceData {
   sortOrder: number;
 }
 
-export default function Footer() {
-  const services = getCollection<ServiceData>('services').sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+export default async function Footer() {
+  const services = (await getCollection<ServiceData>('services')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   return (
     <footer className={styles.footer}>

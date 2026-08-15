@@ -11,9 +11,9 @@ interface TestimonialData {
   sortOrder: number;
 }
 
-export default function Testimonials() {
+export default async function Testimonials() {
   const section = page.testimonialsSection;
-  const testimonials = getCollection<TestimonialData>('testimonials')
+  const testimonials = (await getCollection<TestimonialData>('testimonials'))
     .filter((t) => t.data.approvedPublic)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
     .slice(0, 3);

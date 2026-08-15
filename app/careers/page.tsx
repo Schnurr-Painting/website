@@ -15,9 +15,9 @@ interface PositionData {
   sortOrder: number;
 }
 
-export default function CareersPage() {
+export default async function CareersPage() {
   const h = page.hero;
-  const positions = getCollection<PositionData>('positions')
+  const positions = (await getCollection<PositionData>('positions'))
     .filter((p) => p.data.active)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 

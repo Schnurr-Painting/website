@@ -15,9 +15,9 @@ interface ResourceData {
   sortOrder: number;
 }
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
   const h = page.hero;
-  const resources = getCollection<ResourceData>('resources')
+  const resources = (await getCollection<ResourceData>('resources'))
     .filter((r) => r.data.visibility !== 'private')
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 

@@ -10,11 +10,11 @@ interface ServiceData {
 }
 
 export async function generateStaticParams() {
-  return getCollection('services').map((s) => ({ id: s.id }));
+  return (await getCollection('services')).map((s) => ({ id: s.id }));
 }
 
-export default function ServiceDetailPage({ params }: { params: { id: string } }) {
-  const entry = getEntry<ServiceData>('services', params.id);
+export default async function ServiceDetailPage({ params }: { params: { id: string } }) {
+  const entry = await getEntry<ServiceData>('services', params.id);
   if (!entry) notFound();
 
   return (
