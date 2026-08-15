@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
+import { purgeCache } from '@netlify/functions';
 import crypto from 'crypto';
 
 // All collection tags used across lib/content.ts. A GitHub push webhook
@@ -53,6 +54,25 @@ export async function POST(request: NextRequest) {
   }
 
   ALL_COLLECTION_TAGS.forEach((tag) => revalidateTag(tag));
+
+  // revalidateTag() alone only invalidates Next.js's own internal data
+  // cache — it does NOT clear Netlify's separate CDN edge cache sitting
+  // in front of it. Netlify's Next.js Runtime documents "automatic
+  // fine-grained caching" that's supposed to bridge the two using the
+  // same tag names, but there's real-world evidence this doesn't always
+  // work reliably (netlify/next-runtime#1085). This explicit purge call
+  // is belt-and-suspenders: it uses the exact same tag strings already
+  // used in lib/content.ts's fetch() calls, trusting Netlify's
+  // documented automatic tag-mapping — but doesn't rely on that mapping
+  // being the only mechanism in play.
+  try {
+    await purgeCache({ tags: ALL_COLLECTION_TAGS });
+  } catch (err) {
+    // Don't fail the whole request if the CDN purge call itself has a
+    // problem — revalidateTag() above still ran, so Next.js's own cache
+    // is correct even if this extra step didn't succeed.
+    console.error('Netlify CDN purge failed:', err);
+  }
 
   return NextResponse.json({ revalidated: true, tags: ALL_COLLECTION_TAGS, now: Date.now() });
 }
