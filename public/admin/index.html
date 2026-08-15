@@ -82,6 +82,84 @@
         #schnurr-cms-header .view-site span { display: none; }
       }
 
+      #forgot-password-link {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 900;
+        color: #3a1843;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: underline;
+        background: #fffdf8;
+        padding: 6px 12px;
+        border: 1px solid #d9d5cb;
+        cursor: pointer;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      }
+
+      #forgot-password-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483646;
+        background: rgba(17, 10, 20, 0.72);
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      }
+      #forgot-password-modal .box {
+        width: min(calc(100% - 48px), 380px);
+        background: #fffdf8;
+        padding: 32px 28px;
+      }
+      #forgot-password-modal h2 {
+        margin: 0 0 8px;
+        color: #112a35;
+        font-size: 18px;
+      }
+      #forgot-password-modal p {
+        margin: 0 0 18px;
+        color: #40515a;
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      #forgot-password-modal input {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        border: 1px solid #d9d5cb;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      #forgot-password-modal .actions {
+        display: flex;
+        gap: 10px;
+      }
+      #forgot-password-modal button {
+        min-height: 40px;
+        padding: 0 16px;
+        border: none;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #forgot-password-send {
+        background: #c7b434;
+        color: #2a102f;
+      }
+      #forgot-password-cancel {
+        background: transparent;
+        color: #40515a;
+        border: 1px solid #d9d5cb !important;
+      }
+      #forgot-password-status {
+        margin-top: 12px;
+        font-size: 13px;
+      }
+      #forgot-password-status.success { color: #3d6e3d; }
+      #forgot-password-status.error { color: #a13a2f; }
+
       /* Full-screen overlay shown when a session/auth error is detected,
          in place of Decap's raw technical error toast (things like
          "Gotrue-js: failed getting jwt access token" or "Git Gateway
@@ -155,6 +233,22 @@
       </div>
     </div>
 
+    <button type="button" id="forgot-password-link">Forgot password?</button>
+
+    <div id="forgot-password-modal">
+      <div class="box">
+        <h2>Reset your password</h2>
+        <p>Enter the email your account was set up with — we'll send a
+           reset link. Nothing changes until you click it.</p>
+        <input type="email" id="forgot-password-email" placeholder="you@example.com" />
+        <div class="actions">
+          <button type="button" id="forgot-password-send">Send Reset Link</button>
+          <button type="button" id="forgot-password-cancel">Cancel</button>
+        </div>
+        <p id="forgot-password-status"></p>
+      </div>
+    </div>
+
     <div id="nc-root"></div>
 
     <script src="https://unpkg.com/decap-cms@^3.8.0/dist/decap-cms.js"></script>
@@ -171,12 +265,74 @@
       // source of truth there.
       (function () {
         var header = document.getElementById('schnurr-cms-header');
+        var forgotLink = document.getElementById('forgot-password-link');
         function syncHeaderVisibility() {
           var inEntryEditor = /\/entries\//.test(window.location.hash);
           header.style.display = inEntryEditor ? 'none' : 'flex';
+          forgotLink.style.display = inEntryEditor ? 'none' : 'block';
         }
         window.addEventListener('hashchange', syncHeaderVisibility);
         syncHeaderVisibility();
+      })();
+
+      // "Forgot password?" — Decap's own login screen (git-gateway
+      // backend) doesn't include this, which means without it, anyone
+      // who gets locked out has no path back in except asking whoever
+      // manages this site to reset it for them manually. This calls
+      // GoTrue's real, documented recovery endpoint directly:
+      // https://github.com/netlify/gotrue-js — requestPasswordRecovery()
+      // wraps a POST to {APIUrl}/recover with {email}; this does the
+      // same thing without adding a second copy of the widget library.
+      (function () {
+        var modal = document.getElementById('forgot-password-modal');
+        var status = document.getElementById('forgot-password-status');
+
+        function closeModal() {
+          modal.style.display = 'none';
+          status.textContent = '';
+          status.className = '';
+        }
+
+        document.getElementById('forgot-password-link').addEventListener('click', function () {
+          modal.style.display = 'flex';
+        });
+        document.getElementById('forgot-password-cancel').addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) closeModal();
+        });
+
+        document.getElementById('forgot-password-send').addEventListener('click', function () {
+          var email = document.getElementById('forgot-password-email').value.trim();
+          if (!email) {
+            status.textContent = 'Enter an email address first.';
+            status.className = 'error';
+            return;
+          }
+          status.textContent = 'Sending…';
+          status.className = '';
+
+          fetch('/.netlify/identity/recover', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email }),
+          })
+            .then(function (res) {
+              // GoTrue returns success here even for an email that isn't
+              // registered, deliberately, so this can't be used to probe
+              // which emails have accounts.
+              if (res.ok) {
+                status.textContent = 'Check your email for a reset link.';
+                status.className = 'success';
+              } else {
+                status.textContent = 'Something went wrong. Try again, or contact whoever manages this site.';
+                status.className = 'error';
+              }
+            })
+            .catch(function () {
+              status.textContent = 'Something went wrong. Try again, or contact whoever manages this site.';
+              status.className = 'error';
+            });
+        });
       })();
 
       // Decap's git-gateway backend surfaces session/token failures as
