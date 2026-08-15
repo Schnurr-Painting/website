@@ -81,6 +81,53 @@
         #schnurr-cms-header .titles strong { font-size: 13px; }
         #schnurr-cms-header .view-site span { display: none; }
       }
+
+      /* Full-screen overlay shown when a session/auth error is detected,
+         in place of Decap's raw technical error toast (things like
+         "Gotrue-js: failed getting jwt access token" or "Git Gateway
+         Error: [object Object]"). Not something a non-technical editor
+         should have to interpret on their own. */
+      #session-expired-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        background: rgba(17, 10, 20, 0.72);
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      }
+      #session-expired-overlay .box {
+        width: min(calc(100% - 48px), 420px);
+        background: #fffdf8;
+        padding: 36px 32px;
+        text-align: center;
+      }
+      #session-expired-overlay img {
+        height: 40px;
+        margin-bottom: 18px;
+      }
+      #session-expired-overlay h2 {
+        margin: 0 0 10px;
+        color: #112a35;
+        font-size: 20px;
+      }
+      #session-expired-overlay p {
+        margin: 0 0 22px;
+        color: #40515a;
+        font-size: 14.5px;
+        line-height: 1.55;
+      }
+      #session-expired-overlay button {
+        min-height: 44px;
+        padding: 0 22px;
+        background: #c7b434;
+        color: #2a102f;
+        border: none;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -95,6 +142,17 @@
       <a class="view-site" href="/" target="_blank" rel="noopener noreferrer">
         View Live Site <span aria-hidden="true">↗</span>
       </a>
+    </div>
+
+    <div id="session-expired-overlay">
+      <div class="box">
+        <img src="/images/branding/schnurr-logo.png" alt="" />
+        <h2>Your session timed out</h2>
+        <p>This happens after the Content Manager has been open a while
+           without use. Nothing was lost — just log back in to keep
+           editing.</p>
+        <button type="button" id="session-expired-relogin">Log In Again</button>
+      </div>
     </div>
 
     <div id="nc-root"></div>
@@ -119,6 +177,61 @@
         }
         window.addEventListener('hashchange', syncHeaderVisibility);
         syncHeaderVisibility();
+      })();
+
+      // Decap's git-gateway backend surfaces session/token failures as
+      // raw technical error text — "Gotrue-js: failed getting jwt access
+      // token", "ACCESS_TOKEN_ERROR", "Git Gateway Error: [object
+      // Object]" — which isn't something a non-technical editor should
+      // have to interpret (it just reads as "the site is broken," and
+      // that becomes a support call).
+      //
+      // This deliberately watches the DOM rather than listening for
+      // window 'error'/'unhandledrejection' events. Decap renders these
+      // as its own styled toast component, which means Decap is already
+      // catching the underlying error internally to build that UI — so
+      // it never becomes an uncaught error a window-level listener would
+      // see. Watching for the actual rendered text is what's reliable
+      // here, not trying to intercept something Decap already handled.
+      (function () {
+        var shown = false;
+        var SESSION_ERROR_PATTERN = /gotrue|jwt|access.?token|git gateway error/i;
+
+        function showSessionExpiredOverlay() {
+          if (shown) return;
+          shown = true;
+          document.getElementById('session-expired-overlay').style.display = 'flex';
+        }
+
+        var observer = new MutationObserver(function () {
+          if (shown) return;
+          // Debounced: checking document.body.innerText on every single
+          // DOM mutation would run constantly against a busy React app
+          // like Decap (re-renders on every keystroke in the editor).
+          clearTimeout(window.__sessionCheckTimer);
+          window.__sessionCheckTimer = setTimeout(function () {
+            if (SESSION_ERROR_PATTERN.test(document.body.innerText || '')) {
+              showSessionExpiredOverlay();
+            }
+          }, 400);
+        });
+        observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+        document.getElementById('session-expired-relogin').addEventListener('click', function () {
+          // Clear any stale Identity/GoTrue session data before reloading,
+          // so the fresh load can't reuse whatever broke in the first
+          // place — otherwise a stale localStorage entry can make even a
+          // brand-new login attempt fail the same way.
+          try {
+            Object.keys(localStorage)
+              .filter(function (k) { return /gotrue|netlify-cms|decap/i.test(k); })
+              .forEach(function (k) { localStorage.removeItem(k); });
+          } catch (err) {
+            // localStorage may be unavailable in some contexts; safe to ignore.
+          }
+          window.location.href = '/admin/';
+          window.location.reload();
+        });
       })();
     </script>
   </body>
