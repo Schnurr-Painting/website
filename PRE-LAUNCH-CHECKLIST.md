@@ -67,6 +67,13 @@ loose ends don't get lost or forgotten under the pace of everything else.
 - [ ] **Test both forms end-to-end** once notifications are confirmed
       working: submit a real entry, confirm it lands in the Netlify
       dashboard *and* triggers an actual email, not just one or the other.
+- [ ] **Verify where the resume file upload actually lands.** The Job
+      Application form (Careers page) includes a real file input for
+      resumes, submitted via Netlify Forms. Need to confirm: does the
+      uploaded file show up as a downloadable attachment on the
+      submission in the Netlify dashboard, and is that location obvious
+      enough for whoever's reviewing applications to actually find it —
+      not yet verified with a real test submission.
 
 ## Content Gaps (verified, not guessed — checked directly against the repo)
 
@@ -169,9 +176,12 @@ Running total of real costs incurred during the build, to invoice at handoff.
       site uses simple/direct-publish mode, so there's no separate
       preview deploy for it to check. Decided to stay in simple mode
       rather than switch to editorial workflow (would add a draft/review
-      step to every future edit, not something needed right now). Button
-      itself is still worth hiding via CSS since it's genuinely inert and
-      confusing — not yet done, low priority.
+      step to every future edit, not something needed right now). **Hide
+      it via CSS** — genuinely inert and confusing, directly requested.
+- [ ] **Hide the Decap icon with up/down arrows** (next to "Check for
+      Preview" in the entry editor toolbar). Not yet identified exactly
+      what it does — needs a quick look before deciding whether to hide
+      it outright or just relabel/explain it.
 
 ## Next.js Migration (parallel site — `schnurr-painting-nextjs`)
 
@@ -193,11 +203,15 @@ Its own set of gaps, distinct from the Astro items above:
       separate Netlify Forms setup from the Astro site, zero real
       verification yet.
 - [ ] **"Send Us Your Resume" button on Careers opens the Request-a-Bid
-      form, not an actual resume upload.** It reuses the bid modal as a
+      form, not an actual resume upload.** ~~It reuses the bid modal as a
       placeholder rather than a dedicated application flow with file
-      upload. Needs a real applicant form, or at minimum a modal that
-      doesn't say "Request a Bid" at the top when someone's trying to
-      apply for a job.
+      upload.~~ **Resolved** — built a real `ApplicationModal` matching
+      the field set Astro already had (name, email, phone, role,
+      experience, file upload, message).
+- [ ] **Application form's "Experience" field placeholder text is too
+      long for the field width** — reads as cut-off/cramped rather than
+      helpful. Needs a shorter placeholder or a smaller font, not a
+      structural fix.
 - [ ] **This branch has its own separate copy of `src/content/`.** Content
       edited via Decap on one branch does not appear on the other — the two
       sites will silently drift apart until a real cutover decision is made
