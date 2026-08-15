@@ -5,18 +5,22 @@
 # Exit 0 = SKIP this build.
 # Exit 1 (or any non-zero) = PROCEED with the build.
 #
-# WHY THIS EXISTS: Decap edits (via /admin) only ever touch files under
-# src/content/, data/, or public/images/uploads/. Those are handled by
-# an on-demand revalidation webhook (see app/api/revalidate/route.ts)
-# that regenerates just the affected page in low single digits of
-# seconds — no full rebuild needed. Without this script, Netlify was
-# running a full 40-50 second build on every single content edit
-# anyway, completely masking whether the fast webhook path was even
-# working, since both mechanisms were racing and the slow one always
-# "won" by virtue of being the only one anyone could see finish.
+# WHY THIS EXISTS: Decap edits to markdown COLLECTIONS (Services,
+# Markets, Projects, Team, Testimonials, Positions, Resources — all
+# under src/content/) are handled by an on-demand revalidation webhook
+# (see app/api/revalidate/route.ts) that regenerates just the affected
+# page in low single digits of seconds — no full rebuild needed.
 #
-# Any change OUTSIDE those content paths (app/, components/, lib/,
-# package.json, etc.) is real code and still needs a normal full build.
+# IMPORTANT — data/*.json (Home hero text, other page copy, Site
+# Settings) is explicitly NOT covered by that webhook. Those pages still
+# read via static import at build time, same as before tonight's work.
+# Skipping the build for changes to those files would mean the edit
+# published to GitHub correctly but NEVER actually appeared on the live
+# site until some unrelated future full rebuild happened to fire — this
+# happened for real during testing (a Home page text edit silently
+# never went live) before this was caught and fixed. Only src/content/
+# and public/images/uploads/ are safe to skip; data/ is deliberately
+# NOT in this list until JSON page files get the same async treatment.
 
 # No previous commit to diff against (e.g. very first deploy on a new
 # site) — don't try to be clever, just build.
@@ -32,8 +36,9 @@ if [ -z "$CHANGED_FILES" ]; then
   exit 0
 fi
 
-# Anything that does NOT match a Decap-editable content path.
-NON_CONTENT_CHANGES=$(echo "$CHANGED_FILES" | grep -vE '^(src/content/|data/|public/images/uploads/)')
+# Anything that does NOT match a path actually covered by on-demand
+# revalidation. data/ is deliberately excluded — see note above.
+NON_CONTENT_CHANGES=$(echo "$CHANGED_FILES" | grep -vE '^(src/content/|public/images/uploads/)')
 
 if [ -z "$NON_CONTENT_CHANGES" ]; then
   echo "Only content files changed:"
