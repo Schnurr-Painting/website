@@ -2,13 +2,21 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import page from '@/data/pages/home.json';
 import styles from './Hero.module.css';
 
 const MOTIONS = ['zoom-in', 'pan-left', 'zoom-out', 'pan-up'];
 
-export default function Hero() {
-  const h = page.hero;
+interface HeroData {
+  eyebrow?: string;
+  headingLine1?: string;
+  headingLine2?: string;
+  headingLine3?: string;
+  intro?: string;
+  slides?: { image?: string; imagePosition?: string }[];
+}
+
+export default function Hero({ hero }: { hero?: HeroData }) {
+  const h = hero || {};
   const [current, setCurrent] = useState(0);
   const [mounted, setMounted] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);

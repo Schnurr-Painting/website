@@ -1,5 +1,10 @@
-import page from '@/data/pages/home.json';
 import styles from './StatsBand.module.css';
+
+interface Stat {
+  value: string;
+  label?: string;
+  description?: string;
+}
 
 const iconsByIndex = [
   // Years in Business
@@ -34,9 +39,7 @@ const iconsByIndex = [
 
 const colorClasses = ['orange', 'green', 'blue', 'gold', 'teal'];
 
-export default function StatsBand() {
-  const stats = page.stats;
-
+export default function StatsBand({ stats }: { stats: Stat[] }) {
   return (
     <section className={styles.credentials}>
       <img

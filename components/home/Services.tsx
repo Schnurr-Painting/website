@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
-import page from '@/data/pages/home.json';
 import styles from './Services.module.css';
 
 interface ServiceData {
@@ -11,8 +10,16 @@ interface ServiceData {
   sortOrder: number;
 }
 
-export default async function Services() {
-  const section = page.servicesSection;
+interface SectionCopy {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  photoLabel?: string;
+  photoTitle?: string;
+}
+
+export default async function Services({ section }: { section?: SectionCopy }) {
+  const sec = section || {};
   const services = (await getCollection<ServiceData>('services'))
     .filter((s) => s.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
@@ -28,16 +35,16 @@ export default async function Services() {
           <img src={sectionImage} alt="" loading="lazy" />
           <div className={styles.servicesPhotoShade} />
           <div className={styles.servicesPhotoLabel}>
-            <span>{section.photoLabel}</span>
-            <strong>{section.photoTitle}</strong>
+            <span>{sec.photoLabel}</span>
+            <strong>{sec.photoTitle}</strong>
           </div>
         </div>
 
         <div className={styles.servicesContent}>
           <div className={styles.servicesHeading}>
-            <p className={`eyebrow ${styles.servicesEyebrow}`}>{section.eyebrow}</p>
-            <h2>{section.heading}</h2>
-            <p className={styles.servicesIntro}>{section.intro}</p>
+            <p className={`eyebrow ${styles.servicesEyebrow}`}>{sec.eyebrow}</p>
+            <h2>{sec.heading}</h2>
+            <p className={styles.servicesIntro}>{sec.intro}</p>
           </div>
 
           <div className={styles.serviceList}>

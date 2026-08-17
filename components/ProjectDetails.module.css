@@ -1,0 +1,137 @@
+.wrap {
+  background: var(--paper);
+  padding: 80px 0;
+}
+
+.inner {
+  width: min(calc(100% - 120px), 1200px);
+  margin: 0 auto;
+}
+
+.inner.withSidebar {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  align-items: stretch;
+  border: 1px solid var(--line);
+}
+
+.body {
+  background: var(--paper);
+  padding: 44px 48px;
+}
+
+.leadImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 0 0 32px;
+}
+
+
+.sidebar {
+  background: var(--cream);
+  padding: 32px 26px;
+  border-left: 1px solid var(--line);
+}
+
+.sidebar h3 {
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--utility);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.specRow {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.specRow:last-of-type {
+  border-bottom: none;
+}
+
+.specLabel {
+  margin: 0 0 5px;
+  color: var(--body);
+  opacity: 0.75;
+  font-family: var(--utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.specValue {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.serviceTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.serviceTag {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 5px 10px;
+  color: var(--ink);
+  font-family: var(--utility);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.galleryOuter {
+  width: min(calc(100% - 120px), 1200px);
+  margin: 40px auto 0;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.galleryGrid.single {
+  grid-template-columns: 1fr;
+}
+
+.galleryImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.galleryGrid.single .galleryImg {
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 900px) {
+  .inner, .galleryOuter {
+    width: min(calc(100% - 48px), 1200px);
+  }
+  .inner.withSidebar {
+    grid-template-columns: 1fr;
+  }
+  .body {
+    padding: 32px 28px;
+  }
+  .sidebar {
+    border-left: none;
+    border-top: 1px solid var(--line);
+  }
+}

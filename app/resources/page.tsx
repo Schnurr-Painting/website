@@ -1,14 +1,14 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
 import { getCollection } from '@/lib/content';
-import page from '@/data/pages/resources.json';
+import { getPage } from '@/lib/sanity/queries';
 import styles from './page.module.css';
 import ResourceRow from './ResourceRow';
 
 interface ResourceData {
   title: string;
   resourceType: string;
-  description: string;
+  description?: any[];
   visibility: 'public' | 'private' | 'request_required';
   file?: string;
   externalUrl?: string;
@@ -16,7 +16,8 @@ interface ResourceData {
 }
 
 export default async function ResourcesPage() {
-  const h = page.hero;
+  const page = await getPage('resources');
+  const h = page?.hero || {};
   const resources = (await getCollection<ResourceData>('resources'))
     .filter((r) => r.data.visibility !== 'private')
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);

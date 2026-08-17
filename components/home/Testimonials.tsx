@@ -1,22 +1,16 @@
-import { getCollection } from '@/lib/content';
-import page from '@/data/pages/home.json';
+import { PortableText } from '@portabletext/react';
+import { richBodyComponents } from '../RichBody';
+import { getTestimonialsForPage } from '@/lib/testimonials';
 import styles from './Testimonials.module.css';
 
-interface TestimonialData {
-  quote: string;
-  person?: string;
-  role?: string;
-  company?: string;
-  approvedPublic?: boolean;
-  sortOrder: number;
+interface SectionCopy {
+  eyebrow?: string;
+  heading?: string;
 }
 
-export default async function Testimonials() {
-  const section = page.testimonialsSection;
-  const testimonials = (await getCollection<TestimonialData>('testimonials'))
-    .filter((t) => t.data.approvedPublic)
-    .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
-    .slice(0, 3);
+export default async function Testimonials({ section }: { section?: SectionCopy }) {
+  const sec = section || {};
+  const testimonials = await getTestimonialsForPage('home');
 
   if (testimonials.length === 0) return null;
 
@@ -24,14 +18,21 @@ export default async function Testimonials() {
     <section className={styles.testimonials}>
       <div className={styles.testimonialsInner}>
         <div className={styles.testimonialsHeading}>
-          <p className={`eyebrow ${styles.testimonialsEyebrow}`}>{section.eyebrow}</p>
-          <h2>{section.heading}</h2>
+          <p className={`eyebrow ${styles.testimonialsEyebrow}`}>{sec.eyebrow}</p>
+          <h2>{sec.heading}</h2>
         </div>
 
         <div className={styles.testimonialGrid}>
           {testimonials.map((testimonial) => (
             <blockquote key={testimonial.id} className={styles.testimonialCard}>
-              <p className={styles.quote}>&ldquo;{testimonial.data.quote}&rdquo;</p>
+              <div className={styles.cardLogoRow}>
+                {testimonial.data.companyLogo && (
+                  <img className={styles.companyLogo} src={testimonial.data.companyLogo} alt={testimonial.data.company || ''} />
+                )}
+              </div>
+              <div className={styles.quote}>
+                <PortableText value={testimonial.data.quote} components={richBodyComponents} />
+              </div>
               {testimonial.data.person && (
                 <footer className={styles.attribution}>
                   <strong>{testimonial.data.person}</strong>

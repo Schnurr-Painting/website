@@ -1,6 +1,8 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
-import page from '@/data/pages/careers.json';
+import { PortableText } from '@portabletext/react';
+import { richBodyComponents } from '@/components/RichBody';
+import { getPage } from '@/lib/sanity/queries';
 import { getCollection } from '@/lib/content';
 import styles from './page.module.css';
 import ApplyButton from './ApplyButton';
@@ -10,13 +12,14 @@ interface PositionData {
   roleType: string;
   employmentType: string;
   location?: string;
-  requirements?: string;
+  requirements?: any[];
   active: boolean;
   sortOrder: number;
 }
 
 export default async function CareersPage() {
-  const h = page.hero;
+  const page = await getPage('careers');
+  const h = page?.hero || {};
   const positions = (await getCollection<PositionData>('positions'))
     .filter((p) => p.data.active)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
@@ -45,45 +48,44 @@ export default async function CareersPage() {
           {positions.length > 0 ? (
             <div className={styles.positionsList}>
               {positions.map((position) => {
-                const requirementLines = (position.data.requirements || '')
-                  .split('\n')
-                  .map((line) => line.trim())
-                  .filter(Boolean);
+                const hasRequirements = (position.data.requirements?.length || 0) > 0;
 
                 return (
                   <article key={position.id} className={styles.positionCard}>
-                    <div className={styles.positionMeta}>
-                      <span>{position.data.roleType}</span>
-                      <span>{position.data.employmentType}</span>
-                      {position.data.location && <span className={styles.location}>{position.data.location}</span>}
-                    </div>
-                    <h3>{position.data.title}</h3>
-                    <div className={styles.positionDescription}>
-                      {position.body.split('\n\n').map((para, i) => {
-                        if (para.startsWith('**') && para.endsWith('**')) {
-                          return <p key={i}><strong>{para.replace(/\*\*/g, '')}</strong></p>;
-                        }
-                        if (para.trim().startsWith('- ')) {
-                          return (
-                            <ul key={i}>
-                              {para.split('\n').map((line, j) => (
-                                <li key={j}>{line.replace(/^-\s*/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={i}>{para}</p>;
-                      })}
-                    </div>
-                    {requirementLines.length > 0 && (
-                      <div className={styles.requirementsBlock}>
-                        <p className={styles.requirementsHeading}>Requirements</p>
-                        <ul className={styles.requirements}>
-                          {requirementLines.map((req, i) => <li key={i}>{req}</li>)}
-                        </ul>
+                    <div className={styles.positionGrid}>
+                      <div className={styles.positionMain}>
+                        <h3>{position.data.title}</h3>
+                        {position.body?.length > 0 && (
+                          <div className={styles.positionDescription}>
+                            <PortableText value={position.body} components={richBodyComponents} />
+                          </div>
+                        )}
+                        {hasRequirements && (
+                          <div className={styles.requirementsBlock}>
+                            <p className={styles.requirementsHeading}>Requirements</p>
+                            <PortableText value={position.data.requirements} components={richBodyComponents} />
+                          </div>
+                        )}
+                        <ApplyButton positionTitle={position.data.title} roleType={position.data.roleType} />
                       </div>
-                    )}
-                    <ApplyButton positionTitle={position.data.title} roleType={position.data.roleType} />
+                      <aside className={styles.positionSidebar}>
+                        <h4>Position Details</h4>
+                        <div className={styles.specRow}>
+                          <p className={styles.specLabel}>Role Type</p>
+                          <p className={styles.specValue}>{position.data.roleType}</p>
+                        </div>
+                        <div className={styles.specRow}>
+                          <p className={styles.specLabel}>Employment Type</p>
+                          <p className={styles.specValue}>{position.data.employmentType}</p>
+                        </div>
+                        {position.data.location && (
+                          <div className={styles.specRow}>
+                            <p className={styles.specLabel}>Location</p>
+                            <p className={styles.specValue}>{position.data.location}</p>
+                          </div>
+                        )}
+                      </aside>
+                    </div>
                   </article>
                 );
               })}

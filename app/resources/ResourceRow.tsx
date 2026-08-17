@@ -1,10 +1,12 @@
 'use client';
 
+import { PortableText } from '@portabletext/react';
+import { richBodyComponents } from '@/components/RichBody';
 import styles from './page.module.css';
 
 interface Props {
   title: string;
-  description: string;
+  description?: any[];
   resourceType: string;
   isRequest: boolean;
   href: string;
@@ -27,7 +29,9 @@ export default function ResourceRow({ title, description, resourceType, isReques
           {resourceType}{isRequest ? ' · Request Required' : ''}
         </span>
         <h2>{title}</h2>
-        <p>{description}</p>
+        {description && description.length > 0 && (
+          <PortableText value={description} components={richBodyComponents} />
+        )}
       </div>
       <strong aria-hidden="true" className={styles.arrow}>→</strong>
     </a>

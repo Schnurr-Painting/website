@@ -1,5 +1,7 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
+import DetailCta from '@/components/DetailCta';
+import RichBody from '@/components/RichBody';
 import { getCollection, getEntry } from '@/lib/content';
 import { notFound } from 'next/navigation';
 
@@ -28,11 +30,12 @@ export default async function ServiceDetailPage({ params }: { params: { id: stri
         overlayColor="#3a1843"
         overlayOpacity={0.85}
       />
-      {entry.body && (
+      {entry.body?.length > 0 && (
         <div style={{ padding: '80px 0', maxWidth: '800px', margin: '0 auto' }}>
-          <p style={{ color: 'var(--body)', fontSize: '17px', lineHeight: '1.7' }}>{entry.body}</p>
+          <RichBody value={entry.body} />
         </div>
       )}
+      <DetailCta page="services" />
     </SitePage>
   );
 }

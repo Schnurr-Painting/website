@@ -1,13 +1,22 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
+import ProjectDetails from '@/components/ProjectDetails';
+import DetailCta from '@/components/DetailCta';
 import { getCollection, getEntry } from '@/lib/content';
 import { notFound } from 'next/navigation';
 
 interface ProjectData {
   title: string;
   market?: string;
+  location?: string;
   shortDescription: string;
   featuredImage?: string;
+  gallery?: string[];
+  gc?: string;
+  owner?: string;
+  projectSize?: string;
+  completionDate?: string;
+  services?: string[];
 }
 
 export async function generateStaticParams() {
@@ -29,11 +38,18 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
         overlayColor="#3a1843"
         overlayOpacity={0.8}
       />
-      {entry.body && (
-        <div style={{ padding: '80px 0', maxWidth: '800px', margin: '0 auto' }}>
-          <p style={{ color: 'var(--body)', fontSize: '17px', lineHeight: '1.7' }}>{entry.body}</p>
-        </div>
-      )}
+      <ProjectDetails
+        body={entry.body}
+        featuredImage={entry.data.featuredImage}
+        location={entry.data.location}
+        gc={entry.data.gc}
+        owner={entry.data.owner}
+        projectSize={entry.data.projectSize}
+        completionDate={entry.data.completionDate}
+        services={entry.data.services}
+        gallery={entry.data.gallery}
+      />
+      <DetailCta page="projects" />
     </SitePage>
   );
 }

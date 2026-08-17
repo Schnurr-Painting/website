@@ -1,8 +1,9 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
 import CollectionGrid from '@/components/interior/CollectionGrid';
+import TestimonialsSection from '@/components/TestimonialsSection';
 import { getCollection } from '@/lib/content';
-import page from '@/data/pages/services.json';
+import { getPage } from '@/lib/sanity/queries';
 
 interface ServiceData {
   title: string;
@@ -12,7 +13,8 @@ interface ServiceData {
 }
 
 export default async function ServicesPage() {
-  const h = page.hero;
+  const page = await getPage('services');
+  const h = page?.hero || {};
   const services = (await getCollection<ServiceData>('services')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const items = services.map((s) => ({
@@ -28,6 +30,7 @@ export default async function ServicesPage() {
     <SitePage>
       <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
       <CollectionGrid items={items} />
+      <TestimonialsSection page="services" />
     </SitePage>
   );
 }

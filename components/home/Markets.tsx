@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
-import page from '@/data/pages/home.json';
 import styles from './Markets.module.css';
 
 interface MarketData {
@@ -12,8 +11,14 @@ interface MarketData {
   sortOrder: number;
 }
 
-export default async function Markets() {
-  const section = page.marketsSection;
+interface SectionCopy {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+}
+
+export default async function Markets({ section }: { section?: SectionCopy }) {
+  const sec = section || {};
   const markets = (await getCollection<MarketData>('markets'))
     .filter((m) => m.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
@@ -23,10 +28,10 @@ export default async function Markets() {
       <div className={styles.marketsInner}>
         <div className={styles.marketsHeading}>
           <div>
-            <p className={`eyebrow ${styles.marketsEyebrow}`}>{section.eyebrow}</p>
-            <h2 className={styles.heading}>{section.heading}</h2>
+            <p className={`eyebrow ${styles.marketsEyebrow}`}>{sec.eyebrow}</p>
+            <h2 className={styles.heading}>{sec.heading}</h2>
           </div>
-          <p className={styles.marketsIntro}>{section.intro}</p>
+          <p className={styles.marketsIntro}>{sec.intro}</p>
         </div>
 
         <div className={styles.marketGrid}>

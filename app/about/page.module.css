@@ -4,7 +4,39 @@
 .index { color: var(--orange); font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
 .section h2 { margin: 0; color: var(--ink); font-family: var(--display); font-size: clamp(34px, 3vw, 48px); font-weight: 600; line-height: 1.04; }
 .section p { max-width: 820px; margin: 14px 0 0; color: var(--body); font-size: 17px; line-height: 1.72; }
-.teamBand { background: var(--paper); padding: 76px 0 96px; border-top: 1px solid var(--line); }
+
+.story { background: var(--paper); padding: 76px 0 40px; }
+.story.hasSections { background: var(--cream); }
+.storyInner { width: min(calc(100% - 120px), 1200px); margin: 0 auto; }
+.storyEyebrow { margin: 0 0 14px; color: var(--gold); }
+
+.storyGrid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: start; }
+.storyGrid.withImage { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+
+.storyImageWrap { align-self: start; margin: 0; }
+.storyImageWrap img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: 2px; }
+.storyImageCaption { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; }
+.storyImageName { color: var(--ink); font-family: var(--display); font-size: 24px; font-weight: 600; }
+.storyImageTitle { color: var(--gold); font-family: var(--utility); font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+
+.storyText { color: var(--ink); font-family: var(--display); font-size: clamp(20px, 1.7vw, 25px); font-weight: 500; line-height: 1.55; max-width: 820px; }
+.storyGrid.withImage .storyText { max-width: none; }
+.storyText p { margin: 0 0 1em; }
+.storyText p:last-child { margin-bottom: 0; }
+.storyText h2, .storyText h3 { font-family: var(--display); color: var(--ink); font-weight: 600; line-height: 1.15; margin: 1em 0 .4em; }
+.storyText h2 { font-size: clamp(24px, 2.2vw, 32px); }
+.storyText h3 { font-size: clamp(20px, 1.8vw, 24px); }
+.storyText h2:first-child, .storyText h3:first-child { margin-top: 0; }
+.storyText strong { font-weight: 700; }
+.storyText em { font-style: italic; }
+.storyText a { color: var(--gold); text-underline-offset: 3px; }
+.storyText blockquote { margin: 1em 0; padding-left: 20px; border-left: 3px solid var(--gold); font-style: italic; }
+.storyText ul, .storyText ol { margin: 0 0 1em; padding-left: 1.25em; }
+.storyText li { margin: .3em 0; }
+.storyInlineImage { display: block; width: 100%; height: auto; margin: 1em 0; border-radius: 2px; }
+
+.teamBand { background: var(--cream); padding: 76px 0 96px; border-top: 1px solid var(--line); }
+.teamBand.noTestimonials { background: var(--paper); }
 .teamInner { width: min(calc(100% - 120px), 1200px); margin: 0 auto; }
 .teamEyebrow { margin: 0; color: var(--gold); }
 .teamHeading { margin: 8px 0 30px; color: var(--ink); font-family: var(--display); font-size: clamp(38px, 4vw, 58px); font-weight: 600; }
@@ -15,5 +47,7 @@
 .teamCopy h3 { margin: 0; color: var(--ink); font-family: var(--display); font-size: 28px; }
 .role { margin: 5px 0 0; color: var(--gold); font-family: var(--utility); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .bio { color: var(--body); line-height: 1.6; margin: 10px 0 0; font-size: 14px; }
+.bio p { margin: 0 0 6px; }
+.bio p:last-child { margin-bottom: 0; }
 .teamCopy a { display: block; margin-top: 6px; color: var(--ink); font-size: 14px; }
-@media (max-width: 900px) { .inner, .teamInner { width: min(calc(100% - 48px), 1200px); } .section { grid-template-columns: 1fr; gap: 10px; } }
+@media (max-width: 900px) { .inner, .teamInner, .storyInner { width: min(calc(100% - 48px), 1200px); } .section { grid-template-columns: 1fr; gap: 10px; } .storyGrid.withImage { grid-template-columns: 1fr; gap: 28px; } }

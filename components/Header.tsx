@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import settings from '@/data/site-settings.json';
 import styles from './Header.module.css';
 
 const links = [
@@ -15,7 +14,7 @@ const links = [
   ['Contact', '/contact'],
 ];
 
-export default function Header() {
+export default function Header({ logo, logoAlt }: { logo?: string; logoAlt?: string }) {
   const handleBidClick = () => {
     if (typeof window !== 'undefined' && (window as any).openBidModal) {
       (window as any).openBidModal();
@@ -29,8 +28,8 @@ export default function Header() {
           <div className={styles.brandLogoPlate}>
             <img
               className={styles.brandLogo}
-              src={settings.brand.logo}
-              alt={settings.brand.logoAlt}
+              src={logo}
+              alt={logoAlt || 'Schnurr Painting'}
             />
           </div>
         </Link>

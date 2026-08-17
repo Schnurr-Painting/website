@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
-import page from '@/data/pages/home.json';
 import styles from './FeaturedProjects.module.css';
 
 interface ProjectData {
@@ -12,8 +11,14 @@ interface ProjectData {
   sortOrder: number;
 }
 
-export default async function FeaturedProjects() {
-  const section = page.projectsSection;
+interface SectionCopy {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+}
+
+export default async function FeaturedProjects({ section }: { section?: SectionCopy }) {
+  const sec = section || {};
   const projects = (await getCollection<ProjectData>('projects'))
     .filter((p) => p.data.featured)
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
@@ -28,10 +33,10 @@ export default async function FeaturedProjects() {
       <div className={styles.projectsInner}>
         <div className={styles.projectsHeading}>
           <div>
-            <p className={`eyebrow ${styles.projectsEyebrow}`}>{section.eyebrow}</p>
-            <h2 className={styles.heading}>{section.heading}</h2>
+            <p className={`eyebrow ${styles.projectsEyebrow}`}>{sec.eyebrow}</p>
+            <h2 className={styles.heading}>{sec.heading}</h2>
           </div>
-          <p className={styles.projectsIntro}>{section.intro}</p>
+          <p className={styles.projectsIntro}>{sec.intro}</p>
         </div>
 
         <div className={`${styles.projectGrid} ${isSingle ? styles.projectGridSingle : ''}`}>

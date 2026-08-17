@@ -1,11 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import page from '@/data/pages/home.json';
 import styles from './RequestBidModal.module.css';
 
-export default function RequestBidModal() {
-  const section = (page as any).requestBidSection || { eyebrow: 'Get Started', heading: 'Request a Bid', intro: "Tell us about your project and we'll be in touch." };
+interface SectionCopy {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+}
+
+export default function RequestBidModal({ section: sectionProp }: { section?: SectionCopy }) {
+  const section = sectionProp || {
+    eyebrow: 'Get Started',
+    heading: 'Request a Bid',
+    intro: "Tell us about your project and we'll be in touch.",
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
