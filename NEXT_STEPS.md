@@ -1,127 +1,96 @@
-# Next.js Migration: Complete & Ready
+# Project Status — 2026-08-17
 
-## ✅ What's Done
+This file replaces the old Decap/Astro-era version of NEXT_STEPS.md, which
+was written before the Sanity migration and no longer reflects reality.
+Read this first when picking the project back up — it should get you (or a
+fresh Claude Code session) oriented without re-deriving everything.
 
-**Infrastructure:**
-- Next.js 14 project initialized with TypeScript
-- All public assets copied (images, logos, brand textures)
-- All JSON data copied (pages, settings, site content)
-- Decap CMS config copied (unchanged)
-- Global CSS variables and styling imported
-- Git initialized with clean commit history
+## Architecture, as it actually stands
 
-**Components Ported:**
-- Header (with logo, nav links, request bid button)
-- Footer (with contact info, social links, menu)
-- Hero carousel (with auto-advance, manual controls, animations, responsive)
-- App layout (with metadata, Google Fonts)
+- **Frontend**: Next.js 14 App Router, deployed from this repo
+  (`nextjs-migration` branch). Netlify/Decap CMS are fully gone —
+  `middleware.ts`, `netlify.toml`, `public/admin/*`, and the Netlify Forms
+  integration were removed.
+- **CMS**: Sanity, in a **separate sibling repo**:
+  `C:\Users\Lukel\Documents\studio-schnurr-painting-website`
+  (GitHub: `Schnurr-Painting/sanity-studio`). Studio dev server runs on
+  `localhost:3333`. It has its own PROJECT-STATUS.md — read that too if
+  you're touching schema/content structure.
+- Content fetching lives in `lib/content.ts` (project/service/market/
+  teamMember/testimonial/resource/position collections) and
+  `lib/sanity/queries.ts` (singleton pages + site settings).
 
-**Architecture:**
-- CSS Modules for component styles (scoped, no conflicts)
-- Client-side interactivity where needed (Hero slider, nav)
-- Data loading from JSON (same structure as Astro)
-- Ready for Netlify deployment
+## What's built and working
 
-## 📋 Remaining Work (Priority Order)
+- **Rich text is real now.** Every body-style field (About's story, team
+  bios, testimonial quotes, differentiator copy, Service/Market/Project/
+  Position bodies, Safety's certifications/practices) renders through
+  `@portabletext/react` via the shared `components/RichBody.tsx`, not
+  flattened plain strings. `seoDescription` and short card/hero blurbs were
+  deliberately left as plain text (meta tags can't hold markup; tight
+  layouts don't want headings/lists).
+- **Bottom CTA band** (`components/DetailCta.tsx`) on Home, Services,
+  Markets, and Projects — per-page-type copy and six Studio-editable
+  colors (background/eyebrow/heading/button bg/button text/phone).
+  Careers and the listing pages (`/services`, `/markets`, `/projects`)
+  don't have one yet.
+- **Project detail pages** (`components/ProjectDetails.tsx`): a bordered
+  card with body text + lead image on the left, a specs sidebar (location/
+  GC/owner/size/completion date/services) on the right, and a gallery grid
+  below — all sections gracefully collapse when data is sparse or missing
+  instead of leaving broken grids/empty boxes.
+- **Careers** job cards use the same spec-sidebar pattern (role type/
+  employment type/location) instead of tiny inline tags.
+- **Testimonials** support an optional company logo (fixed-height row so
+  cards stay aligned whether or not a logo is set).
+- **Safety page** (`app/safety/page.tsx`) was a hardcoded "Content coming
+  soon." placeholder — now a real page: credentials strip (reuses Home's
+  stats), approach pillars, certifications badges, site practices, and a
+  safety-contact line. Coordination text and a downloadable safety
+  document field exist in Studio but are empty — the client hasn't
+  provided that content yet.
+- **Sanity Studio branding**: custom icon (`components/StudioLogo.tsx`,
+  cropped from the real brand mark) via the `icon` config field — note
+  `studio.components.logo` is deprecated in this Sanity version and does
+  nothing.
+- **Sanity Studio navigation** was restructured (`structure.ts`) — each
+  page's settings are now grouped with its related content collection
+  (e.g. one "Services" item containing both "Page Settings" and "All
+  Services"), instead of "Services" appearing twice at the top level with
+  no way to tell them apart.
 
-### Phase 1: Homepage Completion (2-3 hours)
-Port the remaining homepage components:
-- [ ] StatsBand (stats grid with icons)
-- [ ] Services section (service cards, dynamic from collection)
-- [ ] Markets section (market cards, dynamic from collection)
-- [ ] FeaturedProjects (project cards, images, dynamic)
-- [ ] Testimonials (testimonial cards, filtered, dynamic)
+## Known open items
 
-**Effort:** Straightforward copy-paste of Astro styles into CSS Modules + React JSX
+- **Sanity Studio nav restructure needs a final look.** A "Pane returned
+  no child" console warning appeared once during a live HMR reload right
+  after the restructure — most likely a stale deep-link from the old nav
+  shape resolving against the new tree, not a bug in the new structure.ts,
+  but this was never confirmed against a real authenticated screenshot
+  (Puppeteer can't get past Sanity's login without a saved session). If
+  anything in the sidebar looks broken, that's the first place to check.
+- **Safety page content is incomplete by design, not by accident.**
+  `coordination` and `safetyDocument` are empty; `certifications` and
+  `sitePractices` do have real client-provided content, but one
+  `sitePractices` bullet links out to `smithpropainting.com` (a
+  competitor's blog) as a citation — worth a second look before this is
+  considered final.
+- **Dev server stale-chunk issue**: both the Next.js and Sanity Studio dev
+  servers occasionally serve stale/broken chunks (`ChunkLoadError`, or
+  config changes not hot-reloading) after a long stretch of file edits.
+  Fix is always the same: kill the process, `rm -rf .next` (Next.js) or
+  clear `node_modules/.sanity` + `node_modules/.vite` + `.sanity`
+  (Studio), restart. Config-level changes (`sanity.config.ts`,
+  `structure.ts`) especially seem to need a full restart, not just a
+  browser refresh.
+- **Listing pages have no closing CTA**: `/services`, `/markets`,
+  `/projects` (the grid pages, not individual detail pages) only have a
+  hero, same gap Home used to have.
+- Everything already flagged in `PRE-LAUNCH-CHECKLIST.md` is unverified
+  against current state — that file predates this session's work and
+  needs a fresh pass, not blind trust.
 
-### Phase 2: Category Pages (2-3 hours)
-- [ ] Services index page (/services)
-- [ ] Markets index page (/markets)
-- [ ] Projects index page (/projects)
-- [ ] Resources index page (/resources)
+## If you're a fresh Claude Code session reading this
 
-**Pattern:** CollectionGrid component + dynamic data loading
-
-### Phase 3: Detail Pages (2-3 hours)
-- [ ] Service detail pages (/services/[id])
-- [ ] Market detail pages (/markets/[id])
-- [ ] Project detail pages (/projects/[id])
-
-**Pattern:** DetailPage component + dynamic content
-
-### Phase 4: Standalone Pages (1-2 hours)
-- [ ] About page (/about) - with CompanyPage, TeamBand, Testimonials
-- [ ] Safety page (/safety)
-- [ ] Careers page (/careers) - with PositionsList
-- [ ] Contact page (/contact) - with ContactForm
-- [ ] Resources page (/resources) - with ResourcesList
-
-### Phase 5: Testing & Deployment (1-2 hours)
-- [ ] Visual regression testing (compare Astro vs Next.js)
-- [ ] Test all links and navigation
-- [ ] Test Decap CMS integration
-- [ ] Deploy to Netlify preview
-- [ ] Configure DNS switchover plan
-
-## 🚀 How This Solves Your Problems
-
-**Problem:** "Every edit takes 1 minute to show on front-end"
-**Solution:** Next.js with ISR (Incremental Static Regeneration) or dynamic rendering means edits can show instantly, no rebuild needed for content changes.
-
-**Problem:** "Constrained by Astro if we add portal features"
-**Solution:** Next.js is built for full-stack apps - can add database, authentication, dynamic routes, API endpoints without rearchitecting.
-
-**Problem:** "Need better developer experience"
-**Solution:** React/Next.js has much larger ecosystem and community; easier to find developers familiar with it.
-
-## 💾 Current Location
-
-```
-/home/claude/website-nextjs/
-├── app/                    # Next.js app router
-├── components/            # React components
-├── data/                  # JSON data (copied from Astro)
-├── public/                # Static assets (copied from Astro)
-├── styles/                # Global CSS
-├── package.json          # Ready to npm install
-└── MIGRATION.md           # Detailed changes
-```
-
-## 🔄 Data Sync Strategy
-
-Currently both projects can read from the same data:
-- Content edits in Decap → git commit to Schnurr-Painting/website
-- Both Astro and Next.js projects pull from same JSON
-- Allows parallel testing before switchover
-
-## 📦 Ready to Test Locally
-
-```bash
-cd /home/claude/website-nextjs
-npm install
-npm run dev
-# Opens http://localhost:3000
-```
-
-Then compare against Astro version running on same machine to verify visual parity.
-
-## ⚡ Performance Benefits
-
-Once complete:
-- Astro: Static HTML files (fast user experience)
-- Next.js: Same static files + serverless functions (faster content updates + dynamic features)
-- Netlify handles both equally well
-
-## 🎯 Recommended Path Forward
-
-1. **This week:** Port remaining homepage components (Phase 1)
-2. **Next week:** Category and detail pages (Phases 2-3)
-3. **Following week:** Standalone pages + testing (Phases 4-5)
-4. **Then:** Deploy to Netlify and test Decap CMS live
-5. **Finally:** Switchover public traffic from Astro to Next.js
-
-This keeps Schnurr's site live on Astro while Next.js is built and tested in parallel.
-
----
-
-**Estimated total time:** 8-12 hours of focused work across components. The structure is sound; it's mostly copy-paste with React syntax conversion.
+Don't re-derive the CMS architecture from scratch — read this file and the
+Studio repo's PROJECT-STATUS.md first. The Studio repo is a **separate git
+repo** at `studio-schnurr-painting-website`, not a subfolder of this one.

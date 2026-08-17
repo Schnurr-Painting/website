@@ -1,5 +1,10 @@
 # Pre-Launch Checklist
 
+> **Stale as of 2026-08-17.** This file predates the Sanity migration and a
+> large amount of subsequent work — several items below may already be
+> resolved or no longer relevant. Read `NEXT_STEPS.md` first for current
+> state; treat everything below as "needs re-verification," not fact.
+
 A running log of things to come back to and finalize before this site is
 genuinely ready to go live and be handed off. Add to this as things come up —
 don't fix in the moment unless it's quick; note it here and keep moving.
