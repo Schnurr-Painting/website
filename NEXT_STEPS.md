@@ -59,6 +59,20 @@ fresh Claude Code session) oriented without re-deriving everything.
   Services"), instead of "Services" appearing twice at the top level with
   no way to tell them apart.
 
+## Roadmap: block/component system (not started)
+
+A future rebuild, not yet begun: replace the current hardcoded per-page
+section order (every `app/*/page.tsx` renders a fixed JSX tree — Home,
+About, Safety, etc. each have their own hardcoded component sequence)
+with a real page-builder pattern — a catalog of reusable section/block
+types, an array field per page in Sanity letting an editor add/remove/
+reorder/choose which components appear where, and a generic frontend
+renderer walking that array. Full reasoning and the specific content-
+modeling decision that led here (Stats vs. Testimonials, and why one
+needed a shared cross-page model and the other doesn't) is written up in
+the Studio repo's `PROJECT-STATUS.md` — read that first before touching
+Stats or building this.
+
 ## Known open items
 
 - **Sanity Studio nav restructure needs a final look.** A "Pane returned
