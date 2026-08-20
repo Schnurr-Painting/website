@@ -30,7 +30,7 @@ export default async function ServiceDetailPage({ params }: { params: { id: stri
         overlayColor="#3a1843"
         overlayOpacity={0.85}
       />
-      {entry.body?.length > 0 && (
+      {(entry.body?.length ?? 0) > 0 && (
         <div style={{ padding: '80px 0', maxWidth: '800px', margin: '0 auto' }}>
           <RichBody value={entry.body} />
         </div>

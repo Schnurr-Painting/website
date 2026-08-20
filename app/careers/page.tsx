@@ -55,7 +55,7 @@ export default async function CareersPage() {
                     <div className={styles.positionGrid}>
                       <div className={styles.positionMain}>
                         <h3>{position.data.title}</h3>
-                        {position.body?.length > 0 && (
+                        {(position.body?.length ?? 0) > 0 && (
                           <div className={styles.positionDescription}>
                             <PortableText value={position.body} components={richBodyComponents} />
                           </div>

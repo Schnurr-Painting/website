@@ -30,7 +30,7 @@ export default async function MarketDetailPage({ params }: { params: { id: strin
         overlayOpacity={0.9}
         accentColor={entry.data.accentColor}
       />
-      {entry.body?.length > 0 && (
+      {(entry.body?.length ?? 0) > 0 && (
         <div style={{ padding: '80px 0', maxWidth: '800px', margin: '0 auto' }}>
           <RichBody value={entry.body} />
         </div>

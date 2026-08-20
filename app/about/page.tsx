@@ -119,7 +119,7 @@ export default async function AboutPage() {
                   <div className={styles.teamCopy}>
                     <h3>{member.data.name}</h3>
                     <p className={styles.role}>{member.data.role}</p>
-                    {member.data.bio?.length > 0 && (
+                    {(member.data.bio?.length ?? 0) > 0 && (
                       <div className={styles.bio}>
                         <PortableText value={member.data.bio} components={richBodyComponents} />
                       </div>
