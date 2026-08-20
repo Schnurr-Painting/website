@@ -51,7 +51,6 @@ export async function getHomePage() {
         backgroundColor, headingColor, introColor, eyebrowColor, headingFont,
         "slides": slides[]{"image": image.asset->url, imagePosition}
       },
-      stats,
       servicesSection,
       marketsSection,
       projectsSection,

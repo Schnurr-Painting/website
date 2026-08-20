@@ -2,9 +2,10 @@ import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import CredentialsStrip from '@/components/CredentialsStrip';
-import { getPage, getSharedLabels, getHomePage } from '@/lib/sanity/queries';
+import { getPage, getSharedLabels } from '@/lib/sanity/queries';
 import { getCollection } from '@/lib/content';
 import { getTestimonialsForPage } from '@/lib/testimonials';
+import { getStatsForPage } from '@/lib/stats';
 import { urlFor } from '@/lib/sanity/image';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import { richBodyComponents } from '@/components/RichBody';
@@ -45,10 +46,10 @@ interface TeamData {
 }
 
 export default async function AboutPage() {
-  const [page, shared, home, teamRaw, testimonials] = await Promise.all([
+  const [page, shared, stats, teamRaw, testimonials] = await Promise.all([
     getPage('about'),
     getSharedLabels(),
-    getHomePage(),
+    getStatsForPage('about'),
     getCollection<TeamData>('team'),
     getTestimonialsForPage('about'),
   ]);
@@ -104,7 +105,7 @@ export default async function AboutPage() {
         </section>
       )}
 
-      <CredentialsStrip stats={home?.stats} />
+      <CredentialsStrip stats={stats.map((s) => s.data)} />
       <TestimonialsSection page="about" />
 
       {team.length > 0 && (

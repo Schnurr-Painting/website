@@ -7,14 +7,15 @@ import FeaturedProjects from '@/components/home/FeaturedProjects';
 import Testimonials from '@/components/home/Testimonials';
 import DetailCta from '@/components/DetailCta';
 import { getHomePage } from '@/lib/sanity/queries';
+import { getStatsForPage } from '@/lib/stats';
 
 export default async function Home() {
-  const home = await getHomePage();
+  const [home, stats] = await Promise.all([getHomePage(), getStatsForPage('home')]);
 
   return (
     <SitePage>
       <Hero hero={home?.hero} />
-      <StatsBand stats={home?.stats || []} />
+      <StatsBand stats={stats.map((s) => s.data)} />
       <Services section={home?.servicesSection} />
       <Testimonials section={home?.testimonialsSection} />
       <Markets section={home?.marketsSection} />

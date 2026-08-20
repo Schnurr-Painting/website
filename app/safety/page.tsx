@@ -3,11 +3,12 @@ import InteriorHero from '@/components/interior/InteriorHero';
 import CredentialsStrip from '@/components/CredentialsStrip';
 import { PortableText } from '@portabletext/react';
 import { richBodyComponents } from '@/components/RichBody';
-import { getPage, getHomePage } from '@/lib/sanity/queries';
+import { getPage } from '@/lib/sanity/queries';
+import { getStatsForPage } from '@/lib/stats';
 import styles from './page.module.css';
 
 export default async function Page() {
-  const [page, home] = await Promise.all([getPage('safety'), getHomePage()]);
+  const [page, stats] = await Promise.all([getPage('safety'), getStatsForPage('safety')]);
   const h = page?.hero || {};
   const sections = (page?.sections as any[]) || [];
   const certifications = (page?.certifications as string[]) || [];
@@ -40,7 +41,7 @@ export default async function Page() {
         accentColor={h.accentColor}
       />
 
-      <CredentialsStrip stats={home?.stats} />
+      <CredentialsStrip stats={stats.map((s) => s.data)} />
 
       {sections.length > 0 && (
         <section className={styles.pillars}>

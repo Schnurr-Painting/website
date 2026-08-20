@@ -15,6 +15,7 @@ const TYPE_MAP: Record<string, string> = {
   markets: 'market',
   team: 'teamMember',
   testimonials: 'testimonial',
+  stats: 'stat',
   resources: 'resource',
   positions: 'position',
 }
@@ -29,6 +30,7 @@ const PROJECTIONS: Record<string, string> = {
   market: `title, shortDescription, "cardImage": cardImage.asset->url, "heroImage": heroImage.asset->url, icon, accentColor, featured, sortOrder, heroStyle, body`,
   teamMember: `name, role, "headshot": headshot.asset->url, email, phone, bio, displayOrder, publicProfile`,
   testimonial: `quote, person, role, company, "companyLogo": companyLogo.asset->url, project, approvedPublic, showOn, sortOrder`,
+  stat: `value, label, description, showOn, sortOrder`,
   resource: `title, resourceType, description, "file": file.asset->url, externalUrl, visibility, icon, sortOrder`,
   position: `title, roleType, employmentType, location, requirements, active, sortOrder, body`,
 }
