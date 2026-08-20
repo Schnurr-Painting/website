@@ -9,7 +9,7 @@ interface ProjectData {
   title: string;
   market?: string;
   location?: string;
-  shortDescription: string;
+  shortDescription: any;
   featuredImage?: string;
   gallery?: string[];
   gc?: string;

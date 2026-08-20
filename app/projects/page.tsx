@@ -8,7 +8,7 @@ import { getPage } from '@/lib/sanity/queries';
 interface ProjectData {
   title: string;
   market?: string;
-  shortDescription: string;
+  shortDescription: any;
   featuredImage?: string;
   sortOrder: number;
 }

@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 
 interface ServiceData {
   title: string;
-  shortDescription: string;
+  shortDescription: any;
   heroImage?: string;
 }
 

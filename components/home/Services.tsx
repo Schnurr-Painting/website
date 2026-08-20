@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
+import RichBody from '@/components/RichBody';
 import styles from './Services.module.css';
 
 interface ServiceData {
   title: string;
-  shortDescription: string;
+  shortDescription: any;
   heroImage?: string;
   featured?: boolean;
   sortOrder: number;
@@ -13,7 +14,7 @@ interface ServiceData {
 interface SectionCopy {
   eyebrow?: string;
   heading?: string;
-  intro?: string;
+  intro?: any;
   photoLabel?: string;
   photoTitle?: string;
 }
@@ -44,7 +45,7 @@ export default async function Services({ section }: { section?: SectionCopy }) {
           <div className={styles.servicesHeading}>
             <p className={`eyebrow ${styles.servicesEyebrow}`}>{sec.eyebrow}</p>
             <h2>{sec.heading}</h2>
-            <p className={styles.servicesIntro}>{sec.intro}</p>
+            <RichBody value={sec.intro} className={styles.servicesIntro} />
           </div>
 
           <div className={styles.serviceList}>
@@ -55,7 +56,7 @@ export default async function Services({ section }: { section?: SectionCopy }) {
                   <span className={styles.serviceNumber}>{number}</span>
                   <div className={styles.serviceMain}>
                     <h3>{service.data.title}</h3>
-                    <p>{service.data.shortDescription}</p>
+                    <RichBody value={service.data.shortDescription} />
                   </div>
                   <span className={styles.serviceArrow} aria-hidden="true">→</span>
                 </Link>

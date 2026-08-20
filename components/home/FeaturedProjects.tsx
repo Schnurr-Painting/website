@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
+import RichBody from '@/components/RichBody';
 import styles from './FeaturedProjects.module.css';
 
 interface ProjectData {
   title: string;
   market?: string;
-  shortDescription: string;
+  shortDescription: any;
   featuredImage?: string;
   featured?: boolean;
   sortOrder: number;
@@ -14,7 +15,7 @@ interface ProjectData {
 interface SectionCopy {
   eyebrow?: string;
   heading?: string;
-  intro?: string;
+  intro?: any;
 }
 
 export default async function FeaturedProjects({ section }: { section?: SectionCopy }) {
@@ -36,7 +37,7 @@ export default async function FeaturedProjects({ section }: { section?: SectionC
             <p className={`eyebrow ${styles.projectsEyebrow}`}>{sec.eyebrow}</p>
             <h2 className={styles.heading}>{sec.heading}</h2>
           </div>
-          <p className={styles.projectsIntro}>{sec.intro}</p>
+          <RichBody value={sec.intro} className={styles.projectsIntro} />
         </div>
 
         <div className={`${styles.projectGrid} ${isSingle ? styles.projectGridSingle : ''}`}>
@@ -71,7 +72,7 @@ export default async function FeaturedProjects({ section }: { section?: SectionC
                     <span>{number}</span>
                   </div>
                   <h3 className={styles.projectTitle}>{project.data.title}</h3>
-                  <p className={styles.projectDesc}>{project.data.shortDescription}</p>
+                  <RichBody value={project.data.shortDescription} className={styles.projectDesc} />
                   <Link href={`/projects/${project.id}`} className={styles.projectLink}>
                     View Project <span aria-hidden="true">→</span>
                   </Link>

@@ -1,9 +1,10 @@
+import RichBody from '@/components/RichBody';
 import styles from './InteriorHero.module.css';
 
 interface Props {
   eyebrow?: string;
   title: string;
-  intro?: string;
+  intro?: any;
   image?: string;
   imagePosition?: string;
   backgroundColor?: string;
@@ -72,7 +73,7 @@ export default function InteriorHero({
             </div>
           )}
           <h1>{title}</h1>
-          {intro && <p className={styles.interiorIntro}>{intro}</p>}
+          <RichBody value={intro} className={styles.interiorIntro} />
         </div>
       </div>
     </section>

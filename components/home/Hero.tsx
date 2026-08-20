@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import RichBody from '@/components/RichBody';
 import styles from './Hero.module.css';
 
 const MOTIONS = ['zoom-in', 'pan-left', 'zoom-out', 'pan-up'];
@@ -11,7 +12,7 @@ interface HeroData {
   headingLine1?: string;
   headingLine2?: string;
   headingLine3?: string;
-  intro?: string;
+  intro?: any;
   slides?: { image?: string; imagePosition?: string }[];
 }
 
@@ -67,7 +68,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             {h.headingLine2}<br />
             {line3Rest && `${line3Rest} `}<em>{line3Last}</em>
           </h1>
-          <p className={styles.intro}>{h.intro}</p>
+          <RichBody value={h.intro} className={styles.intro} />
           <div className={styles.actions}>
             <button
               type="button"

@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
+import RichBody from '@/components/RichBody';
 import styles from './Markets.module.css';
 
 interface MarketData {
   title: string;
-  shortDescription: string;
+  shortDescription: any;
   cardImage?: string;
   accentColor?: string;
   featured?: boolean;
@@ -14,7 +15,7 @@ interface MarketData {
 interface SectionCopy {
   eyebrow?: string;
   heading?: string;
-  intro?: string;
+  intro?: any;
 }
 
 export default async function Markets({ section }: { section?: SectionCopy }) {
@@ -31,7 +32,7 @@ export default async function Markets({ section }: { section?: SectionCopy }) {
             <p className={`eyebrow ${styles.marketsEyebrow}`}>{sec.eyebrow}</p>
             <h2 className={styles.heading}>{sec.heading}</h2>
           </div>
-          <p className={styles.marketsIntro}>{sec.intro}</p>
+          <RichBody value={sec.intro} className={styles.marketsIntro} />
         </div>
 
         <div className={styles.marketGrid}>
@@ -63,7 +64,7 @@ export default async function Markets({ section }: { section?: SectionCopy }) {
                     <span className={styles.marketIndex}>{number}</span>
                     <h3 className={styles.marketTitle}>{market.data.title}</h3>
                   </div>
-                  <p className={styles.marketDesc}>{market.data.shortDescription}</p>
+                  <RichBody value={market.data.shortDescription} className={styles.marketDesc} />
                   <Link href={`/markets/${market.id}`} className={styles.marketLink}>
                     Explore Market <span aria-hidden="true">→</span>
                   </Link>

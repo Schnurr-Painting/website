@@ -1,10 +1,11 @@
 import Link from 'next/link';
+import RichBody from '@/components/RichBody';
 import styles from './CollectionGrid.module.css';
 
 interface CollectionItem {
   id: string;
   title: string;
-  description: string;
+  description: any;
   image?: string;
   href: string;
   accent?: string;
@@ -35,7 +36,7 @@ export default function CollectionGrid({ items }: { items: CollectionItem[] }) {
                 <div className={styles.content}>
                   {item.meta && <p className={styles.meta}>{item.meta}</p>}
                   <h2>{item.title}</h2>
-                  <p>{item.description}</p>
+                  <RichBody value={item.description} className={styles.description} />
                   <Link href={item.href}>View Details <span aria-hidden="true">→</span></Link>
                 </div>
               </article>

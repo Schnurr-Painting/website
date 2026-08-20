@@ -7,7 +7,7 @@ import { getPage } from '@/lib/sanity/queries';
 
 interface MarketData {
   title: string;
-  shortDescription: string;
+  shortDescription: any;
   accentColor?: string;
   sortOrder: number;
 }

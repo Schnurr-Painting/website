@@ -1,19 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import RichBody from '@/components/RichBody';
 import styles from './RequestBidModal.module.css';
 
 interface SectionCopy {
   eyebrow?: string;
   heading?: string;
-  intro?: string;
+  intro?: any;
 }
+
+const DEFAULT_INTRO = [
+  {
+    _type: 'block',
+    style: 'normal',
+    markDefs: [],
+    children: [{ _type: 'span', marks: [], text: "Tell us about your project and we'll be in touch." }],
+  },
+];
 
 export default function RequestBidModal({ section: sectionProp }: { section?: SectionCopy }) {
   const section = sectionProp || {
     eyebrow: 'Get Started',
     heading: 'Request a Bid',
-    intro: "Tell us about your project and we'll be in touch.",
+    intro: DEFAULT_INTRO,
   };
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -86,7 +96,7 @@ export default function RequestBidModal({ section: sectionProp }: { section?: Se
             <div className={styles.heading}>
               <p className="eyebrow">{section.eyebrow}</p>
               <h2 id="bid-modal-heading">{section.heading}</h2>
-              <p className={styles.intro}>{section.intro}</p>
+              <RichBody value={section.intro} className={styles.intro} />
             </div>
 
             <form name="request-bid" method="POST" data-netlify="true" netlify-honeypot="bot-field" className={styles.form} onSubmit={handleSubmit}>

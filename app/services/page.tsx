@@ -7,7 +7,7 @@ import { getPage } from '@/lib/sanity/queries';
 
 interface ServiceData {
   title: string;
-  shortDescription: string;
+  shortDescription: any;
   heroImage?: string;
   sortOrder: number;
 }
