@@ -5,7 +5,7 @@ import styles from './RichBody.module.css';
 export const richBodyComponents: PortableTextComponents = {
   types: {
     image: ({ value }) => (
-      <img className={styles.inlineImage} src={urlFor(value).width(1000).url()} alt={value?.alt || ''} />
+      <img className={styles.inlineImage} src={urlFor(value).width(1000).fit('max').auto('format').url()} alt={value?.alt || ''} />
     ),
   },
   marks: {

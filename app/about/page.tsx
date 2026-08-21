@@ -16,7 +16,7 @@ const storyComponents: PortableTextComponents = {
     image: ({ value }) => (
       <img
         className={styles.storyInlineImage}
-        src={urlFor(value).width(1200).url()}
+        src={urlFor(value).width(1200).fit('max').auto('format').url()}
         alt={value?.alt || ''}
       />
     ),

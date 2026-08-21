@@ -49,7 +49,7 @@ export async function getHomePage() {
       hero{
         eyebrow, headingLine1, headingLine2, headingLine3, intro,
         backgroundColor, headingColor, introColor, eyebrowColor, headingFont,
-        "slides": slides[]{"image": image.asset->url, imagePosition}
+        "slides": slides[]{"image": image.asset->url + "?w=1920&auto=format&fit=max", imagePosition}
       },
       servicesSection,
       marketsSection,
@@ -88,13 +88,13 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
       seoDescription,
       hero{
         eyebrow, title, intro,
-        "image": image.asset->url,
+        "image": image.asset->url + "?w=1920&auto=format&fit=max",
         imagePosition, backgroundColor, overlayColor, overlayOpacity,
         headingColor, introColor, accentColor, headingFont
       },
       story,
       storyImage{
-        "url": image.asset->url,
+        "url": image.asset->url + "?w=1200&auto=format&fit=max",
         name,
         title
       },
