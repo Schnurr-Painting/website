@@ -53,7 +53,8 @@ export default function RequestBidModal({ section: sectionProp }: { section?: Se
     new FormData(form).forEach((value, key) => body.append(key, String(value)));
 
     try {
-      const response = await fetch('/', {
+      // Posts to /__forms.html, not "/" — see public/__forms.html for why.
+      const response = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),

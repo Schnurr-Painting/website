@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@netlify/blobs": "^11.0.1",
     "@netlify/functions": "^5.3.0",
     "@portabletext/react": "^3.2.4",
     "@sanity/image-url": "^2.1.1",

@@ -43,15 +43,15 @@ export default function ApplicationModal() {
     setSubmitting(true);
     setError('');
 
-    // Posts to our own /api/job-application route rather than directly to
-    // Netlify Forms — multipart submissions (needed for the resume file)
-    // fail on Netlify's Next.js Runtime. The route parses the upload
-    // itself, stores the resume in Netlify Blobs, and forwards the rest
-    // of the fields to Netlify Forms as plain url-encoded data.
+    // Posts to /__forms.html, not "/" — this site's pages are all
+    // server-rendered, so Netlify's edge never gets a chance to intercept
+    // a POST to a real route. /__forms.html is a genuinely static file
+    // (see public/__forms.html) that Netlify's forms backend can actually
+    // catch, file upload included.
     const formData = new FormData(form);
 
     try {
-      const response = await fetch('/api/job-application', { method: 'POST', body: formData });
+      const response = await fetch('/__forms.html', { method: 'POST', body: formData });
       if (response.ok) {
         setSubmitted(true);
       } else {
@@ -108,7 +108,6 @@ export default function ApplicationModal() {
             >
               <input type="hidden" name="form-name" value="job-application" />
               <input type="hidden" name="appliedForPosition" value={positionTitle} />
-              <input type="hidden" name="resumeUrl" value="" />
               <p style={{ display: 'none' }}>
                 <label>Don&apos;t fill this out: <input name="bot-field" /></label>
               </p>
