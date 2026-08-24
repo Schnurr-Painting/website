@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+  Deploy-time form detection only — never rendered to a visitor.
+
+  Netlify Forms detects and captures submissions by scanning genuinely
+  static HTML files at deploy time. This site's real pages are all
+  server-rendered (dynamic) Next.js routes, so Netlify never sees the
+  forms declared inside them and never intercepts POSTs sent to those
+  routes — this was true for all three forms, not just the one with the
+  file upload. This static file exists purely so Netlify registers the
+  field schema; the actual forms (in ContactForm.tsx, RequestBidModal.tsx,
+  ApplicationModal.tsx) submit here via fetch() instead of to "/".
+-->
+<html>
+  <head><meta charSet="utf-8" /></head>
+  <body>
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field">
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <input name="phone" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form name="request-bid" data-netlify="true" netlify-honeypot="bot-field">
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <input name="phone" />
+      <input name="company" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form name="job-application" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+      <input name="bot-field" />
+      <input name="appliedForPosition" />
+      <input name="name" />
+      <input name="email" />
+      <input name="phone" />
+      <input name="roleInterest" />
+      <input name="experience" />
+      <input name="resume" type="file" />
+      <input name="resumeUrl" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
