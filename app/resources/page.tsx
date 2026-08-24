@@ -29,7 +29,7 @@ export default async function ResourcesPage() {
         <div className={styles.inner}>
           {resources.map((resource) => {
             const isRequest = resource.data.visibility === 'request_required';
-            const href = isRequest ? '#' : (resource.data.file || resource.data.externalUrl || '#');
+            const href = isRequest ? '#' : (resource.data.file || resource.data.externalUrl || null);
             return (
               <ResourceRow
                 key={resource.id}

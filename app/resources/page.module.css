@@ -6,4 +6,7 @@
 .resourceRow h2 { margin: 5px 0 0; color: var(--ink); font-family: var(--display); font-size: 31px; font-weight: 600; }
 .resourceRow p { margin: 8px 0 0; color: var(--body); font-size: 15px; line-height: 1.6; }
 .arrow { color: var(--orange); font-size: 24px; flex-shrink: 0; }
+.resourceRowDisabled { cursor: default; }
+.resourceRowDisabled:hover { background: none; }
+.resourceRowDisabled .arrow { color: var(--body); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 @media (max-width: 900px) { .inner { width: min(calc(100% - 48px), 1200px); } }
