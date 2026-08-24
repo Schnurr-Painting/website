@@ -43,12 +43,15 @@ export default function ApplicationModal() {
     setSubmitting(true);
     setError('');
 
-    // Raw FormData (not URL-encoded) is required for the resume file
-    // upload to actually reach Netlify Forms.
+    // Posts to our own /api/job-application route rather than directly to
+    // Netlify Forms — multipart submissions (needed for the resume file)
+    // fail on Netlify's Next.js Runtime. The route parses the upload
+    // itself, stores the resume in Netlify Blobs, and forwards the rest
+    // of the fields to Netlify Forms as plain url-encoded data.
     const formData = new FormData(form);
 
     try {
-      const response = await fetch('/', { method: 'POST', body: formData });
+      const response = await fetch('/api/job-application', { method: 'POST', body: formData });
       if (response.ok) {
         setSubmitted(true);
       } else {
@@ -105,6 +108,7 @@ export default function ApplicationModal() {
             >
               <input type="hidden" name="form-name" value="job-application" />
               <input type="hidden" name="appliedForPosition" value={positionTitle} />
+              <input type="hidden" name="resumeUrl" value="" />
               <p style={{ display: 'none' }}>
                 <label>Don&apos;t fill this out: <input name="bot-field" /></label>
               </p>
