@@ -75,6 +75,8 @@ const PAGE_TYPE_MAP: Record<string, string> = {
   safety: 'safetyPage',
   careers: 'careersPage',
   contact: 'contactPage',
+  privacy: 'privacyPage',
+  terms: 'termsPage',
 }
 
 export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
@@ -86,12 +88,14 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
     *[_type == $type][0]{
       title,
       seoDescription,
+      "updatedAt": _updatedAt,
       hero{
         eyebrow, title, intro,
         "image": image.asset->url + "?w=1920&auto=format&fit=max",
         imagePosition, backgroundColor, overlayColor, overlayOpacity,
         headingColor, introColor, accentColor, headingFont
       },
+      body,
       story,
       storyImage{
         "url": image.asset->url + "?w=1200&auto=format&fit=max",

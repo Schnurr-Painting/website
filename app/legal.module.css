@@ -13,43 +13,6 @@
   margin: -8px 0 32px;
 }
 
-.body {
-  color: var(--body);
-  font-size: 17px;
-  line-height: 1.72;
-}
-
-.body h2 {
-  font-family: var(--display);
-  color: var(--ink);
-  font-weight: 600;
-  line-height: 1.2;
-  font-size: clamp(20px, 1.8vw, 24px);
-  margin: 1.6em 0 0.5em;
-}
-
-.body h2:first-child {
-  margin-top: 0;
-}
-
-.body p {
-  margin: 0 0 1em;
-}
-
-.body ul {
-  margin: 0 0 1em;
-  padding-left: 1.25em;
-}
-
-.body li {
-  margin: 0.3em 0;
-}
-
-.body a {
-  color: var(--gold);
-  text-underline-offset: 3px;
-}
-
 @media (max-width: 900px) {
   .section { padding: 48px 0 64px; }
 }
