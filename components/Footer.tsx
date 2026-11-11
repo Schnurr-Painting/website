@@ -74,9 +74,10 @@ export default async function Footer() {
           <div className={styles.footerCol}>
             <p className={styles.colHeading}>Resources</p>
             <ul>
-              <li><Link href="/resources">Capability Statement</Link></li>
-              <li><Link href="/resources">Prequalification</Link></li>
-              <li><Link href="/resources">Client Portal</Link></li>
+              <li><Link href="/vendors#documents">Capability Statement</Link></li>
+              <li><Link href="/vendors#documents">Prequalification</Link></li>
+              <li><Link href="/vendors#documents">Client Portal</Link></li>
+              <li><Link href="/vendors">Vendors</Link></li>
             </ul>
           </div>
           <div className={`${styles.footerCol} ${styles.footerContact}`}>

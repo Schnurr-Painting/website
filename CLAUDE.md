@@ -121,3 +121,15 @@ element with `data-sanity={editAttr(doc, 'fieldPath')}` from
 anything with a photo must project them (see `lib/content.ts`,
 `getHomePage`, `getPage`). List items use `field[_key=="..."]` paths, so
 project `_key` too (e.g. `galleryKeys`, hero `slides[]._key`).
+
+## Nov 2026 content changes
+
+- Testimonials are no longer shown; `components/ContractorsSection.tsx`
+  (Studio: Site Settings → General Contractors, doc id `contractorsList`)
+  takes their place on Home, About, Services, Markets, Projects.
+- Services and markets have a `gallery` field rendered by
+  `components/PhotoGallery.tsx` (shows an "add photos" box in preview only).
+- "Resources" is now "Vendors" at `/vendors` (same `resourcesPage` doc;
+  `/resources` redirects). Vendor/tool lists live on that doc; company
+  documents (`resource` docs) are listed under `#documents`.
+- Careers page has an `intro` paragraph above the openings.

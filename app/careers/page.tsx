@@ -45,6 +45,7 @@ export default async function CareersPage() {
           <div className={styles.heading}>
             <p className="eyebrow" style={{ color: 'var(--gold)', margin: '0 0 12px' }}>Open Positions</p>
             <h2>Current Openings</h2>
+            {page?.intro && <p className={styles.intro}>{page.intro}</p>}
           </div>
 
           {positions.length > 0 ? (

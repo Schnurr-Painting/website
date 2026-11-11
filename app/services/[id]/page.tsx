@@ -5,11 +5,14 @@ import RichBody from '@/components/RichBody';
 import { getCollection, getEntry } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import { editAttr } from '@/lib/sanity/edit';
+import PhotoGallery from '@/components/PhotoGallery';
 
 interface ServiceData {
   title: string;
   shortDescription: any;
   heroImage?: string;
+  gallery?: string[];
+  galleryKeys?: string[];
 }
 
 export async function generateStaticParams() {
@@ -37,6 +40,7 @@ export default async function ServiceDetailPage({ params }: { params: { id: stri
           <RichBody value={entry.body} />
         </div>
       )}
+      <PhotoGallery doc={entry.data as any} photos={entry.data.gallery} photoKeys={entry.data.galleryKeys} />
       <DetailCta page="services" />
     </SitePage>
   );
