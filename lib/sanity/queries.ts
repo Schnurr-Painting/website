@@ -1,14 +1,14 @@
-import {client} from './client'
+import {sanityFetch} from './client'
 
-// NOTE the third argument on every client.fetch call below: {cache:
-// 'no-store'}. Next.js's App Router caches fetch() calls indefinitely by
-// default — without this, edits made in Sanity would never show up on the
-// site without a full server restart.
+// NOTE: every query goes through sanityFetch (lib/sanity/client.ts). It
+// applies {cache: 'no-store'} — Next.js's App Router caches fetch() calls
+// indefinitely by default, so without it Sanity edits would never show up —
+// and switches to drafts + click-to-edit markers in preview mode.
 
 // --- Site Settings -----------------------------------------------------
 
 export async function getSiteSettings() {
-  return client.fetch(
+  return sanityFetch(
     `
     *[_type == "brandTheme"][0]{
       "brand": {
@@ -18,30 +18,28 @@ export async function getSiteSettings() {
       theme
     }
   `,
-    {},
-    {cache: 'no-store'}
-  )
+    {})
 }
 
 export async function getSiteFooter() {
-  return client.fetch(`*[_type == "siteFooter"][0]{tagline, contact, social}`, {}, {cache: 'no-store'})
+  return sanityFetch(`*[_type == "siteFooter"][0]{tagline, contact, social}`, {})
 }
 
 export async function getSharedLabels() {
-  return client.fetch(`*[_type == "sharedLabels"][0]`, {}, {cache: 'no-store'})
+  return sanityFetch(`*[_type == "sharedLabels"][0]`, {})
 }
 
 // Small dedicated query so pages that only need the "Request a Bid" modal
 // copy (i.e. every page, via SitePage) don't have to fetch the entire
 // Home page document.
 export async function getRequestBidSection() {
-  return client.fetch(`*[_type == "homePage"][0].requestBidSection`, {}, {cache: 'no-store'})
+  return sanityFetch(`*[_type == "homePage"][0].requestBidSection`, {})
 }
 
 // --- Home Page -----------------------------------------------------------
 
 export async function getHomePage() {
-  return client.fetch(
+  return sanityFetch(
     `
     *[_type == "homePage"][0]{
       title,
@@ -58,9 +56,7 @@ export async function getHomePage() {
       requestBidSection
     }
   `,
-    {},
-    {cache: 'no-store'}
-  )
+    {})
 }
 
 // --- Standard Pages (Services, Markets, Projects, Resources, About,
@@ -83,7 +79,7 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
   const type = PAGE_TYPE_MAP[name]
   if (!type) throw new Error(`Unknown page "${name}"`)
 
-  return client.fetch(
+  return sanityFetch(
     `
     *[_type == $type][0]{
       title,
@@ -114,9 +110,7 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
       }
     }
   `,
-    {type},
-    {cache: 'no-store'}
-  )
+    {type})
 }
 
 // Bottom-of-page CTA band — one per page type (Home, Services/Markets/
@@ -132,7 +126,7 @@ export async function getDetailCta(name: keyof typeof DETAIL_CTA_TYPE_MAP) {
   const type = DETAIL_CTA_TYPE_MAP[name]
   if (!type) throw new Error(`Unknown detail CTA page "${name}"`)
 
-  return client.fetch(
+  return sanityFetch(
     `
     *[_type == $type][0].detailCta{
       eyebrow, heading,
@@ -140,7 +134,5 @@ export async function getDetailCta(name: keyof typeof DETAIL_CTA_TYPE_MAP) {
       buttonColor, buttonTextColor, phoneColor
     }
   `,
-    {type},
-    {cache: 'no-store'}
-  )
+    {type})
 }
