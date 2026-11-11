@@ -1,5 +1,5 @@
 .header {
-  height: 88px;
+  height: 112px;
   background: var(--paper);
   border-bottom: 1px solid rgba(17, 42, 53, 0.08);
   position: relative;
@@ -21,31 +21,28 @@
 
 .brand {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
   height: 100%;
   z-index: 40;
 }
 
 .brandLogoPlate {
-  position: absolute;
-  left: 0;
-  top: 4px;
-  width: 221px;
-  height: 117px;
+  /* The logo sits inside the header bar (it used to hang down over the
+     hero on a fixed-size white plate, which left a wide empty strip
+     beside the portrait-shaped logo). */
+  height: 96px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background: var(--paper);
-  overflow: hidden;
-  z-index: 41;
 }
 
 .brandLogo {
   display: block;
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: contain;
-  object-position: left top;
+  /* The logo PNG has a white background; multiply blends it into the
+     cream header so no white box shows. */
+  mix-blend-mode: multiply;
 }
 
 .nav {
@@ -92,16 +89,20 @@
   .nav {
     display: none;
   }
+  .header {
+    height: 96px;
+  }
   .brandLogoPlate {
-    width: 200px;
-    height: 108px;
+    height: 80px;
   }
 }
 
 @media (max-width: 650px) {
+  .header {
+    height: 80px;
+  }
   .brandLogoPlate {
-    width: 167px;
-    height: 99px;
+    height: 64px;
   }
   .bidButton {
     min-height: 44px;
