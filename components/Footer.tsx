@@ -9,12 +9,27 @@ interface ServiceData {
   sortOrder: number;
 }
 
+interface ResourceData {
+  title: string;
+  visibility: 'public' | 'private' | 'request_required';
+  file?: string;
+  externalUrl?: string;
+  sortOrder: number;
+}
+
 export default async function Footer() {
-  const [footer, settings, servicesRaw] = await Promise.all([
+  const [footer, settings, servicesRaw, resourcesRaw] = await Promise.all([
     getSiteFooter(),
     getSiteSettings(),
     getCollection<ServiceData>('services'),
+    getCollection<ResourceData>('resources'),
   ]);
+
+  // Company documents (Studio: Vendors → Company Documents). Each one links
+  // straight to its file; one without a file yet links to the Vendors page.
+  const documents = resourcesRaw
+    .filter((r) => r.data.visibility !== 'private')
+    .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const services = servicesRaw.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
   const social = footer?.social || {};
@@ -72,12 +87,21 @@ export default async function Footer() {
             </ul>
           </div>
           <div className={styles.footerCol}>
-            <p className={styles.colHeading}>Resources</p>
+            <p className={styles.colHeading}>Vendors</p>
             <ul>
-              <li><Link href="/vendors#documents">Capability Statement</Link></li>
-              <li><Link href="/vendors#documents">Prequalification</Link></li>
-              <li><Link href="/vendors#documents">Client Portal</Link></li>
-              <li><Link href="/vendors">Vendors</Link></li>
+              <li><Link href="/vendors">Vendors &amp; Tools</Link></li>
+              {documents.map((d) => {
+                const href = d.data.visibility === 'public' ? d.data.file || d.data.externalUrl : undefined;
+                return (
+                  <li key={d.id}>
+                    {href ? (
+                      <a href={href} target="_blank" rel="noopener noreferrer">{d.data.title}</a>
+                    ) : (
+                      <Link href="/vendors#documents">{d.data.title}</Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className={`${styles.footerCol} ${styles.footerContact}`}>
