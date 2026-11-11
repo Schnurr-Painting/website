@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getCollection } from '@/lib/content';
 import RichBody from '@/components/RichBody';
 import styles from './Markets.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface MarketData {
   title: string;
@@ -45,7 +46,7 @@ export default async function Markets({ section }: { section?: SectionCopy }) {
                 className={styles.marketCard}
                 style={{ '--market-accent': accent } as React.CSSProperties}
               >
-                <div className={styles.marketVisual}>
+                <div className={styles.marketVisual} data-sanity={editAttr(market.data as any, 'cardImage')}>
                   {market.data.cardImage ? (
                     <img src={market.data.cardImage} alt="" loading="lazy" />
                   ) : (

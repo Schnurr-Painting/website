@@ -8,13 +8,19 @@ import Testimonials from '@/components/home/Testimonials';
 import DetailCta from '@/components/DetailCta';
 import { getHomePage } from '@/lib/sanity/queries';
 import { getStatsForPage } from '@/lib/stats';
+import { editAttr } from '@/lib/sanity/edit';
 
 export default async function Home() {
   const [home, stats] = await Promise.all([getHomePage(), getStatsForPage('home')]);
 
   return (
     <SitePage>
-      <Hero hero={home?.hero} />
+      <Hero
+        hero={home?.hero}
+        slideEdits={(home?.hero?.slides || []).map((s: any) =>
+          s?._key ? editAttr(home, `hero.slides[_key=="${s._key}"].image`) : undefined
+        )}
+      />
       <StatsBand stats={stats.map((s) => s.data)} />
       <Services section={home?.servicesSection} />
       <Testimonials section={home?.testimonialsSection} />

@@ -3,6 +3,7 @@ import { richBodyComponents } from './RichBody';
 import { getSharedLabels } from '@/lib/sanity/queries';
 import { getTestimonialsForPage, type TestimonialsPageKey } from '@/lib/testimonials';
 import styles from './home/Testimonials.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 export default async function TestimonialsSection({ page }: { page: TestimonialsPageKey }) {
   const [shared, testimonials] = await Promise.all([
@@ -24,7 +25,7 @@ export default async function TestimonialsSection({ page }: { page: Testimonials
             <blockquote key={t.id} className={styles.testimonialCard}>
               <div className={styles.cardLogoRow}>
                 {t.data.companyLogo && (
-                  <img className={styles.companyLogo} src={t.data.companyLogo} alt={t.data.company || ''} />
+                  <img className={styles.companyLogo} src={t.data.companyLogo} data-sanity={editAttr(t.data as any, 'companyLogo')} alt={t.data.company || ''} />
                 )}
               </div>
               <div className={styles.quote}>

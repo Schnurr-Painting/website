@@ -11,9 +11,12 @@ interface Props {
   completionDate?: string;
   services?: string[];
   gallery?: string[];
+  /** Visual Editor: data-sanity values for the photos (see lib/sanity/edit.ts) */
+  featuredImageEdit?: string;
+  galleryEdits?: (string | undefined)[];
 }
 
-export default function ProjectDetails({ body, featuredImage, location, gc, owner, projectSize, completionDate, services, gallery }: Props) {
+export default function ProjectDetails({ body, featuredImage, location, gc, owner, projectSize, completionDate, services, gallery, featuredImageEdit, galleryEdits }: Props) {
   const specs = [
     { label: 'Location', value: location },
     { label: 'General Contractor', value: gc },
@@ -27,7 +30,9 @@ export default function ProjectDetails({ body, featuredImage, location, gc, owne
 
   // Lead with the first gallery photo (so it doesn't also show up in the grid
   // below); fall back to the featured image if there's no gallery yet.
-  const [leadImage, ...restGallery] = gallery && gallery.length > 0 ? gallery : [featuredImage];
+  const fromGallery = !!gallery && gallery.length > 0;
+  const [leadImage, ...restGallery] = fromGallery ? gallery : [featuredImage];
+  const leadEdit = fromGallery ? galleryEdits?.[0] : featuredImageEdit;
   const hasGallery = restGallery.length > 0;
 
   const hasBody = !!body && body.length > 0;
@@ -40,7 +45,7 @@ export default function ProjectDetails({ body, featuredImage, location, gc, owne
         <div className={`${styles.inner} ${hasSidebar ? styles.withSidebar : ''}`}>
           {(hasBody || leadImage) && (
             <div className={styles.body}>
-              {leadImage && <img className={styles.leadImage} src={leadImage} alt="" />}
+              {leadImage && <img className={styles.leadImage} src={leadImage} alt="" data-sanity={leadEdit} />}
               <RichBody value={body} />
             </div>
           )}
@@ -68,7 +73,7 @@ export default function ProjectDetails({ body, featuredImage, location, gc, owne
         <div className={styles.galleryOuter}>
           <div className={`${styles.galleryGrid} ${restGallery.length === 1 ? styles.single : ''}`}>
             {restGallery.map((src, i) => (
-              <img key={i} className={styles.galleryImg} src={src} alt="" />
+              <img key={i} className={styles.galleryImg} src={src} alt="" data-sanity={galleryEdits?.[i + 1]} />
             ))}
           </div>
         </div>

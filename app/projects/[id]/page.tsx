@@ -4,6 +4,7 @@ import ProjectDetails from '@/components/ProjectDetails';
 import DetailCta from '@/components/DetailCta';
 import { getCollection, getEntry } from '@/lib/content';
 import { notFound } from 'next/navigation';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface ProjectData {
   title: string;
@@ -34,6 +35,7 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
         title={entry.data.title}
         intro={entry.data.shortDescription}
         image={entry.data.featuredImage}
+        imageEdit={editAttr(entry.data as any, 'featuredImage')}
         backgroundColor="#3a1843"
         overlayColor="#3a1843"
         overlayOpacity={0.8}
@@ -48,6 +50,10 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
         completionDate={entry.data.completionDate}
         services={entry.data.services}
         gallery={entry.data.gallery}
+        featuredImageEdit={editAttr(entry.data as any, 'featuredImage')}
+        galleryEdits={(entry.data as any).galleryKeys?.map((k: string) =>
+          k ? editAttr(entry.data as any, `gallery[_key=="${k}"]`) : undefined
+        )}
       />
       <DetailCta page="projects" />
     </SitePage>

@@ -42,12 +42,13 @@ export async function getHomePage() {
   return sanityFetch(
     `
     *[_type == "homePage"][0]{
+      _id, _type,
       title,
       seoDescription,
       hero{
         eyebrow, headingLine1, headingLine2, headingLine3, intro,
         backgroundColor, headingColor, introColor, eyebrowColor, headingFont,
-        "slides": slides[]{"image": image.asset->url + "?w=1920&auto=format&fit=max", imagePosition}
+        "slides": slides[]{_key, "image": image.asset->url + "?w=1920&auto=format&fit=max", imagePosition}
       },
       servicesSection,
       marketsSection,
@@ -82,6 +83,7 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
   return sanityFetch(
     `
     *[_type == $type][0]{
+      _id, _type,
       title,
       seoDescription,
       "updatedAt": _updatedAt,

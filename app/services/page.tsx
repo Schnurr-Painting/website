@@ -4,6 +4,7 @@ import CollectionGrid from '@/components/interior/CollectionGrid';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { getCollection } from '@/lib/content';
 import { getPage } from '@/lib/sanity/queries';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface ServiceData {
   title: string;
@@ -22,6 +23,7 @@ export default async function ServicesPage() {
     title: s.data.title,
     description: s.data.shortDescription,
     image: s.data.heroImage,
+    imageEdit: editAttr(s.data as any, 'heroImage'),
     href: `/services/${s.id}`,
     accent: 'var(--orange)',
   }));

@@ -4,6 +4,7 @@ import CollectionGrid from '@/components/interior/CollectionGrid';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { getCollection } from '@/lib/content';
 import { getPage } from '@/lib/sanity/queries';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface ProjectData {
   title: string;
@@ -23,6 +24,7 @@ export default async function ProjectsPage() {
     title: p.data.title,
     description: p.data.shortDescription,
     image: p.data.featuredImage,
+    imageEdit: editAttr(p.data as any, 'featuredImage'),
     href: `/projects/${p.id}`,
     accent: 'var(--orange)',
     meta: p.data.market,

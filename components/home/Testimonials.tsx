@@ -2,6 +2,7 @@ import { PortableText } from '@portabletext/react';
 import { richBodyComponents } from '../RichBody';
 import { getTestimonialsForPage } from '@/lib/testimonials';
 import styles from './Testimonials.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface SectionCopy {
   eyebrow?: string;
@@ -27,7 +28,7 @@ export default async function Testimonials({ section }: { section?: SectionCopy 
             <blockquote key={testimonial.id} className={styles.testimonialCard}>
               <div className={styles.cardLogoRow}>
                 {testimonial.data.companyLogo && (
-                  <img className={styles.companyLogo} src={testimonial.data.companyLogo} alt={testimonial.data.company || ''} />
+                  <img className={styles.companyLogo} src={testimonial.data.companyLogo} data-sanity={editAttr(testimonial.data as any, 'companyLogo')} alt={testimonial.data.company || ''} />
                 )}
               </div>
               <div className={styles.quote}>
