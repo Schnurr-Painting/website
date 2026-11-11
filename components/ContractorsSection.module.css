@@ -36,8 +36,8 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
+  /* Each box draws its own full border (see .item); room for the overlap */
+  padding: 0 1px 1px 0;
 }
 
 .item {
@@ -46,8 +46,9 @@
   justify-content: center;
   min-height: 112px;
   padding: 20px 16px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border: 1px solid var(--line);
+  /* overlap neighbouring borders so they stay 1px; works for any count */
+  margin: 0 -1px -1px 0;
   background: white;
   text-align: center;
 }
