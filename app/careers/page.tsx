@@ -43,8 +43,12 @@ export default async function CareersPage() {
       <section className={styles.positions}>
         <div className={styles.inner}>
           <div className={styles.heading}>
-            <p className="eyebrow" style={{ color: 'var(--gold)', margin: '0 0 12px' }}>Open Positions</p>
-            <h2>Current Openings</h2>
+            {/* Schnurr takes applications at any time, so with no listed
+                openings the page invites a general application instead. */}
+            <p className="eyebrow" style={{ color: 'var(--gold)', margin: '0 0 12px' }}>
+              {positions.length > 0 ? 'Open Positions' : 'Join Our Team'}
+            </p>
+            <h2>{positions.length > 0 ? 'Current Openings' : 'Apply Anytime'}</h2>
             {page?.intro && <p className={styles.intro}>{page.intro}</p>}
           </div>
 
@@ -95,7 +99,6 @@ export default async function CareersPage() {
             </div>
           ) : (
             <div className={styles.noOpenings}>
-              <p>We don&apos;t have any open positions right now, but we&apos;re always interested in hearing from experienced commercial painters and project leaders.</p>
               <ApplyButton positionTitle="" roleType="" />
             </div>
           )}
