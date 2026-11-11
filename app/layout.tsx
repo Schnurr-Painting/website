@@ -1,6 +1,9 @@
 ﻿import type { Metadata } from 'next';
 import './globals.css';
 import { getSiteFooter } from '@/lib/sanity/queries';
+import { draftMode } from 'next/headers';
+import { VisualEditing } from 'next-sanity';
+import PreviewBanner from '@/components/PreviewBanner';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://schnurr-painting-nextjs.netlify.app';
 
@@ -45,7 +48,14 @@ export default async function RootLayout({
       </head>
       <body>
         {children}
+        {draftMode().isEnabled && (
+          <>
+            {/* Click-to-edit overlays for the Studio's Presentation view */}
+            <VisualEditing />
+            <PreviewBanner />
+          </>
+        )}
       </body>
     </html>
   );
-}
+}

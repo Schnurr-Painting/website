@@ -63,10 +63,24 @@ custom properties: `--ink`, `--gold`/`--orange` (same value), `--paper`,
   — hero, story, storyImage, sections, plus Safety-specific fields fetched
   generically for all page types since GROQ just returns null where a
   field doesn't exist). Also `getDetailCta(name)` for the bottom CTA band.
-- **Every fetch passes `{cache: 'no-store'}`.** This is required — Next.js
-  caches `fetch()` indefinitely by default, and without this flag, Sanity
-  content edits wouldn't appear without a full server restart. Always
-  include it on new queries.
+- **Every query goes through `sanityFetch()`** in `lib/sanity/client.ts`,
+  which applies `{cache: 'no-store'}` (Next.js caches `fetch()` forever by
+  default, so without it Sanity edits wouldn't appear) and handles preview
+  mode. Never call `client.fetch` directly.
+
+### Visual editing (preview mode)
+
+The Studio's **Visual Editor** (Sanity Presentation tool, configured in the
+Studio repo's `presentation.ts`) loads this site in an iframe and calls
+`/api/draft-mode/enable`. In draft mode, `sanityFetch` reads drafts with the
+`SANITY_API_READ_TOKEN` (Viewer token, Netlify env var, secret) and turns on
+stega: invisible markers in strings that `<VisualEditing />` (mounted in
+`app/layout.tsx` only in draft mode) turns into click-to-edit overlays.
+Stega would corrupt values used as CSS or logic (colors, fonts, slugs,
+emails, `showOn`, `visibility`…), so `client.ts` filters those by field name
+(`NON_TEXT`). **If you add a field whose value drives styling or logic,
+add its name there.** `lib/sanity/env.ts` holds the shared settings that
+client components may import (client.ts uses `next/headers`, server-only).
 
 ### Rich text
 

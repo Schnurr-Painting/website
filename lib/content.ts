@@ -1,4 +1,4 @@
-import {client} from './sanity/client'
+import {sanityFetch} from './sanity/client'
 
 export interface ContentEntry<T = Record<string, any>> {
   id: string
@@ -47,16 +47,15 @@ function resolveType(collectionName: string): string {
   return type
 }
 
-// NOTE the third argument: {cache: 'no-store'}. Next.js's App Router
-// caches fetch() calls indefinitely by default — without this, edits made
-// in Sanity would never show up on the site without a full server restart.
+// NOTE: sanityFetch applies {cache: 'no-store'} (see lib/sanity/client.ts) —
+// without it Sanity edits would never show up — and handles preview mode.
 export async function getCollection<T = Record<string, any>>(
   collectionName: string
 ): Promise<ContentEntry<T>[]> {
   const type = resolveType(collectionName)
   const idExpr = SLUG_TYPES.has(type) ? '"id": slug.current,' : '"id": _id,'
   const query = `*[_type == "${type}"]{ ${idExpr} ${PROJECTIONS[type]} }`
-  const docs = await client.fetch(query, {}, {cache: 'no-store'})
+  const docs = await sanityFetch(query, {})
   return docs.map((doc: any) => {
     const {id, body, ...rest} = doc
     return {id, data: rest as T, body: body || []}
@@ -70,7 +69,7 @@ export async function getEntry<T = Record<string, any>>(
   const type = resolveType(collectionName)
   const filter = SLUG_TYPES.has(type) ? 'slug.current == $id' : '_id == $id'
   const query = `*[_type == "${type}" && ${filter}][0]{ ${PROJECTIONS[type]} }`
-  const doc = await client.fetch(query, {id}, {cache: 'no-store'})
+  const doc = await sanityFetch(query, {id})
   if (!doc) return null
   const {body, ...rest} = doc
   return {id, data: rest as T, body: body || []}
