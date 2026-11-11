@@ -13,13 +13,15 @@ import styles from './page.module.css';
 
 const storyComponents: PortableTextComponents = {
   types: {
-    image: ({ value }) => (
-      <img
-        className={styles.storyInlineImage}
-        src={urlFor(value).width(1200).fit('max').auto('format').url()}
-        alt={value?.alt || ''}
-      />
-    ),
+    // Skip image blocks with no photo chosen yet instead of crashing the page
+    image: ({ value }) =>
+      value?.asset ? (
+        <img
+          className={styles.storyInlineImage}
+          src={urlFor(value).width(1200).fit('max').auto('format').url()}
+          alt={value?.alt || ''}
+        />
+      ) : null,
   },
   marks: {
     link: ({ value, children }) => {
