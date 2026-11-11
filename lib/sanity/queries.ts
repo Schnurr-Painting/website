@@ -7,13 +7,15 @@ import {sanityFetch} from './client'
 
 // --- Site Settings -----------------------------------------------------
 
+// The logo is served resized and in a modern format like every other photo
+// (the upload is 1280px wide; the header shows it ~100px wide).
 export async function getSiteSettings() {
   return sanityFetch(
     `
     *[_type == "brandTheme"][0]{
       _id, _type,
       "brand": {
-        "logo": brand.logo.asset->url,
+        "logo": brand.logo.asset->url + "?w=600&auto=format&fit=max",
         "logoAlt": brand.logoAlt
       },
       theme
