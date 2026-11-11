@@ -1,7 +1,7 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
 import CollectionGrid from '@/components/interior/CollectionGrid';
-import TestimonialsSection from '@/components/TestimonialsSection';
+import ContractorsSection from '@/components/ContractorsSection';
 import { getCollection } from '@/lib/content';
 import { getPage } from '@/lib/sanity/queries';
 
@@ -29,7 +29,7 @@ export default async function MarketsPage() {
     <SitePage>
       <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
       <CollectionGrid items={items} />
-      <TestimonialsSection page="markets" />
+      <ContractorsSection />
     </SitePage>
   );
 }

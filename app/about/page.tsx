@@ -1,10 +1,9 @@
 import SitePage from '@/components/SitePage';
 import InteriorHero from '@/components/interior/InteriorHero';
-import TestimonialsSection from '@/components/TestimonialsSection';
+import ContractorsSection from '@/components/ContractorsSection';
 import CredentialsStrip from '@/components/CredentialsStrip';
-import { getPage, getSharedLabels } from '@/lib/sanity/queries';
+import { getPage, getSharedLabels, getContractors } from '@/lib/sanity/queries';
 import { getCollection } from '@/lib/content';
-import { getTestimonialsForPage } from '@/lib/testimonials';
 import { getStatsForPage } from '@/lib/stats';
 import { urlFor } from '@/lib/sanity/image';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
@@ -49,17 +48,17 @@ interface TeamData {
 }
 
 export default async function AboutPage() {
-  const [page, shared, stats, teamRaw, testimonials] = await Promise.all([
+  const [page, shared, stats, teamRaw, contractors] = await Promise.all([
     getPage('about'),
     getSharedLabels(),
     getStatsForPage('about'),
     getCollection<TeamData>('team'),
-    getTestimonialsForPage('about'),
+    getContractors(),
   ]);
 
   const h = page?.hero || {};
   const hasSections = !!page?.sections && page.sections.length > 0;
-  const hasTestimonials = testimonials.length > 0;
+  const hasTestimonials = (contractors?.contractors?.length ?? 0) > 0;
   const team = teamRaw
     .filter((m) => m.data.publicProfile)
     .sort((a, b) => a.data.displayOrder - b.data.displayOrder);
@@ -109,7 +108,7 @@ export default async function AboutPage() {
       )}
 
       <CredentialsStrip stats={stats.map((s) => s.data)} />
-      <TestimonialsSection page="about" />
+      <ContractorsSection />
 
       {team.length > 0 && (
         <section className={`${styles.teamBand} ${!hasTestimonials ? styles.noTestimonials : ''}`}>

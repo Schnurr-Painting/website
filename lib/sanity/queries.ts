@@ -28,6 +28,16 @@ export async function getSiteFooter() {
   return sanityFetch(`*[_type == "siteFooter"][0]{tagline, contact, social}`, {})
 }
 
+// General contractors list (replaces testimonials) — Site Settings → General Contractors
+export async function getContractors() {
+  return sanityFetch(
+    `*[_id == "contractorsList"][0]{
+      _id, _type, eyebrow, heading,
+      contractors[]{_key, name, "logo": logo.asset->url + "?w=400&auto=format&fit=max"}
+    }`,
+    {})
+}
+
 export async function getSharedLabels() {
   return sanityFetch(`*[_type == "sharedLabels"][0]`, {})
 }
@@ -71,6 +81,7 @@ const PAGE_TYPE_MAP: Record<string, string> = {
   markets: 'marketsPage',
   projects: 'projectsPage',
   resources: 'resourcesPage',
+  vendors: 'resourcesPage',
   about: 'aboutPage',
   safety: 'safetyPage',
   careers: 'careersPage',
@@ -104,6 +115,9 @@ export async function getPage(name: keyof typeof PAGE_TYPE_MAP) {
         title
       },
       sections,
+      intro,
+      vendors[]{_key, name, url, "logo": logo.asset->url + "?w=400&auto=format&fit=max"},
+      tools[]{_key, name, description},
       certifications,
       sitePractices,
       coordination,
