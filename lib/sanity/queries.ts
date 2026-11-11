@@ -11,6 +11,7 @@ export async function getSiteSettings() {
   return sanityFetch(
     `
     *[_type == "brandTheme"][0]{
+      _id, _type,
       "brand": {
         "logo": brand.logo.asset->url,
         "logoAlt": brand.logoAlt
