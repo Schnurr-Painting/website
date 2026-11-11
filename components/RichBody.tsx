@@ -4,9 +4,12 @@ import styles from './RichBody.module.css';
 
 export const richBodyComponents: PortableTextComponents = {
   types: {
-    image: ({ value }) => (
-      <img className={styles.inlineImage} src={urlFor(value).width(1000).fit('max').auto('format').url()} alt={value?.alt || ''} />
-    ),
+    // An image block with no photo chosen yet (common in drafts) renders
+    // nothing instead of crashing the page.
+    image: ({ value }) =>
+      value?.asset ? (
+        <img className={styles.inlineImage} src={urlFor(value).width(1000).fit('max').auto('format').url()} alt={value?.alt || ''} />
+      ) : null,
   },
   marks: {
     link: ({ value, children }) => {
