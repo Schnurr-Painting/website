@@ -19,7 +19,12 @@
 .footerLogo {
   height: 42px;
   width: auto;
-  filter: brightness(0) invert(1);
+  /* Show the logo in white on the dark footer. Works whether the uploaded
+     logo has a transparent or a solid white background: grayscale+invert
+     turns the white background black, and "screen" blending then makes
+     black disappear into the footer. */
+  filter: grayscale(1) invert(1) contrast(1.6);
+  mix-blend-mode: screen;
 }
 
 .tagline {
