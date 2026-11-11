@@ -77,21 +77,20 @@ export default async function VendorsPage() {
               <div className={styles.listBlock} data-sanity={editAttr(page, 'vendors')}>
                 <h2>Vendors</h2>
                 {vendors.length > 0 ? (
-                  <ul className={styles.vendorGrid}>
-                    {vendors.map((v) => {
-                      const content = v.logo ? <img src={v.logo} alt={v.name} /> : <span>{v.name}</span>;
-                      return (
-                        <li key={v._key} data-sanity={editAttr(page, `vendors[_key=="${v._key}"]`)}>
-                          {v.url ? (
+                  <ul className={styles.itemList}>
+                    {vendors.map((v) => (
+                      <li key={v._key} data-sanity={editAttr(page, `vendors[_key=="${v._key}"]`)}>
+                        {v.logo && <img className={styles.vendorLogo} src={v.logo} alt="" />}
+                        <div className={styles.itemText}>
+                          <strong>{v.name}</strong>
+                          {v.url && (
                             <a href={v.url} target="_blank" rel="noopener noreferrer">
-                              {content}
+                              Website <span aria-hidden="true">↗</span>
                             </a>
-                          ) : (
-                            content
                           )}
-                        </li>
-                      );
-                    })}
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 ) : (
                   <p className={styles.empty}>No vendors yet. Click here to add them.</p>
@@ -103,11 +102,13 @@ export default async function VendorsPage() {
               <div className={styles.listBlock} data-sanity={editAttr(page, 'tools')}>
                 <h2>Tools We Use</h2>
                 {tools.length > 0 ? (
-                  <ul className={styles.toolList}>
+                  <ul className={styles.itemList}>
                     {tools.map((t) => (
                       <li key={t._key} data-sanity={editAttr(page, `tools[_key=="${t._key}"]`)}>
-                        <strong>{t.name}</strong>
-                        {t.description && <span>{t.description}</span>}
+                        <div className={styles.itemText}>
+                          <strong>{t.name}</strong>
+                          {t.description && <span>{t.description}</span>}
+                        </div>
                       </li>
                     ))}
                   </ul>
