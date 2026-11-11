@@ -6,6 +6,7 @@ import { getPage } from '@/lib/sanity/queries';
 import { getCollection } from '@/lib/content';
 import styles from './page.module.css';
 import ApplyButton from './ApplyButton';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface PositionData {
   title: string;
@@ -31,6 +32,7 @@ export default async function CareersPage() {
         title={h.title}
         intro={h.intro}
         image={(h as any).image}
+        imageEdit={editAttr(page, 'hero.image')}
         backgroundColor={h.backgroundColor}
         overlayColor={h.overlayColor}
         overlayOpacity={h.overlayOpacity}

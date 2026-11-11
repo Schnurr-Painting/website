@@ -16,7 +16,7 @@ interface HeroData {
   slides?: { image?: string; imagePosition?: string }[];
 }
 
-export default function Hero({ hero }: { hero?: HeroData }) {
+export default function Hero({ hero, slideEdits }: { hero?: HeroData; slideEdits?: (string | undefined)[] }) {
   const h = hero || {};
   const [current, setCurrent] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -91,7 +91,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         </div>
       </div>
 
-      <div className={styles.heroMedia}>
+      <div className={styles.heroMedia} data-sanity={slideEdits?.[mounted ? current : 0]}>
         <div className={styles.slides} aria-hidden="true">
           {slides.map((slide, index) => (
             <img

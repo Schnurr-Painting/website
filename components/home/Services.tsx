@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getCollection } from '@/lib/content';
 import RichBody from '@/components/RichBody';
 import styles from './Services.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface ServiceData {
   title: string;
@@ -26,13 +27,14 @@ export default async function Services({ section }: { section?: SectionCopy }) {
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
     .slice(0, 4);
 
-  const sectionImage =
-    services.find((s) => s.data.heroImage)?.data.heroImage || '/images/hero/hero-02.jpg';
+  // The big photo is the first featured service's photo
+  const photoService = services.find((s) => s.data.heroImage);
+  const sectionImage = photoService?.data.heroImage || '/images/hero/hero-02.jpg';
 
   return (
     <section className={styles.services} id="services">
       <div className={styles.servicesInner}>
-        <div className={styles.servicesPhoto}>
+        <div className={styles.servicesPhoto} data-sanity={editAttr(photoService?.data as any, 'heroImage')}>
           <img src={sectionImage} alt="" loading="lazy" />
           <div className={styles.servicesPhotoShade} />
           <div className={styles.servicesPhotoLabel}>

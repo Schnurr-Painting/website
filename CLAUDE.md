@@ -112,3 +112,12 @@ broken layouts).
 anywhere — including plain server components — via a `window` bridge:
 client components check `typeof window !== 'undefined' && window.openBidModal`
 and call it, rather than each button owning its own modal state.
+
+## Photo click-to-edit (Visual Editor)
+
+Text is click-to-edit automatically (stega). Photos are not: tag the
+element with `data-sanity={editAttr(doc, 'fieldPath')}` from
+`lib/sanity/edit.ts`. The doc needs `_id` and `_type`, so queries for
+anything with a photo must project them (see `lib/content.ts`,
+`getHomePage`, `getPage`). List items use `field[_key=="..."]` paths, so
+project `_key` too (e.g. `galleryKeys`, hero `slides[]._key`).

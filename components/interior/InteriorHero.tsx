@@ -13,6 +13,8 @@ interface Props {
   headingColor?: string;
   introColor?: string;
   accentColor?: string;
+  /** Visual Editor: data-sanity value for the photo (see lib/sanity/edit.ts) */
+  imageEdit?: string;
 }
 
 function hexToRgba(hex: string, alpha: number) {
@@ -37,6 +39,7 @@ export default function InteriorHero({
   headingColor = '#ffffff',
   introColor = '#ffffff',
   accentColor = 'var(--gold)',
+  imageEdit,
 }: Props) {
   const op = Number(overlayOpacity) || 0.9;
   const overlayStrong = hexToRgba(overlayColor, Math.min(1, op));
@@ -57,6 +60,7 @@ export default function InteriorHero({
     <section
       className={`${styles.interiorHero} ${image ? styles.interiorHeroPhoto : styles.interiorHeroSolid}`}
       style={cssVars}
+      data-sanity={imageEdit}
     >
       {image && (
         <div className={styles.heroBackground} aria-hidden="true">

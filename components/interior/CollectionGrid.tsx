@@ -7,6 +7,8 @@ interface CollectionItem {
   title: string;
   description: any;
   image?: string;
+  /** Visual Editor: data-sanity value for the photo */
+  imageEdit?: string;
   href: string;
   accent?: string;
   meta?: string;
@@ -25,7 +27,7 @@ export default function CollectionGrid({ items }: { items: CollectionItem[] }) {
                 style={{ '--card-accent': item.accent || 'var(--orange)' } as React.CSSProperties}
               >
                 {item.image ? (
-                  <div className={styles.imageWrap}>
+                  <div className={styles.imageWrap} data-sanity={item.imageEdit}>
                     <img src={item.image} alt={item.title} loading="lazy" />
                   </div>
                 ) : (

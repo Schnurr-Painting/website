@@ -10,6 +10,7 @@ import { urlFor } from '@/lib/sanity/image';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import { richBodyComponents } from '@/components/RichBody';
 import styles from './page.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 const storyComponents: PortableTextComponents = {
   types: {
@@ -65,7 +66,7 @@ export default async function AboutPage() {
 
   return (
     <SitePage>
-      <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} image={h.image} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
+      <InteriorHero eyebrow={h.eyebrow} title={h.title} intro={h.intro} image={h.image} imageEdit={editAttr(page, 'hero.image')} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
 
       {page?.story && (
         <section className={`${styles.story} ${hasSections ? styles.hasSections : ''}`}>
@@ -76,7 +77,7 @@ export default async function AboutPage() {
                 <PortableText value={page.story} components={storyComponents} />
               </div>
               {page.storyImage?.url && (
-                <figure className={styles.storyImageWrap}>
+                <figure className={styles.storyImageWrap} data-sanity={editAttr(page, 'storyImage.image')}>
                   <img src={page.storyImage.url} alt={page.storyImage.name || ''} />
                   {(page.storyImage.name || page.storyImage.title) && (
                     <figcaption className={styles.storyImageCaption}>
@@ -118,7 +119,7 @@ export default async function AboutPage() {
             <div className={styles.teamGrid}>
               {team.map((member) => (
                 <article key={member.id} className={styles.teamCard}>
-                  {member.data.headshot && <img src={member.data.headshot} alt={member.data.name} />}
+                  {member.data.headshot && <img src={member.data.headshot} alt={member.data.name} data-sanity={editAttr(member.data as any, 'headshot')} />}
                   <div className={styles.teamCopy}>
                     <h3>{member.data.name}</h3>
                     <p className={styles.role}>{member.data.role}</p>

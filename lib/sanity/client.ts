@@ -30,6 +30,8 @@ export const client = createClient({
       const path = props.sourcePath.map((p) => (typeof p === 'object' ? '' : String(p)))
       const last = path[path.length - 1] || ''
       if (NON_TEXT.test(last)) return false
+      // Internal fields (_id, _type, _key) are used for photo click-to-edit
+      if (last.startsWith('_')) return false
       // Brand & Theme values are all colors/fonts used in CSS
       if (path.includes('theme')) return false
       return props.filterDefault(props)

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getCollection } from '@/lib/content';
 import RichBody from '@/components/RichBody';
 import styles from './FeaturedProjects.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 interface ProjectData {
   title: string;
@@ -45,7 +46,7 @@ export default async function FeaturedProjects({ section }: { section?: SectionC
             const number = String(index + 1).padStart(2, '0');
             return (
               <article key={project.id} className={styles.projectCard}>
-                <div className={styles.projectMedia}>
+                <div className={styles.projectMedia} data-sanity={editAttr(project.data as any, 'featuredImage')}>
                   {project.data.featuredImage ? (
                     <img
                       className={styles.projectImage}

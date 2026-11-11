@@ -6,6 +6,7 @@ import { richBodyComponents } from '@/components/RichBody';
 import { getPage } from '@/lib/sanity/queries';
 import { getStatsForPage } from '@/lib/stats';
 import styles from './page.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 export default async function Page() {
   const [page, stats] = await Promise.all([getPage('safety'), getStatsForPage('safety')]);
@@ -33,6 +34,7 @@ export default async function Page() {
         title={h.title}
         intro={h.intro}
         image={h.image}
+        imageEdit={editAttr(page, 'hero.image')}
         backgroundColor={h.backgroundColor}
         overlayColor={h.overlayColor}
         overlayOpacity={h.overlayOpacity}

@@ -4,6 +4,7 @@ import InteriorHero from '@/components/interior/InteriorHero';
 import RichBody from '@/components/RichBody';
 import { getPage } from '@/lib/sanity/queries';
 import styles from '../legal.module.css';
+import { editAttr } from '@/lib/sanity/edit';
 
 export const revalidate = 60;
 
@@ -24,7 +25,7 @@ export default async function TermsPage() {
 
   return (
     <SitePage>
-      <InteriorHero eyebrow={h.eyebrow} title={h.title || 'Terms of Use'} intro={h.intro} image={h.image} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
+      <InteriorHero eyebrow={h.eyebrow} title={h.title || 'Terms of Use'} intro={h.intro} image={h.image} imageEdit={editAttr(page, 'hero.image')} imagePosition={h.imagePosition} backgroundColor={h.backgroundColor} overlayColor={h.overlayColor} overlayOpacity={h.overlayOpacity} headingColor={h.headingColor} introColor={h.introColor} accentColor={h.accentColor} />
       <section className={styles.section}>
         <div className={styles.inner}>
           {updated && <p className={styles.updated}>Last updated: {updated}</p>}

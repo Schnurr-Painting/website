@@ -31,11 +31,11 @@ const SLUG_TYPES = new Set(['project', 'service', 'market'])
 // upload (untouched by next/image, since next.config.js sets
 // images.unoptimized: true for this repo).
 const PROJECTIONS: Record<string, string> = {
-  project: `title, market, location, "featuredImage": featuredImage.asset->url + "?w=1400&auto=format&fit=max", "gallery": gallery[].asset->url + "?w=1200&auto=format&fit=max", shortDescription, gc, owner, projectSize, completionDate, services, featured, sortOrder, heroStyle, body`,
-  service: `title, shortDescription, "heroImage": heroImage.asset->url + "?w=1600&auto=format&fit=max", icon, featured, sortOrder, heroStyle, body`,
-  market: `title, shortDescription, "cardImage": cardImage.asset->url + "?w=700&auto=format&fit=max", "heroImage": heroImage.asset->url + "?w=1600&auto=format&fit=max", icon, accentColor, featured, sortOrder, heroStyle, body`,
-  teamMember: `name, role, "headshot": headshot.asset->url + "?w=500&auto=format&fit=max", email, phone, bio, displayOrder, publicProfile`,
-  testimonial: `quote, person, role, company, "companyLogo": companyLogo.asset->url + "?w=300&auto=format&fit=max", project, approvedPublic, showOn, sortOrder`,
+  project: `_id, _type, title, market, location, "featuredImage": featuredImage.asset->url + "?w=1400&auto=format&fit=max", "gallery": gallery[].asset->url + "?w=1200&auto=format&fit=max", "galleryKeys": gallery[]._key, shortDescription, gc, owner, projectSize, completionDate, services, featured, sortOrder, heroStyle, body`,
+  service: `_id, _type, title, shortDescription, "heroImage": heroImage.asset->url + "?w=1600&auto=format&fit=max", icon, featured, sortOrder, heroStyle, body`,
+  market: `_id, _type, title, shortDescription, "cardImage": cardImage.asset->url + "?w=700&auto=format&fit=max", "heroImage": heroImage.asset->url + "?w=1600&auto=format&fit=max", icon, accentColor, featured, sortOrder, heroStyle, body`,
+  teamMember: `_id, _type, name, role, "headshot": headshot.asset->url + "?w=500&auto=format&fit=max", email, phone, bio, displayOrder, publicProfile`,
+  testimonial: `_id, _type, quote, person, role, company, "companyLogo": companyLogo.asset->url + "?w=300&auto=format&fit=max", project, approvedPublic, showOn, sortOrder`,
   stat: `value, label, description, showOn, sortOrder`,
   resource: `title, resourceType, description, "file": file.asset->url, externalUrl, visibility, icon, sortOrder`,
   position: `title, roleType, employmentType, location, requirements, active, sortOrder, body`,
