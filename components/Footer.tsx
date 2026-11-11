@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCollection } from '@/lib/content';
 import { getSiteFooter, getSiteSettings } from '@/lib/sanity/queries';
+import { editAttr } from '@/lib/sanity/edit';
 import styles from './Footer.module.css';
 
 interface ServiceData {
@@ -24,7 +25,7 @@ export default async function Footer() {
       <div className={`container ${styles.footerInner}`}>
         <div className={styles.footerTop}>
           <div className={styles.footerBrand}>
-            <img className={styles.footerLogo} src={settings?.brand?.logo} alt={settings?.brand?.logoAlt} />
+            <img className={styles.footerLogo} src={settings?.brand?.logo} alt={settings?.brand?.logoAlt} data-sanity={editAttr(settings, 'brand.logo')} />
             <p className={styles.tagline}>{footer?.tagline}</p>
             <div className={styles.social}>
               {social.facebook && social.facebook !== '#' && (

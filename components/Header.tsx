@@ -16,7 +16,16 @@ const links = [
   ['Contact', '/contact'],
 ];
 
-export default function Header({ logo, logoAlt }: { logo?: string; logoAlt?: string }) {
+export default function Header({
+  logo,
+  logoAlt,
+  logoEdit,
+}: {
+  logo?: string;
+  logoAlt?: string;
+  /** Visual Editor: data-sanity value for the logo (see lib/sanity/edit.ts) */
+  logoEdit?: string;
+}) {
   // Phone/tablet menu (the full nav row is hidden below 1100px wide)
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -46,7 +55,7 @@ export default function Header({ logo, logoAlt }: { logo?: string; logoAlt?: str
     <header className={styles.header}>
       <div className={styles.headerInner}>
         <Link href="/" className={styles.brand} aria-label="Schnurr Painting home">
-          <div className={styles.brandLogoPlate}>
+          <div className={styles.brandLogoPlate} data-sanity={logoEdit}>
             <img
               className={styles.brandLogo}
               src={logo}
