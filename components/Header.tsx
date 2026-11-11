@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.css';
 
 const links = [
@@ -15,6 +17,25 @@ const links = [
 ];
 
 export default function Header({ logo, logoAlt }: { logo?: string; logoAlt?: string }) {
+  // Phone/tablet menu (the full nav row is hidden below 1100px wide)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Close the menu after navigating to another page
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Close with the Escape key
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
   const handleBidClick = () => {
     if (typeof window !== 'undefined' && (window as any).openBidModal) {
       (window as any).openBidModal();
@@ -43,7 +64,40 @@ export default function Header({ logo, logoAlt }: { logo?: string; logoAlt?: str
         <button onClick={handleBidClick} className={styles.bidButton} type="button">
           Request a Bid <span aria-hidden="true">→</span>
         </button>
+
+        <button
+          type="button"
+          className={styles.menuButton}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className={menuOpen ? `${styles.menuIcon} ${styles.menuIconOpen}` : styles.menuIcon} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
       </div>
+
+      <nav
+        id="mobile-menu"
+        className={menuOpen ? `${styles.mobileNav} ${styles.mobileNavOpen}` : styles.mobileNav}
+        aria-label="Mobile navigation"
+        hidden={!menuOpen}
+      >
+        {links.map(([label, href]) => (
+          <Link
+            key={href}
+            href={href}
+            className={pathname === href || pathname.startsWith(`${href}/`) ? styles.mobileNavActive : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
